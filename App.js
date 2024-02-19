@@ -1,6 +1,7 @@
 import { Text, View, ScrollView } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { SafeAreaProvider, useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
@@ -11,23 +12,39 @@ import { registerRootComponent } from "expo";
 
 const Tab = createBottomTabNavigator();
 
-registerRootComponent(App);
+function Main() {
+    const insets = useSafeAreaInsets();
+
+    return (
+        <View className="flex-1 bg-text">
+            <Tab.Navigator
+                screenOptions={{ headerShown: false }}
+                sceneContainerStyle={{
+                    backgroundColor: "rgb(42, 42, 49)",
+                    paddingTop: insets.top,
+                }}
+            >
+                <Tab.Screen name="home" component={HomeScreen} options={{ tabBarIcon: makeIconRender("home") }} />
+                <Tab.Screen name="signup" component={SignUpScreen} options={{ tabBarIcon: makeIconRender("cog") }} />
+            </Tab.Navigator>
+        </View>
+    );
+}
 
 export default function App() {
     return (
-        <NavigationContainer
-            theme={{
-                dark: true,
-                colors: {
-                    background: "#161619",
-                },
-            }}
-        >
-            <Tab.Navigator>
-                <Tab.Screen name="Home" component={HomeScreen} options={{ tabBarIcon: makeIconRender("home") }} />
-                <Tab.Screen name="signup" component={SignUpScreen} options={{ tabBarIcon: makeIconRender("cog") }} />
-            </Tab.Navigator>
-        </NavigationContainer>
+        <SafeAreaProvider>
+            <NavigationContainer
+                theme={{
+                    dark: true,
+                    colors: {
+                        background: "#161619",
+                    },
+                }}
+            >
+                <Main />
+            </NavigationContainer>
+        </SafeAreaProvider>
     );
 }
 
