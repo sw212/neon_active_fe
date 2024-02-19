@@ -44,7 +44,7 @@ export default function SignUp() {
             </View>
             <Pressable className="rounded-full bg-black text-white py-2 px-5 m-2">
                 {/* user info will be verified using supabase onPress */}
-                Log In
+                <Text>Log In</Text>
             </Pressable>
         </View>
     );
