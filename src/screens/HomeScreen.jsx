@@ -44,18 +44,45 @@ const Display = () => {
     );
 };
 
+const LetterN = () => {
+    // prettier-ignore
+    const positions = new Float32Array([
+        -0.6, -0.6, 0.1, -0.6,  0.6, 0.1,
+        -0.6,  0.6, 0.1,  0.6, -0.6, 0.1, 
+         0.6, -0.6, 0.1,  0.6,  0.6, 0.1, 
+         0.6,  0.6, 0.1,  0.6, -0.6, 0.1,
+    ]);
+
+    return (
+        <>
+            <EffectComposer>
+                <Bloom mipmapBlur intensity={0.3} />
+            </EffectComposer>
+
+            <lineSegments>
+                <bufferGeometry>
+                    <bufferAttribute
+                        attach="attributes-position"
+                        count={positions.length}
+                        itemSize={3}
+                        array={positions}
+                    />
+                </bufferGeometry>
+
+                <lineBasicMaterial attach="material" color={[1.5, 1, 4]} linewidth={10} toneMapped={false} />
+            </lineSegments>
+        </>
+    );
+};
+
 export default function HomeScreen() {
     return (
-        <ScrollView>
-            <View className="grow flex flex-1 h-full bg-[#161619]">
-                <View className="flex grow gap-y-2 flex-1 justify-center items-center text-3xl ">
-                    <Text className="text-white">text</Text>
-
-                    <View className="w-96 h-32">
-                        <Canvas>
-                            <Display />
-                        </Canvas>
-                    </View>
+        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+            <View className="h-full pt-4 bg-[#161619]">
+                <View className="h-full pt-4">
+                    <Canvas>
+                        <LetterN />
+                    </Canvas>
                 </View>
             </View>
         </ScrollView>
