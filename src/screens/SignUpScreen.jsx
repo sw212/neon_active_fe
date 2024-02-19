@@ -42,9 +42,9 @@ export default function SignUp() {
                     />
                 </View>
             </View>
-            <Pressable className="rounded-full bg-black text-white py-2 px-5 m-2">
+            <Pressable className="rounded-full bg-black py-2 px-5 m-2">
                 {/* user info will be verified using supabase onPress */}
-                <Text>Log In</Text>
+                <Text className="text-white">Log In</Text>
             </Pressable>
         </View>
     );

@@ -9,6 +9,7 @@ import "./global.css";
 import HomeScreen from "./src/screens/HomeScreen";
 import SignUpScreen from "./src/screens/SignUpScreen";
 import { registerRootComponent } from "expo";
+import NewWorkoutScreen from "./src/screens/newWorkoutScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -33,18 +34,19 @@ function Main() {
 
 export default function App() {
     return (
-        <SafeAreaProvider>
-            <NavigationContainer
-                theme={{
-                    dark: true,
-                    colors: {
-                        background: "#161619",
-                    },
-                }}
-            >
-                <Main />
-            </NavigationContainer>
-        </SafeAreaProvider>
+        <NavigationContainer
+            theme={{
+                dark: true,
+                colors: {
+                    background: "#161619",
+                },
+            }}
+        >
+            <Tab.Navigator>
+                <Tab.Screen name="Home" component={HomeScreen} options={{ tabBarIcon: makeIconRender("home") }} />
+                <Tab.Screen name="signup" component={SignUpScreen} options={{ tabBarIcon: makeIconRender("cog") }} />
+            </Tab.Navigator>
+        </NavigationContainer>
     );
 }
 
