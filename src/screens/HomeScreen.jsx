@@ -1,11 +1,12 @@
 import { useState, useRef, useEffect } from "react";
-import { Text, View, ScrollView } from "react-native";
+import { Text, View, ScrollView, Dimensions } from "react-native";
 import { Canvas, useThree, useFrame } from "@react-three/fiber/native";
 import { Trail, Line } from "@react-three/drei/native";
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import * as THREE from "three";
 import { vec3 } from "gl-matrix";
 import WorkoutList from "../components/WorkoutList";
+import { VictoryChart, VictoryBar, VictoryAxis, VictoryPie } from "victory-native";
 
 import { generatePathShape, index_in_path } from "../utils/track";
 
@@ -32,11 +33,68 @@ const Display = () => {
     `;
 
     const fragmentShader = `
+
+    uniform vec2 size;
+
+    varying vec2 fragCoord;
+
+    float roundSquare(vec2 at)
+    {
+        float size = 0.2;
+        float cornerRadius = 0.01;
+        
+        at = abs(at);
+
+        if ((at.x > size) || (at.y > size))
+        {
+            return abs( length(max(at - size, vec2(0))) - cornerRadius );
+        }
+        else
+        {
+            vec2 delta = abs(at - size);
+            return ((delta.x * delta.y) / (delta.x + delta.y)) + cornerRadius;
+            // return min(delta.x, delta.y) + cornerRadius;
+        }
+    }
+
+    // Narkowicz 2015, "ACES Filmic Tone Mapping Curve"
+    vec3 Tonemap_ACES(vec3 x)
+    {
+        const float a = 2.51;
+        const float b = 0.03;
+        const float c = 2.43;
+        const float d = 0.59;
+        const float e = 0.14;
+        return (x * (a * x + b)) / (x * (c * x + d) + e);
+    }
+
     void main()
     {
-        gl_FragColor = vec4(1.0, 0.5, 0.1, 1.0);
+        float intensity = 1.3;
+        float radius = 0.005;
+
+        vec2 uv = fragCoord;
+        float aspect = size.x/size.y;
+
+        vec2 centre = vec2(0.5, 0.5);
+        vec2 at = uv - centre;
+        at.y /= aspect;
+        
+        float dist = roundSquare(at);
+        float glow = pow(radius/dist, intensity);
+        vec3 col = glow * vec3(0.9, 0.1, 0.1);
+        
+        col = Tonemap_ACES(col);
+
+        gl_FragColor = vec4(col, 1.0);
     }
     `;
+
+    const { size } = useThree();
+
+    const uniforms = {
+        size: { value: [size.width, size.height] },
+    };
 
     return (
         <>
@@ -45,7 +103,7 @@ const Display = () => {
                     <bufferAttribute />
                 </bufferGeometry>
 
-                <shaderMaterial fragmentShader={fragmentShader} vertexShader={vertexShader} />
+                <shaderMaterial fragmentShader={fragmentShader} vertexShader={vertexShader} uniforms={uniforms} />
             </mesh>
         </>
     );
@@ -128,6 +186,90 @@ const OrbitTarget = ({ measure }) => {
     );
 };
 
+const BarChart = () => {
+    //
+    //  TODO: handle empty values for days where no value is given?
+    //
+
+    const [data, setData] = useState([
+        { id: 1, date: new Date(2024, 2, 20), value: 100 },
+        { id: 2, date: new Date(2024, 2, 21), value: 200 },
+        { id: 3, date: new Date(2024, 2, 22), value: 300 },
+        { id: 4, date: new Date(2024, 2, 23), value: 400 },
+        { id: 5, date: new Date(2024, 2, 24), value: 500 },
+        { id: 6, date: new Date(2024, 2, 25), value: 600 },
+    ]);
+
+    const width = Dimensions.get("window").width;
+
+    const days = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
+    const tickValues = data.map((item) => days[item.date.getDay()]);
+
+    return (
+        <View className="flex items-center">
+            <VictoryChart width={Math.min(400, 0.9 * width)}>
+                <VictoryBar data={data} x="id" y="value" barRatio={0.8} style={{ data: { fill: "#3679F3" } }} />
+                <VictoryAxis
+                    style={{
+                        axis: {
+                            display: "none",
+                        },
+                        tickLabels: {
+                            fill: "white",
+                        },
+                    }}
+                    tickValues={tickValues}
+                />
+            </VictoryChart>
+        </View>
+    );
+};
+
+const PieChart = () => {
+    const [data, setData] = useState([
+        { id: 1, type: "Run", count: 15 },
+        { id: 2, type: "Gym", count: 5 },
+        { id: 3, type: "Stretch", count: 0 },
+        { id: 4, type: "Walk", count: 10 },
+    ]);
+
+    const width = Dimensions.get("window").width;
+
+    const values = data.filter((v) => v.count).map((v) => ({ x: v.type, y: v.count }));
+    let maxValue = 0;
+    for (let i = 0; i < values.length; i++) {
+        maxValue = Math.max(maxValue, values[i].y);
+    }
+
+    const scale = ["#181525", "#251c45", "#351e7c", "#4c12c8", "#7c1bff", "#b853ff"];
+    const numColors = scale.length;
+    const colorScale = [];
+
+    for (let i = 0; i < values.length; i++) {
+        const v = values[i].y;
+        const idx = Math.min(Math.floor((v / maxValue) * numColors), numColors - 1);
+        colorScale.push(scale[idx]);
+    }
+
+    return (
+        <View className="flex w-full">
+            <View className="flex items-center">
+                <VictoryPie
+                    data={values}
+                    width={Math.min(400, 0.8 * width)}
+                    height={Math.min(400, 0.6 * width)}
+                    innerRadius={Math.min(125, 0.25 * width)}
+                    radius={Math.min(100, 0.2 * width)}
+                    padAngle={5}
+                    labelRadius={Math.min(133, 0.3 * width)}
+                    colorScale={colorScale}
+                    style={{ labels: { fill: "white" } }}
+                />
+            </View>
+        </View>
+    );
+};
+
 export default function HomeScreen() {
     const targetRef = useRef();
     const containerRef = useRef();
@@ -149,25 +291,32 @@ export default function HomeScreen() {
 
     return (
         <>
-            <WorkoutList />
+            <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+                <View className="h-full pt-4" ref={containerRef}>
+                    <PieChart />
 
-            <View className="h-full pt-4" ref={containerRef}>
-                <View className="flex grow gap-2 items-center justify-evenly">
-                    <View className="relative w-32 h-16 bg-[#d75151] rounded-xl" ref={targetRef}>
-                        <View className="absolute left-0 top-0 right-0 bottom-0"></View>
+                    <BarChart />
+
+                    <WorkoutList />
+
+                    <View className="flex grow gap-2 items-center justify-evenly">
+                        <View className="relative w-32 h-16 bg-[#d75151] rounded-xl" ref={targetRef}>
+                            <View className="absolute left-0 top-0 right-0 bottom-0"></View>
+                        </View>
+                        <View className="w-16 h-16 bg-[#abe267]" />
+                        <View className="w-16 h-16 bg-[#25b1c7]" />
                     </View>
-                    <View className="w-16 h-16 bg-[#abe267]" />
-                    <View className="w-16 h-16 bg-[#25b1c7]" />
+                    <View className="absolute left-0 top-0 right-0 bottom-0 -z-10">
+                        <Canvas>
+                            <Display />
+                            {/* <LetterN /> */}
+                        </Canvas>
+                    </View>
+                    <View className="absolute left-0 top-0 right-0 bottom-0 z-10">
+                        {/* <Canvas camera={{ position: [0, 0, 1] }}>{measure && <OrbitTarget measure={measure} />}</Canvas> */}
+                    </View>
                 </View>
-                <View className="absolute left-0 top-0 right-0 bottom-0 -z-10">
-                    {/* <Canvas>
-                        <LetterN />
-                    </Canvas> */}
-                </View>
-                <View className="absolute left-0 top-0 right-0 bottom-0 z-10">
-                    {/* <Canvas camera={{ position: [0, 0, 1] }}>{measure && <OrbitTarget measure={measure} />}</Canvas> */}
-                </View>
-            </View>
+            </ScrollView>
         </>
     );
 }

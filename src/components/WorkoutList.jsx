@@ -42,11 +42,14 @@ export default function WorkoutList() {
 
     return (
         <View>
-            <FlatList
+            {/* <FlatList
                 data={workouts}
                 renderItem={(v) => <WorkoutCard workout={v.item} />}
                 keyExtractor={(item) => item.workout_id}
-            />
+            /> */}
+            {workouts.map((workout) => {
+                return <WorkoutCard key={workout.workout_id} workout={workout} />;
+            })}
         </View>
     );
 }
