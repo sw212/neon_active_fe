@@ -11,6 +11,7 @@ import HomeScreen from "./src/screens/HomeScreen";
 import SignUpScreen from "./src/screens/SignUpScreen";
 import { registerRootComponent } from "expo";
 import NewWorkoutScreen from "./src/screens/newWorkoutScreen";
+import TeamsScreen from "./src/screens/TeamsScreen";
 
 
 const Tab = createBottomTabNavigator();
@@ -55,7 +56,10 @@ export default function App() {
               backgroundColor: '#e7305b'
            }, tabBarIcon: makeIconRender("run")}} />
                 <Tab.Screen name="New Workout" component={NewWorkoutScreen} options={{ headerTintColor: "red", tabBarIcon: makeIconRender("run") }} />
-
+                <Tab.Screen name="Teams" component={TeamsScreen} options={{ headerStyle: {
+                    backgroundColor:'#e7305b'
+                },
+                 tabBarIcon: makeIconRender("account-group") }} />
             </Tab.Navigator>
         </NavigationContainer>
     );
