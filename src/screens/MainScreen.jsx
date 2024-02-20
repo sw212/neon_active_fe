@@ -26,11 +26,14 @@ export default function MainScreen({ navigation }) {
                         <Text className="items-center space-x-4 text-white">Current Rank : </Text>
                         <View className="border-white">
                             <Text className="items-end space-x-4 text-white">Beginner</Text>
-                            </View>
+                        </View>
                     </View>
                     <View className="flex box-border border-[#ffffff] border-2 p-3 w-full h-{1-2}">
                         <Text className="items-center text-white self-start text-2xl top-3">Current Badge: </Text>
-                        <Image source={require("../img/bronze-coin.jpg")} className="border-4 border-white self-end p-2 w-{3/4} h-{3/4}" />
+                        <Image
+                            source={require("../img/bronze-coin.jpg")}
+                            className="border-4 border-white self-end p-2 w-{3/4} h-{3/4}"
+                        />
                     </View>
                 </View>
                 <View className="items-center rounded-md p-2">

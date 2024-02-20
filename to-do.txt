@@ -1,0 +1,4 @@
+to do
+
+add image to list (why isn't it working)
+add styles to search bar 
