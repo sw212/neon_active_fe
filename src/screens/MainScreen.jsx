@@ -9,12 +9,12 @@ export default function MainScreen({ navigation }) {
                 border-4 bg-[#232323] m-4 text-white"
             >
                 <View>
-                    <Text className="text-center text-white">Home</Text>
+                    <Text className="text-center text-white text-2xl">Home</Text>
                 </View>
-                <View className="m-4 p-3 items-center border-2 text-white border-[#f47171]">
-                    <Text className="text-white">Status Bar</Text>
+                <View className="m-4 p-3 items-center border-2  border-[#f47171]">
+                    <Text className="text-white text-xl">Status Bar</Text>
                     <View>
-                        <View className="m-4 p-3 border-2 border-white">
+                        <View className="m-4 p-3 ">
                             {/* add svg to give circle at the end */}
                             <Progress.Bar progress={0.1} height={20} width={400} color={"red"} />
                             <Text className="self-end right-5 text-white">600/1000</Text>

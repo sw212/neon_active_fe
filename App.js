@@ -45,10 +45,16 @@ export default function App() {
             }}
         >
             <Tab.Navigator>
-                <Tab.Screen name="Home" component={HomeScreen} options={{ tabBarIcon: makeIconRender("home") }} />
-                <Tab.Screen name="signup" component={SignUpScreen} options={{ tabBarIcon: makeIconRender("cog") }} />
-                <Tab.Screen name="Main" component={MainScreen} options={{ tabBarIcon: makeIconRender("run") }} />
-                <Tab.Screen name="New Workout" component={NewWorkoutScreen} options={{ tabBarIcon: makeIconRender("run") }} />
+                <Tab.Screen name="Home" component={HomeScreen} options={{ tabBarIcon: makeIconRender("home"), headerStyle: {
+              backgroundColor: '#e7305b'
+           }} } />
+                <Tab.Screen name="signup" component={SignUpScreen} options={{ tabBarIcon: makeIconRender("cog"), headerStyle: {
+              backgroundColor: '#e7305b'
+           }}} />
+                <Tab.Screen name="Main" component={MainScreen} options={{headerStyle: {
+              backgroundColor: '#e7305b'
+           }, tabBarIcon: makeIconRender("run")}} />
+                <Tab.Screen name="New Workout" component={NewWorkoutScreen} options={{ headerTintColor: "red", tabBarIcon: makeIconRender("run") }} />
 
             </Tab.Navigator>
         </NavigationContainer>
