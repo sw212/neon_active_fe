@@ -19,7 +19,7 @@ function Main() {
     const insets = useSafeAreaInsets();
 
     return (
-        <View className="flex-1 bg-text">
+        <View className="flex-1">
             <Tab.Navigator
                 screenOptions={{ headerShown: false }}
                 sceneContainerStyle={{
@@ -49,6 +49,7 @@ export default function App() {
                 <Tab.Screen name="signup" component={SignUpScreen} options={{ tabBarIcon: makeIconRender("cog") }} />
                 <Tab.Screen name="Main" component={MainScreen} options={{ tabBarIcon: makeIconRender("run") }} />
                 <Tab.Screen name="New Workout" component={NewWorkoutScreen} options={{ tabBarIcon: makeIconRender("run") }} />
+
             </Tab.Navigator>
         </NavigationContainer>
     );

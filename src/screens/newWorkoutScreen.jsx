@@ -1,5 +1,5 @@
 import { ScrollView, View, Text } from "react-native";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Picker } from "@react-native-picker/picker";
 import { TextInput } from "react-native";
 import { Pressable } from "react-native";
@@ -7,21 +7,14 @@ import { Pressable } from "react-native";
 export default function NewWorkoutScreen() {
     const [duration, setDuration] = useState(0);
     const [exerciseType, setExerciseType] = useState("Please Select");
-    const [exercisePoints, setExercisePoints] = useState(0);
 
-    const calculatePoints = (Chosenduration, Chosenexercise) => {
-        if (Chosenexercise !== "Please Select") {
-            if (Chosenexercise === "Run" || Chosenexercise === "Gym") {
-                setExercisePoints(Chosenduration * 2);
-            } else {
-                setExercisePoints(Chosenduration);
-            }
-        }
-    };
+    let exercisePoints = 0;
 
-    useEffect(() => {
-        calculatePoints(duration, exerciseType);
-    }, [duration, exerciseType]);
+    if (exerciseType === "Run" || exerciseType === "Gym") {
+        exercisePoints = duration * 2;
+    } else {
+        exercisePoints = duration;
+    }
 
     return (
         <ScrollView>
@@ -33,9 +26,7 @@ export default function NewWorkoutScreen() {
                         <Picker
                             className="flex p-2 rounded-xl"
                             selectedValue={exerciseType}
-                            onChange={(currentExercise) => {
-                                setExerciseType(currentExercise.target.value);
-                            }}
+                            onValueChange={setExerciseType}
                         >
                             <Picker.Item label="Please Select" value="null" />
                             <Picker.Item label="Run" value="Run" />
@@ -49,7 +40,7 @@ export default function NewWorkoutScreen() {
                         <TextInput
                             className="flex p-2 m-2 rounded-xl bg-white"
                             selectedValue={duration}
-                            keyboardtype="numeric"
+                            keyboardType="numeric"
                             onChange={(e) => {
                                 setDuration(e.target.value);
                             }}
@@ -68,7 +59,7 @@ export default function NewWorkoutScreen() {
                                 <Pressable
                                     className="items-center rounded-full bg-black py-2 px-2 m-2 w-48"
                                     onPress={(e) => {
-                                        console.log(duration, exercisePoints, exerciseType);
+                                        console.info(duration, exercisePoints, exerciseType);
                                     }}
                                 >
                                     <Text className="text-white">Log Workout</Text>
