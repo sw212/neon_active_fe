@@ -157,12 +157,10 @@ export default function HomeScreen() {
                     <View className="w-16 h-16 bg-[#25b1c7]" />
                 </View>
                 <View className="absolute left-0 top-0 right-0 bottom-0 -z-10">
-                    <Canvas>
-                        <LetterN />
-                    </Canvas>
+                    <Canvas>{/* <LetterN /> */}</Canvas>
                 </View>
                 <View className="absolute left-0 top-0 right-0 bottom-0 z-10">
-                    <Canvas camera={{ position: [0, 0, 1] }}>{measure && <OrbitTarget measure={measure} />}</Canvas>
+                    {/* <Canvas camera={{ position: [0, 0, 1] }}>{measure && <OrbitTarget measure={measure} />}</Canvas> */}
                 </View>
             </View>
         </ScrollView>
