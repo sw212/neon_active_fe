@@ -5,6 +5,7 @@ import { Trail, Line } from "@react-three/drei/native";
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import * as THREE from "three";
 import { vec3 } from "gl-matrix";
+import WorkoutList from "../components/WorkoutList";
 
 import { generatePathShape, index_in_path } from "../utils/track";
 
@@ -148,7 +149,8 @@ export default function HomeScreen() {
 
     return (
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-            <View className="h-full pt-4 bg-[#161619]" ref={containerRef}>
+            <WorkoutList />
+            <View className="h-full pt-4" ref={containerRef}>
                 <View className="flex grow gap-2 items-center justify-evenly">
                     <View className="relative w-32 h-16 bg-[#d75151] rounded-xl" ref={targetRef}>
                         <View className="absolute left-0 top-0 right-0 bottom-0"></View>
@@ -157,12 +159,12 @@ export default function HomeScreen() {
                     <View className="w-16 h-16 bg-[#25b1c7]" />
                 </View>
                 <View className="absolute left-0 top-0 right-0 bottom-0 -z-10">
-                    <Canvas>
+                    {/* <Canvas>
                         <LetterN />
-                    </Canvas>
+                    </Canvas> */}
                 </View>
                 <View className="absolute left-0 top-0 right-0 bottom-0 z-10">
-                    <Canvas camera={{ position: [0, 0, 1] }}>{measure && <OrbitTarget measure={measure} />}</Canvas>
+                    {/* <Canvas camera={{ position: [0, 0, 1] }}>{measure && <OrbitTarget measure={measure} />}</Canvas> */}
                 </View>
             </View>
         </ScrollView>
