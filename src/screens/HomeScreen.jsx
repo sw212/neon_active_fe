@@ -148,8 +148,9 @@ export default function HomeScreen() {
     }, []);
 
     return (
-        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+        <>
             <WorkoutList />
+
             <View className="h-full pt-4" ref={containerRef}>
                 <View className="flex grow gap-2 items-center justify-evenly">
                     <View className="relative w-32 h-16 bg-[#d75151] rounded-xl" ref={targetRef}>
@@ -167,7 +168,7 @@ export default function HomeScreen() {
                     {/* <Canvas camera={{ position: [0, 0, 1] }}>{measure && <OrbitTarget measure={measure} />}</Canvas> */}
                 </View>
             </View>
-        </ScrollView>
+        </>
     );
 }
 
