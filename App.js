@@ -2,6 +2,7 @@ import { Text, View, ScrollView } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { SafeAreaProvider, useSafeAreaInsets } from "react-native-safe-area-context";
+import MainScreen from "./src/screens/MainScreen";
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
@@ -10,6 +11,7 @@ import HomeScreen from "./src/screens/HomeScreen";
 import SignUpScreen from "./src/screens/SignUpScreen";
 import { registerRootComponent } from "expo";
 import NewWorkoutScreen from "./src/screens/newWorkoutScreen";
+
 
 const Tab = createBottomTabNavigator();
 
@@ -45,11 +47,9 @@ export default function App() {
             <Tab.Navigator>
                 <Tab.Screen name="Home" component={HomeScreen} options={{ tabBarIcon: makeIconRender("home") }} />
                 <Tab.Screen name="signup" component={SignUpScreen} options={{ tabBarIcon: makeIconRender("cog") }} />
-                <Tab.Screen
-                    name="New Workout"
-                    component={NewWorkoutScreen}
-                    options={{ tabBarIcon: makeIconRender("run") }}
-                />
+                <Tab.Screen name="Main" component={MainScreen} options={{ tabBarIcon: makeIconRender("run") }} />
+                <Tab.Screen name="New Workout" component={NewWorkoutScreen} options={{ tabBarIcon: makeIconRender("run") }} />
+
             </Tab.Navigator>
         </NavigationContainer>
     );
