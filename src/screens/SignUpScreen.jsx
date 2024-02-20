@@ -13,8 +13,9 @@ export default function SignUp() {
 
     return (
         <View className="flex-1 items-center justify-center">
+            <Text className="text-3xl text-white">NEON : Active</Text>
             <TextInput
-                className="border-2 p-2 m-2 rounded-xl"
+                className="border-2 p-2 m-2 rounded-xl text-white"
                 onChangeText={(e) => {
                     setUsername(e);
                 }}
@@ -24,7 +25,7 @@ export default function SignUp() {
             />
             <View className="flex-row">
                 <TextInput
-                    className="border-2 p-2 m-2 rounded-xl"
+                    className="border-2 p-2 m-2 rounded-xl text-white"
                     value={password}
                     onChangeText={(e) => {
                         setPassword(e);
