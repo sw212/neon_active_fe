@@ -72,7 +72,7 @@ function Main() {
                     name="New Workout"
                     component={NewWorkoutScreen}
                     options={{
-                        tabBarIcon: makeIconRender("run"),
+                        tabBarIcon: makeIconRender("plus-box-outline"),
                     }}
                 />
                 <Tab.Screen
