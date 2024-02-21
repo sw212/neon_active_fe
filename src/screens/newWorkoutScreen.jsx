@@ -31,10 +31,12 @@ export default function NewWorkoutScreen() {
         }
     };
 
+    console.log(duration);
+
     return (
-        <>
-            <View className="flex items-center py-4 gap-y-4">
-                <Text className="text-white text-3xl"> Post a New Workout!</Text>
+        <View className="flex flex-1 items-center pt-4">
+            <Text className="text-white text-3xl "> Post a New Workout!</Text>
+            <View className="flex py-4 gap-y-4 grow">
                 <View>
                     <Text className="py-1 text-white text-xl">What Exercise Did You Do?</Text>
                     <View className="p-1 border border-white rounded-xl ">
@@ -64,10 +66,11 @@ export default function NewWorkoutScreen() {
                     />
                 </View>
             </View>
-            <View>
-                {duration && exerciseType ? (
+
+            <View className="py-2 basis-1/3">
+                {duration && exerciseType && (
                     <>
-                        <View className="items-center m-2">
+                        <View className="items-center py-1">
                             <Text className="text-white">
                                 You Will earn {exercisePoints} points for logging this activity
                             </Text>
@@ -83,8 +86,8 @@ export default function NewWorkoutScreen() {
                             </Pressable>
                         </View>
                     </>
-                ) : null}
+                )}
             </View>
-        </>
+        </View>
     );
 }
