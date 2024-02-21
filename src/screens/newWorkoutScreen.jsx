@@ -31,8 +31,6 @@ export default function NewWorkoutScreen() {
         }
     };
 
-    console.log(duration);
-
     return (
         <View className="flex flex-1 items-center pt-4">
             <Text className="text-white text-3xl "> Post a New Workout!</Text>
