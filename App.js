@@ -40,6 +40,11 @@ function Main() {
                     headerStyle: {
                         backgroundColor: headerBG,
                     },
+                    tabBarStyle: {
+                        backgroundColor: headerBG,
+                    },
+                    tabBarActiveTintColor: "white",
+                    tabBarInactiveTintColor: "#254844",
                 }}
             >
                 <Tab.Screen
@@ -101,6 +106,6 @@ export default function App() {
     );
 }
 
-function makeIconRender(name) {
-    return ({ color, size }) => <MaterialCommunityIcons name={name} color={color} size={size} />;
+function makeIconRender(name, size = 24) {
+    return ({ color }) => <MaterialCommunityIcons name={name} color={color} size={size} />;
 }
