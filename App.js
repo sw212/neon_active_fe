@@ -35,15 +35,18 @@ function Main() {
                 paddingRight: insets.right,
             }}
         >
-            <Tab.Navigator>
+            <Tab.Navigator
+                screenOptions={{
+                    headerStyle: {
+                        backgroundColor: headerBG,
+                    },
+                }}
+            >
                 <Tab.Screen
                     name="Home"
                     component={HomeScreen}
                     options={{
                         tabBarIcon: makeIconRender("home"),
-                        headerStyle: {
-                            backgroundColor: headerBG,
-                        },
                     }}
                 />
                 <Tab.Screen
@@ -51,18 +54,12 @@ function Main() {
                     component={SignUpScreen}
                     options={{
                         tabBarIcon: makeIconRender("cog"),
-                        headerStyle: {
-                            backgroundColor: headerBG,
-                        },
                     }}
                 />
                 <Tab.Screen
                     name="Main"
                     component={MainScreen}
                     options={{
-                        headerStyle: {
-                            backgroundColor: headerBG,
-                        },
                         tabBarIcon: makeIconRender("run"),
                     }}
                 />
@@ -70,9 +67,6 @@ function Main() {
                     name="New Workout"
                     component={NewWorkoutScreen}
                     options={{
-                        headerStyle: {
-                            backgroundColor: headerBG,
-                        },
                         tabBarIcon: makeIconRender("run"),
                     }}
                 />
@@ -80,9 +74,6 @@ function Main() {
                     name="Teams"
                     component={TeamsScreen}
                     options={{
-                        headerStyle: {
-                            backgroundColor: headerBG,
-                        },
                         tabBarIcon: makeIconRender("account-group"),
                     }}
                 />
