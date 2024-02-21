@@ -1,35 +1,78 @@
 import { Text, View, ScrollView } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, useTheme } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { SafeAreaProvider, useSafeAreaInsets } from "react-native-safe-area-context";
-import MainScreen from "./src/screens/MainScreen";
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-import "./global.css";
+import MainScreen from "./src/screens/MainScreen";
 import HomeScreen from "./src/screens/HomeScreen";
 import SignUpScreen from "./src/screens/SignUpScreen";
-import { registerRootComponent } from "expo";
 import NewWorkoutScreen from "./src/screens/newWorkoutScreen";
 import TeamsScreen from "./src/screens/TeamsScreen";
 
+import "./global.css";
 
 const Tab = createBottomTabNavigator();
 
 function Main() {
-    const insets = useSafeAreaInsets();
+    const { colors } = useTheme();
+
+    const headerBG = colors.headerBackground;
 
     return (
         <View className="flex-1">
-            <Tab.Navigator
-                screenOptions={{ headerShown: false }}
-                sceneContainerStyle={{
-                    backgroundColor: "rgb(42, 42, 49)",
-                    paddingTop: insets.top,
-                }}
-            >
-                <Tab.Screen name="home" component={HomeScreen} options={{ tabBarIcon: makeIconRender("home") }} />
-                <Tab.Screen name="signup" component={SignUpScreen} options={{ tabBarIcon: makeIconRender("cog") }} />
+            <Tab.Navigator>
+                <Tab.Screen
+                    name="Home"
+                    component={HomeScreen}
+                    options={{
+                        tabBarIcon: makeIconRender("home"),
+                        headerStyle: {
+                            backgroundColor: headerBG,
+                        },
+                    }}
+                />
+                <Tab.Screen
+                    name="signup"
+                    component={SignUpScreen}
+                    options={{
+                        tabBarIcon: makeIconRender("cog"),
+                        headerStyle: {
+                            backgroundColor: headerBG,
+                        },
+                    }}
+                />
+                <Tab.Screen
+                    name="Main"
+                    component={MainScreen}
+                    options={{
+                        headerStyle: {
+                            backgroundColor: headerBG,
+                        },
+                        tabBarIcon: makeIconRender("run"),
+                    }}
+                />
+                <Tab.Screen
+                    name="New Workout"
+                    component={NewWorkoutScreen}
+                    options={{
+                        headerStyle: {
+                            backgroundColor: headerBG,
+                        },
+                        tabBarIcon: makeIconRender("run"),
+                    }}
+                />
+                <Tab.Screen
+                    name="Teams"
+                    component={TeamsScreen}
+                    options={{
+                        headerStyle: {
+                            backgroundColor: headerBG,
+                        },
+                        tabBarIcon: makeIconRender("account-group"),
+                    }}
+                />
             </Tab.Navigator>
         </View>
     );
@@ -41,26 +84,13 @@ export default function App() {
             theme={{
                 dark: true,
                 colors: {
-                    background: "#161619",
+                    background: "rgb(22, 22, 24)",
+                    text: "rgb(255, 255, 255)",
+                    headerBackground: "rgb(231, 48, 91)",
                 },
             }}
         >
-            <Tab.Navigator>
-                <Tab.Screen name="Home" component={HomeScreen} options={{ tabBarIcon: makeIconRender("home"), headerStyle: {
-              backgroundColor: '#e7305b'
-           }} } />
-                <Tab.Screen name="signup" component={SignUpScreen} options={{ tabBarIcon: makeIconRender("cog"), headerStyle: {
-              backgroundColor: '#e7305b'
-           }}} />
-                <Tab.Screen name="Main" component={MainScreen} options={{headerStyle: {
-              backgroundColor: '#e7305b'
-           }, tabBarIcon: makeIconRender("run")}} />
-                <Tab.Screen name="New Workout" component={NewWorkoutScreen} options={{ headerTintColor: "red", tabBarIcon: makeIconRender("run") }} />
-                <Tab.Screen name="Teams" component={TeamsScreen} options={{ headerStyle: {
-                    backgroundColor:'#e7305b'
-                },
-                 tabBarIcon: makeIconRender("account-group") }} />
-            </Tab.Navigator>
+            <Main />
         </NavigationContainer>
     );
 }

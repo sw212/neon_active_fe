@@ -1,10 +1,11 @@
-import { ScrollView, View, Text } from "react-native";
+import { ScrollView, View, Text, TextInput, Pressable } from "react-native";
+import { useTheme } from "@react-navigation/native";
 import { useState } from "react";
 import { Picker } from "@react-native-picker/picker";
-import { TextInput } from "react-native";
-import { Pressable } from "react-native";
 
 export default function NewWorkoutScreen() {
+    const { colors } = useTheme();
+
     const [duration, setDuration] = useState(0);
     const [exerciseType, setExerciseType] = useState("Please Select");
 
@@ -19,24 +20,29 @@ export default function NewWorkoutScreen() {
     return (
         <ScrollView>
             <View className="grow flex flex-1 h-full">
-                <View className="flex grow gap-y-2 flex-1 justify-center items-center">
-                    <Text className="text-white text-2xl"> Post a New Workout!</Text>
+                <View className="flex grow gap-y-2 flex-1 items-center justify-evenly">
+                    <Text className="text-white text-3xl"> Post a New Workout!</Text>
                     <View name="type" className="m-6">
-                        <Text className="text-white">What Exercise Did You Do?</Text>
-                        <Picker
-                            className="flex p-2 rounded-xl"
-                            selectedValue={exerciseType}
-                            onValueChange={setExerciseType}
-                        >
-                            <Picker.Item label="Please Select" value="null" />
-                            <Picker.Item label="Run" value="Run" />
-                            <Picker.Item label="Gym" value="Gym" />
-                            <Picker.Item label="Walk" value="Walk" />
-                            <Picker.Item label="Stretch" value="Stretch" />
-                        </Picker>
+                        <Text className="text-white text-xl">What Exercise Did You Do?</Text>
+                        <View className="p-1 border border-white rounded-xl bg-transparent">
+                            <Picker
+                                style={{
+                                    color: "white",
+                                    backgroundColor: colors.background,
+                                }}
+                                selectedValue={exerciseType}
+                                onValueChange={setExerciseType}
+                            >
+                                <Picker.Item label="Please Select" value="null" />
+                                <Picker.Item label="Run" value="Run" />
+                                <Picker.Item label="Gym" value="Gym" />
+                                <Picker.Item label="Walk" value="Walk" />
+                                <Picker.Item label="Stretch" value="Stretch" />
+                            </Picker>
+                        </View>
                     </View>
                     <View name="duration" className="m-6">
-                        <Text className="text-white">How Long Did You Exercise For?</Text>
+                        <Text className="text-white text-xl">How Long Did You Exercise For?</Text>
                         <TextInput
                             className="flex p-2 m-2 rounded-xl bg-white"
                             selectedValue={duration}
