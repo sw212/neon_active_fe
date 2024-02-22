@@ -1,11 +1,8 @@
-import { ScrollView } from "react-native"
+import {ScrollView } from "react-native"
 import SearchForTeamContainer from "../components/SearchForTeamsContainer"
-import MyTeamsList from "../components/MyTeamsList"
+import MyTeamsList from "../components/MyTeamsList"  
 
-  
-export default function TeamsListScreen ({navigation}){
-
-    
+export default function TeamsScreen ({navigation}){
     return (
         <ScrollView>
             <SearchForTeamContainer/>

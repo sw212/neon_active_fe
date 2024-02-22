@@ -39,7 +39,8 @@ export default function MyTeamsList({navigation, setChosenTeam, chosenTeam}) {
             </View>
             <FlatList
             data={teams}
-                renderItem={(v) => <TeamCard teamInfo={v.item} setChosenTeam={setChosenTeam} chosenTeam={chosenTeam} navigation={navigation}/>}
+                renderItem={(v) => <TeamCard teamInfo={v.item} />}
+                keyExtractor={(item) => item.team_id}
             />
         </View>
     );
