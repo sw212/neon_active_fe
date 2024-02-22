@@ -1,6 +1,6 @@
 import { vec3 } from "gl-matrix";
 
-export const generatePathShape = (w, h, n) => {
+export const generatePathShape = (w, h, n, p=0.3) => {
     const vertices: Array<vec3> = [];
 
     for (let i = 0; i < n; i++) {
@@ -8,8 +8,8 @@ export const generatePathShape = (w, h, n) => {
 
         const c = Math.cos(theta);
         const s = Math.sin(theta);
-        const x = w * Math.sign(c) * Math.pow(Math.abs(c), 0.3);
-        const y = h * Math.sign(s) * Math.pow(Math.abs(s), 0.3);
+        const x = w * Math.sign(c) * Math.pow(Math.abs(c), p);
+        const y = h * Math.sign(s) * Math.pow(Math.abs(s), p);
 
         vertices.push([x, y, 0]);
     }

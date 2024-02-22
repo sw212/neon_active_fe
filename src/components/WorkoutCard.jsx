@@ -15,6 +15,14 @@ export default function WorkoutCard({ workout }) {
         []
     );
 
+    const duration = workout.duration;
+    const hours = Math.floor(duration / 60);
+    const minutes = duration - hours * 60;
+
+    const hoursDisplay = hours ? `${hours}h` : "";
+    const minutesDisplay = `${hours ? " " : ""}${minutes}m`;
+    const durationDisplay = hoursDisplay + minutesDisplay;
+
     return (
         <View className="py-2">
             {/* <View className="min-w-[75%] mx-auto py-2 px-4 border border-white rounded-xl" /> */}
@@ -40,7 +48,7 @@ export default function WorkoutCard({ workout }) {
                         <Text className="text-white">{workout.type}</Text>
                         <Text className="text-white">{workout.date.toDateString()}</Text>
                     </View>
-                    <Text className="text-white">{workout.duration}m</Text>
+                    <Text className="text-white">{durationDisplay}</Text>
                 </View>
 
                 <View>{icon[workout.type]}</View>
