@@ -1,4 +1,4 @@
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, Pressable } from "react-native";
 export default function TeamCard({ teamInfo }) {
     const { team_name, team_img } = teamInfo;
 
@@ -9,6 +9,9 @@ export default function TeamCard({ teamInfo }) {
             <View className="flex-row pb-2 justify-between">
                 <View className="flex-row pr-8 gap-x-4">
                     <Text className="text-white text-2xl">Team Name - {team_name}</Text>
+                    <Pressable>
+                        <Text class> See All Members </Text>
+                    </Pressable>
                 </View>
                 <View className="w-32 h-52 border-white">
                     {team_img ? (

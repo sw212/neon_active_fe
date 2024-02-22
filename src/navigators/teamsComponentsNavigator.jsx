@@ -1,14 +1,26 @@
-import {createStackNavigator} from '@react-navigation/stack'
-import TeamsScreen from '../screens/TeamsScreen'
-import TeamsMembersScreen from '../screens/TeamMembersScreen'
-const Stack = createStackNavigator()
+import { createStackNavigator } from '@react-navigation/stack';
+import TeamsListScreen from '../screens/TeamsListScreen';
+import MembersForThisTeamScreen from '../screens/MembersForThisTeamScreen';
+const Stack = createStackNavigator();
+import {useIsFocused} from '@react-navigation/native';
+import { useEffect, useState } from 'react';
 
-export default function TeamsComponentNavigator (){ 
-    
+export default function TeamsNavigator ({navigation}) {
+
+    const [chosenTeam, setChosenTeam] = useState("");
+    const isFocused = useIsFocused()
+
+      useEffect(() => {
+        if (isFocused) {
+          navigation.navigate('teamslist');
+        }
+      }, [isFocused, navigation]);
+      ;
+
     return (
-        <Stack.Navigator screenOptions={{headerShown:false}}>
-            <Stack.Screen name="Team Screen" component={TeamsScreen}/>
-            <Stack.Screen name="Team Members Screen" component={TeamsMembersScreen}/>
+        <Stack.Navigator screenOptions={{headerShown:false}} initialRouteName='teamslist'>
+            <Stack.Screen name="teamslist" initialParams={{ setChosenTeam, chosenTeam }} component={TeamsListScreen} navigation={navigation}/>
+            <Stack.Screen name="membersForThisTeam"  initialParams={{chosenTeam}}component={MembersForThisTeamScreen}/>
         </Stack.Navigator>
     )
 }

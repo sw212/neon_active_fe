@@ -3,14 +3,13 @@ import SearchForTeamContainer from "../components/SearchForTeamsContainer"
 import MyTeamsList from "../components/MyTeamsList"
 
   
-export default function TeamsListScreen ({navigation, route}){
+export default function TeamsListScreen ({navigation}){
 
-    const { setChosenTeam, chosenTeam } = route.params;
     
     return (
         <ScrollView>
             <SearchForTeamContainer/>
-            <MyTeamsList setChosenTeam={setChosenTeam} chosenTeam={chosenTeam} navigation={navigation}/>
+            <MyTeamsList navigation={navigation}/>
         </ScrollView>
     )
 }
