@@ -2,6 +2,8 @@ import { Text, View, StyleSheet, SafeAreaView, TextInput, Pressable } from "reac
 import { useState } from "react";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
+import NeonBackground from "../components/NeonBackground";
+
 export default function SignUp() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -47,6 +49,8 @@ export default function SignUp() {
                 {/* user info will be verified using supabase onPress */}
                 <Text className="text-white">Log In</Text>
             </Pressable>
+
+            <NeonBackground />
         </View>
     );
 }

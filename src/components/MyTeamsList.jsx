@@ -4,7 +4,7 @@ import TeamCard from "./TeamCard";
 
 
 
-export default function MyTeamsList({navigation}) {
+export default function MyTeamsList({navigation, setChosenTeam, chosenTeam}) {
 
     const [teams, setTeams] = useState([
 
@@ -39,7 +39,8 @@ export default function MyTeamsList({navigation}) {
             </View>
             <FlatList
             data={teams}
-                renderItem={(v) => <TeamCard teamInfo={v.item} navigation={navigation} />}
+                renderItem={(v) => <TeamCard teamInfo={v.item} />}
+                keyExtractor={(item) => item.team_id}
             />
         </View>
     );
