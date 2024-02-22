@@ -22,19 +22,19 @@ export default function WorkoutList() {
             workout_id: 2,
             type: "Gym",
             duration: 20,
-            date: new Date("2024-02-20"),
+            date: new Date("2024-02-21"),
         },
         {
             workout_id: 3,
             type: "Walk",
-            duration: 30,
-            date: new Date("2024-02-20"),
+            duration: 60,
+            date: new Date("2024-02-22"),
         },
         {
             workout_id: 4,
             type: "Stretch",
-            duration: 40,
-            date: new Date("2024-02-20"),
+            duration: 65,
+            date: new Date("2024-02-23"),
         },
     ]);
 
@@ -42,11 +42,6 @@ export default function WorkoutList() {
 
     return (
         <View>
-            {/* <FlatList
-                data={workouts}
-                renderItem={(v) => <WorkoutCard workout={v.item} />}
-                keyExtractor={(item) => item.workout_id}
-            /> */}
             {workouts.map((workout) => {
                 return <WorkoutCard key={workout.workout_id} workout={workout} />;
             })}
