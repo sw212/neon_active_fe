@@ -13,9 +13,10 @@ import MainScreen from "./src/screens/MainScreen";
 import HomeScreen from "./src/screens/HomeScreen";
 import SignUpScreen from "./src/screens/SignUpScreen";
 import NewWorkoutScreen from "./src/screens/newWorkoutScreen";
-import TeamsScreen from "./src/screens/TeamsScreen";
+import TeamsScreen from "./src/screens/TeamsListScreen";
 
 import "./global.css";
+import TeamsNavigator from "./src/stacknav/teamsNavigator";
 
 const Tab = createBottomTabNavigator();
 
@@ -77,7 +78,7 @@ function Main() {
                 />
                 <Tab.Screen
                     name="Teams"
-                    component={TeamsScreen}
+                    component={TeamsNavigator}
                     options={{
                         tabBarIcon: makeIconRender("account-group"),
                     }}
