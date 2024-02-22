@@ -49,7 +49,6 @@ export default function SignUp() {
                 {/* user info will be verified using supabase onPress */}
                 <Text className="text-white">Log In</Text>
             </Pressable>
-
             <NeonBackground />
         </View>
     );
