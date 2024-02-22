@@ -121,12 +121,12 @@ export default function HomeScreen() {
                         </View>
                     </View>
 
-                    <NeonBackground />
-
                     <View className="absolute left-0 top-0 right-0 bottom-0 z-10 hidden">
                         {/* <Canvas camera={{ position: [0, 0, 1] }}>{measure && <OrbitTarget measure={measure} />}</Canvas> */}
                     </View>
                 </View>
+
+                <NeonBackground />
             </ScrollView>
         </>
     );
