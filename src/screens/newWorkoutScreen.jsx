@@ -6,7 +6,7 @@ import { Picker } from "@react-native-picker/picker";
 export default function NewWorkoutScreen() {
     const { colors } = useTheme();
 
-    const [duration, setDuration] = useState();
+    const [duration, setDuration] = useState(0);
     const [exerciseType, setExerciseType] = useState();
 
     let exercisePoints = 0;
@@ -27,9 +27,11 @@ export default function NewWorkoutScreen() {
         if (!isNaN(text) && !isNaN(parseFloat(text))) {
             setDuration(Number(text));
         } else {
-            setDuration();
+            setDuration(0);
         }
     };
+
+    const showAddWorkout = duration > 0 && exerciseType;
 
     return (
         <View className="flex flex-1 items-center pt-4">
@@ -66,7 +68,7 @@ export default function NewWorkoutScreen() {
             </View>
 
             <View className="py-2 basis-1/3">
-                {duration && exerciseType && (
+                {showAddWorkout && (
                     <>
                         <View className="items-center py-1">
                             <Text className="text-white">

@@ -38,8 +38,6 @@ export default function WorkoutList() {
         },
     ]);
 
-    console.info("TODO: allow duration to be formatted as either '90m' or '1h30m'");
-
     return (
         <View>
             {workouts.map((workout) => {
