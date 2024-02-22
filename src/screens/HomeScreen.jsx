@@ -1,9 +1,9 @@
 import { useState, useRef, useEffect } from "react";
-import { View, ScrollView } from "react-native";
+import { View, Text, ScrollView } from "react-native";
 
 import { vec3 } from "gl-matrix";
 import * as THREE from "three";
-import { useThree, useFrame } from "@react-three/fiber/native";
+import { useThree, useFrame, Canvas } from "@react-three/fiber/native";
 import { Trail } from "@react-three/drei/native";
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
 
@@ -15,6 +15,7 @@ import NeonGrid from "../components/shaders/NeonGrid";
 import PieChart from "../components/PieChart";
 import BarChart from "../components/BarChart";
 import PointsBar from "../components/shaders/PointsBar";
+import NeonBackground from "../components/NeonBackground";
 
 const OrbitTarget = ({ measure }) => {
     const { left, top, width, height } = measure;
@@ -96,37 +97,33 @@ export default function HomeScreen() {
                     {/* <View className="w-[700px] h-[500px] mx-auto">
                         <NeonGrid />
                     </View> */}
-                    <View className="w-[700px] h-[100px] mx-auto">
+                    <View className="py-4">
+                        <View className="flex-row">
+                            <Text className="text-white text-2xl ml-[10%]">Recent Workouts</Text>
+                        </View>
+                        <WorkoutList />
+                    </View>
+
+                    <View className="w-[700px] h-[100px] mx-auto hidden">
                         <PointsBar frac={0.4} />
                     </View>
-                    <View className="w-[700px] h-[200px] mx-auto">
-                        <NeonRoundedRect />
+
+                    <View className="py-4">
+                        <View className="flex-row">
+                            <Text className="text-white text-2xl ml-[10%]">Past 7 Days</Text>
+                        </View>
+                        <BarChart />
                     </View>
 
-                    <PieChart />
-
-                    <BarChart />
-
-                    <WorkoutList />
-
-                    <View className="flex grow gap-2 items-center justify-evenly">
+                    <View className="flex grow gap-2 items-center justify-evenly hidden">
                         <View className="relative w-32 h-16 bg-[#d75151] rounded-xl" ref={targetRef}>
                             <View className="absolute left-0 top-0 right-0 bottom-0"></View>
                         </View>
                     </View>
 
-                    <View className="absolute left-0 top-0 right-0 bottom-0 -z-10">
-                        <NeonRoundedRect
-                            startX={0.05}
-                            startY={0.5}
-                            width={0.95}
-                            length={0.9}
-                            intensity={0.5}
-                            radius={0.0001}
-                        />
-                    </View>
+                    <NeonBackground />
 
-                    <View className="absolute left-0 top-0 right-0 bottom-0 z-10">
+                    <View className="absolute left-0 top-0 right-0 bottom-0 z-10 hidden">
                         {/* <Canvas camera={{ position: [0, 0, 1] }}>{measure && <OrbitTarget measure={measure} />}</Canvas> */}
                     </View>
                 </View>
