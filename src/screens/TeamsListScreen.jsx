@@ -5,7 +5,7 @@ import MyTeamsList from "../components/MyTeamsList";
 export default function TeamsListScreen({ navigation }) {
     return (
         <ScrollView>
-            <SearchForTeamContainer />
+            <SearchForTeamContainer/>
             <MyTeamsList navigation={navigation} />
         </ScrollView>
     );

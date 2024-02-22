@@ -2,7 +2,7 @@ import { View, Text, FlatList } from "react-native";
 import { useState } from "react";
 import TeamCard from "./TeamCard";
 
-export default function MyTeamsList({ navigation, setChosenTeam, chosenTeam }) {
+export default function MyTeamsList({ navigation}) {
     const [teams, setTeams] = useState([
         {
             team_id: 1,
