@@ -1,10 +1,10 @@
 import { Canvas, useThree } from "@react-three/fiber/native";
 
 const Bar = ({ frac }) => {
-    const startX = 0.25;
+    const startX = 0.1;
     const startY = 0.5;
     const width = 0.5;
-    const length = 0.5;
+    const length = 0.8;
 
     const vertexShader = `
     varying vec2 fragCoord;
@@ -86,9 +86,8 @@ const Bar = ({ frac }) => {
         float corner = 0.08;
         float dist = roundSquare(at, size, corner);
         float intensity = 1.8;
-        float radius = 0.02;
+        float radius = 0.04;
         float glow = pow(radius/dist, intensity);
-        // glow = clamp(glow, 0.0, 1.0);
 
         vec3 col = glow * vec3(0.9, 0.1, 0.1);
         col = clamp(col, 0.0, 1.0);
