@@ -18,7 +18,6 @@ import NewWorkoutScreen from "./src/screens/newWorkoutScreen";
 import TeamsScreen from "./src/screens/TeamsListScreen";
 
 import "./global.css";
-import TeamsComponentNavigator from "./src/navigators/teamsComponentsNavigator";
 import TeamsNavigator from "./src/stacknav/teamsNavigator";
 
 const Tab = createBottomTabNavigator();
