@@ -1,3 +1,4 @@
+import { useRef, useMemo } from "react";
 import * as THREE from "three";
 import { Canvas, useFrame } from "@react-three/fiber/native";
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
@@ -33,7 +34,7 @@ const Grid = () => {
         vec4 modelPosition = modelMatrix * vec4(position, 1.0);
         vec4 viewPosition = viewMatrix * modelPosition;
         vec4 projectedPosition = projectionMatrix * viewPosition;
-      
+
         gl_Position = projectedPosition;
     }
     `;
@@ -52,7 +53,7 @@ const Grid = () => {
         float fc = fract(p);
         return mix(rand(fl), rand(fl + 1.0), fc);
     }
-        
+
     float noise2(vec2 n)
     {
         const vec2 d = vec2(0.0, 1.0);
@@ -60,21 +61,41 @@ const Grid = () => {
         return mix(mix(rand2(b), rand2(b + d.yx), f.x), mix(rand2(b + d.xy), rand2(b + d.yy), f.x), f.y);
     }
 
+    vec3 palette(in float t)
+    {
+        vec3 a = vec3(0.5, 0.5, 0.5);
+        vec3 b = vec3(0.5, 0.5, 0.5);
+        vec3 c = vec3(1.0, 1.0, 1.0);
+        vec3 d = vec3(0.263, 0.416, 0.557);
+
+        return a + b*cos( 6.28318*(c*t+d) );
+    }    
+
     void main()
     {      
         vec2 coord = UV;
         vec2 grid = abs(fract(coord - 0.5) - 0.5) / fwidth(coord);
         float line = min(grid.x, grid.y);
-      
-        float color = 1.0 - min(line, 1.0);
-        
-        color = pow(color, 1.0 / 2.2);
-        float divisor = 5.0;
-
-        // sin((UV.x - time) / divisor)
+        float factor = 1.0 - min(line, 1.0);
 
         vec2 v = UV.xy / 25.0;
-        gl_FragColor = vec4(color * noise(v.x - time), color * noise(v.y - time), 0.0, 1.0);
+        v = 2.0 * (v - 0.5);
+
+        v = 2.0 * fract(v) - 1.0;
+
+        float d = length(v);
+
+        vec3 col = palette(noise2(v) - time * 0.1);
+
+        d = sin(d * 8.0 + time);
+        d = abs(d);
+
+        d = exp(-d / 0.1 + 0.6);
+
+        col *= factor * d;        
+
+        col = pow(col, vec3(1.0 / 2.2));
+        gl_FragColor = vec4(col, 1.0);
     }
     `;
 
@@ -118,8 +139,10 @@ const Grid = () => {
 };
 
 export default function NeonGrid() {
+    const v = 1.0;
+
     return (
-        <Canvas camera={{ position: [0, 2, 3] }}>
+        <Canvas camera={{ position: [0, v * 2, v * 3] }}>
             <Grid />
         </Canvas>
     );

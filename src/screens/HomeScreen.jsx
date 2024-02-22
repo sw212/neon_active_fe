@@ -1,9 +1,9 @@
 import { useState, useRef, useEffect } from "react";
-import { View, ScrollView } from "react-native";
+import { View, Text, ScrollView } from "react-native";
 
 import { vec3 } from "gl-matrix";
 import * as THREE from "three";
-import { useThree, useFrame } from "@react-three/fiber/native";
+import { useThree, useFrame, Canvas } from "@react-three/fiber/native";
 import { Trail } from "@react-three/drei/native";
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
 
@@ -15,6 +15,7 @@ import NeonGrid from "../components/shaders/NeonGrid";
 import PieChart from "../components/PieChart";
 import BarChart from "../components/BarChart";
 import PointsBar from "../components/shaders/PointsBar";
+import NeonBackground from "../components/NeonBackground";
 
 const OrbitTarget = ({ measure }) => {
     const { left, top, width, height } = measure;
@@ -93,39 +94,36 @@ export default function HomeScreen() {
         <>
             <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
                 <View className="h-full pt-4" ref={containerRef}>
-                    <View className="w-[700px] h-[100px] mx-auto">
-                        <PointsBar frac={1.0} />
+                    {/* <View className="w-[700px] h-[500px] mx-auto">
+                        <NeonGrid />
+                    </View> */}
+                    <View className="py-4">
+                        <View className="flex-row">
+                            <Text className="text-white text-2xl ml-[10%]">Recent Workouts</Text>
+                        </View>
+                        <WorkoutList />
                     </View>
-                    <View className="w-[700px] h-[200px] mx-auto">
-                        <NeonRoundedRect />
+
+                    <View className="w-[700px] h-[100px] mx-auto hidden">
+                        <PointsBar frac={0.4} />
                     </View>
 
-                    <PieChart />
+                    <View className="py-4">
+                        <View className="flex-row">
+                            <Text className="text-white text-2xl ml-[10%]">Past 7 Days</Text>
+                        </View>
+                        <BarChart />
+                    </View>
 
-                    <BarChart />
-
-                    <WorkoutList />
-
-                    <View className="flex grow gap-2 items-center justify-evenly">
+                    <View className="flex grow gap-2 items-center justify-evenly hidden">
                         <View className="relative w-32 h-16 bg-[#d75151] rounded-xl" ref={targetRef}>
                             <View className="absolute left-0 top-0 right-0 bottom-0"></View>
                         </View>
-                        <View className="w-16 h-16 bg-[#abe267]" />
-                        <View className="w-16 h-16 bg-[#25b1c7]" />
                     </View>
 
-                    <View className="absolute left-0 top-0 right-0 bottom-0 -z-10">
-                        <NeonRoundedRect
-                            startX={0.05}
-                            startY={0.5}
-                            width={0.95}
-                            length={0.9}
-                            intensity={0.5}
-                            radius={0.0001}
-                        />
-                    </View>
+                    <NeonBackground />
 
-                    <View className="absolute left-0 top-0 right-0 bottom-0 z-10">
+                    <View className="absolute left-0 top-0 right-0 bottom-0 z-10 hidden">
                         {/* <Canvas camera={{ position: [0, 0, 1] }}>{measure && <OrbitTarget measure={measure} />}</Canvas> */}
                     </View>
                 </View>
@@ -133,71 +131,3 @@ export default function HomeScreen() {
         </>
     );
 }
-
-/*
-<View className="flex-row gap-x-2">
-<View className="w-16 h-16 bg-[#ef276f]" />
-<View className="w-16 h-16 bg-[#82df37]" />
-<View className="w-16 h-16 bg-[#d75151]" />
-<View className="w-16 h-16 bg-[#abe267]" />
-<View className="w-16 h-16 bg-[#25b1c7]" />
-<View className="w-16 h-16 bg-[#e8c940]" />
-</View>
-
-<Text className="text-3xl text-white">Text!</Text>
-
-<View className="flex flex-row gap-x-4 items-center">
-<Text className="text-3xl text-[#ffd931]">Text!</Text>
-<Text className="text-3xl p-4 w-44 text-center rounded-3xl bg-[#ffd931] text-black">Text!</Text>
-<Text className="text-3xl p-4 w-44 text-center rounded-3xl border-solid border-2 border-[#ffd931] text-[#ffd931]">
-    Text!
-</Text>
-</View>
-
-<View className="flex flex-row gap-x-4 items-center">
-<Text className="text-3xl text-[#e8c940]">Text!</Text>
-<Text className="text-3xl p-4 w-44 text-center rounded-3xl bg-[#e8c940] text-black">Text!</Text>
-<Text className="text-3xl p-4 w-44 text-center rounded-3xl border-solid border-2 border-[#e8c940] text-[#e8c940]">
-    Text!
-</Text>
-</View>
-
-<View className="flex flex-row gap-x-4 items-center">
-<Text className="text-3xl text-[#ef276f]">Text!</Text>
-<Text className="text-3xl p-4 w-44 text-center rounded-3xl bg-[#ef276f] text-white">Text!</Text>
-<Text className="text-3xl p-4 w-44 text-center rounded-3xl border-solid border-2 border-[#ef276f] text-[#ef276f]">
-    Text!
-</Text>
-</View>
-
-<View className="flex flex-row gap-x-4 items-center">
-<Text className="text-3xl text-[#82df37]">Text!</Text>
-<Text className="text-3xl p-4 w-44 text-center rounded-3xl bg-[#82df37] text-white">Text!</Text>
-<Text className="text-3xl p-4 w-44 text-center rounded-3xl border-solid border-2 border-[#82df37] text-[#82df37]">
-    Text!
-</Text>
-</View>
-
-<View className="flex flex-row gap-x-4 items-center">
-<Text className="text-3xl text-[#d75151]">Text!</Text>
-<Text className="text-3xl p-4 w-44 text-center rounded-3xl bg-[#d75151] text-white">Text!</Text>
-<Text className="text-3xl p-4 w-44 text-center rounded-3xl border-solid border-2 border-[#d75151] text-[#d75151]">
-    Text!
-</Text>
-</View>
-
-<View className="flex flex-row gap-x-4 items-center">
-<Text className="text-3xl text-[#abe267]">Text!</Text>
-<Text className="text-3xl p-4 w-44 text-center rounded-3xl bg-[#abe267] text-white">Text!</Text>
-<Text className="text-3xl p-4 w-44 text-center rounded-3xl border-solid border-2 border-[#abe267] text-[#abe267]">
-    Text!
-</Text>
-</View>
-
-<View className="flex flex-row gap-x-4 items-center">
-<Text className="text-3xl text-[#25b1c7]">Text!</Text>
-<Text className="text-3xl p-4 w-44 text-center rounded-3xl bg-[#25b1c7] text-white">Text!</Text>
-<Text className="text-3xl p-4 w-44 text-center rounded-3xl border-solid border-2 border-[#25b1c7] text-[#25b1c7]">
-    Text!
-</Text>
-</View> */
