@@ -16,6 +16,7 @@ import NewWorkoutScreen from "./src/screens/newWorkoutScreen";
 import TeamsScreen from "./src/screens/TeamsScreen";
 
 import "./global.css";
+import TeamsComponentNavigator from "./src/navigators/teamsComponentsNavigator";
 
 const Tab = createBottomTabNavigator();
 
@@ -77,7 +78,7 @@ function Main() {
                 />
                 <Tab.Screen
                     name="Teams"
-                    component={TeamsScreen}
+                    component={TeamsComponentNavigator}
                     options={{
                         tabBarIcon: makeIconRender("account-group"),
                     }}
