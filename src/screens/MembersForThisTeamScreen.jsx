@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { View, Text, FlatList } from "react-native";
+import { View, Text, FlatList, ScrollView } from "react-native";
 import MembersCard from "../components/MembersCard";
 
 export default function MembersForThisTeamScreen({ route }) {
@@ -42,12 +42,12 @@ export default function MembersForThisTeamScreen({ route }) {
         <View>
             <View className="flex grow gap-y-2 flex-1 justify-center items-center">
             </View>
-            <View>
+            <ScrollView>
                 <Text className="flex text-white text-2xl self-center m-3 top-4 items-center">{chosenTeamName}</Text>
             {members.map((member) => {
                 return member.team_id === chosenTeamId ? <MembersCard key={member.member_id} memberInfo={member}/> : null
             })}
-            </View>
+            </ScrollView>
         </View>
     );
 }

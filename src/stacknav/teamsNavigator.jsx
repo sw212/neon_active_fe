@@ -7,7 +7,6 @@ import { useEffect, useState } from 'react';
 
 export default function TeamsNavigator ({navigation}) {
 
-    const [chosenTeam, setChosenTeam] = useState("");
     const isFocused = useIsFocused()
 
       useEffect(() => {
@@ -19,8 +18,8 @@ export default function TeamsNavigator ({navigation}) {
 
     return (
         <Stack.Navigator screenOptions={{headerShown:false}} initialRouteName='teamslist'>
-            <Stack.Screen name="teamslist" initialParams={{ setChosenTeam, chosenTeam }} component={TeamsListScreen} navigation={navigation}/>
-            <Stack.Screen name="membersForThisTeam"  initialParams={{chosenTeam}}component={MembersForThisTeamScreen}/>
+            <Stack.Screen name="teamslist" component={TeamsListScreen} navigation={navigation}/>
+            <Stack.Screen name="membersForThisTeam" component={MembersForThisTeamScreen}/>
         </Stack.Navigator>
     )
 }
