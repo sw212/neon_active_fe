@@ -11,7 +11,7 @@ export default function TeamCard({ teamInfo, navigation }) {
                         <Pressable
                             className="items-center block rounded-xl bg-white py-2 px-4 m-2"
                             onPress={() => {
-                                navigation.navigate("membersForThisTeam", [
+                                navigation.navigate("This Team Members", [
                                     { chosenTeamId: team_id, chosenTeamName: team_name },
                                 ]);
                             }}
