@@ -4,14 +4,12 @@ import { useState } from "react";
 export default function SearchForTeamContainer() {
     const [searchedTeam, setSearchedTeam] = useState("");
     return (
-        <View>
-            <View className="flex grow gap-y-2 flex-1 justify-center items-center top-5">
-            <Text className="text-2xl text-white">Search For Teams</Text>
-                <TextInput className="flex p-2 m-2 rounded-xl bg-white w-80" selectedValue={searchedTeam} />
-            </View>
-                <View className="flex p-2 m-2 items-center">
-                <Pressable className="bg-blue-500 hover:bg-blue-700 items-center rounded-full border-white py-2 px-2 m-2 w-48">
-                    <Text className="border-2 border-white bg-white self-center p-2 rounded-full"> Search </Text>
+        <View className="flex items-center w-full max-w-xs mx-auto gap-y-1">
+            <Text className="text-2xl text-white py-1">Search For Teams</Text>
+            <View className="w-[50%] min-w-[240]">
+                <TextInput className="w-full p-1 rounded-xl bg-white" selectedValue={searchedTeam} />
+                <Pressable className="my-2 bg-white rounded-xl">
+                    <Text className="py-2 text-center">Search</Text>
                 </Pressable>
             </View>
         </View>

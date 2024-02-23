@@ -2,7 +2,7 @@ import { View, Text, FlatList } from "react-native";
 import { useState } from "react";
 import TeamCard from "./TeamCard";
 
-export default function MyTeamsList({ navigation}) {
+export default function MyTeamsList({ navigation }) {
     const [teams, setTeams] = useState([
         {
             team_id: 2,
@@ -22,15 +22,13 @@ export default function MyTeamsList({ navigation}) {
     ]);
 
     return (
-        <View>
-            <View className="flex grow gap-y-2 flex-1 justify-center items-center">
-                <Text className="flex text-white text-2xl items-center">My Teams!!</Text>
+        <View className="w-full">
+            <View className="flex items-center w-[80%] max-w-md mx-auto py-2">
+                <Text className="text-white text-2xl -mb-2 self-start">My Teams!</Text>
+                {teams.map((team) => {
+                    return <TeamCard key={team.team_id} teamInfo={team} navigation={navigation} />;
+                })}
             </View>
-            <FlatList
-                data={teams}
-                renderItem={(v) => <TeamCard teamInfo={v.item} navigation={navigation} />}
-                keyExtractor={(item) => item.team_id}
-            />
         </View>
     );
 }

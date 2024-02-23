@@ -5,10 +5,10 @@ import NeonBackground from "../components/NeonBackground";
 
 export default function TeamsListScreen({ navigation }) {
     return (
-        <ScrollView>
-            <SearchForTeamContainer/>
+        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+            <SearchForTeamContainer />
             <MyTeamsList navigation={navigation} />
-            <NeonBackground/>
+            <NeonBackground />
         </ScrollView>
     );
 }

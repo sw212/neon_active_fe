@@ -14,20 +14,25 @@ export default function TeamsNavigator({ navigation }) {
             navigation.navigate("My Teams");
         }
     }, [isFocused, navigation]);
+
     return (
         <Stack.Navigator
-        screenOptions={{
-            headerStyle: {
-                backgroundColor: 'rgb(231, 48, 91)',
-            },
-            tabBarStyle: {
-                backgroundColor: 'rgb(231, 48, 91)',
-            },
-            headerTitleAlign:"center",
-        }}
+            screenOptions={{
+                headerStyle: {
+                    backgroundColor: "rgb(231, 48, 91)",
+                },
+                tabBarStyle: {
+                    backgroundColor: "rgb(231, 48, 91)",
+                },
+                headerTitleAlign: "center",
+            }}
             initialRouteName="My Teams"
         >
-            <Stack.Screen name="My Teams" component={TeamsListScreen} navigation={navigation}  options={({ navigation }) => ({
+            <Stack.Screen
+                name="My Teams"
+                component={TeamsListScreen}
+                navigation={navigation}
+                options={({ navigation }) => ({
                     headerLeft: () => (
                         <Ionicons
                             name="arrow-back-outline"
@@ -37,7 +42,8 @@ export default function TeamsNavigator({ navigation }) {
                             style={{ marginLeft: 7 }}
                         />
                     ),
-                })} />
+                })}
+            />
             <Stack.Screen
                 name="This Team Members"
                 component={MembersForThisTeamScreen}
