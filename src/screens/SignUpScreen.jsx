@@ -14,6 +14,8 @@ export default function SignUp() {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [hidePass, setHidePass] = useState(true);
 
+    
+
     const toggleHidePass = () => {
         setHidePass(!hidePass);
     };
