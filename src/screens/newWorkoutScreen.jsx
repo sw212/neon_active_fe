@@ -1,14 +1,20 @@
 import { ScrollView, View, Text, TextInput, Pressable } from "react-native";
 import { useTheme } from "@react-navigation/native";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Picker } from "@react-native-picker/picker";
 import NeonBackground from "../components/NeonBackground";
+import { UserContext } from "../contexts/UserContext";
+import { API } from "../utils/api";
 
 export default function NewWorkoutScreen() {
     const { colors } = useTheme();
 
     const [duration, setDuration] = useState(0);
     const [exerciseType, setExerciseType] = useState();
+
+    const { user } = useContext(UserContext);
+
+    console.log(user);
 
     let exercisePoints = 0;
 
@@ -29,6 +35,28 @@ export default function NewWorkoutScreen() {
             setDuration(Number(text));
         } else {
             setDuration(0);
+        }
+    };
+    const handleSubmit = async (duration, exerciseType) => {
+        const data = {
+            duration,
+            type: exerciseType,
+        };
+        try {
+            const reqHeaders = {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `jwt ${user.token}`,
+                },
+            };
+            const response = await API.post("/workouts/add", data, reqHeaders);
+            return (
+                <View>
+                    <Text className="text-white"> You Logged a workout, nice </Text>
+                </View>
+            )
+        } catch (err) {
+            console.error(err);
         }
     };
 
@@ -53,7 +81,7 @@ export default function NewWorkoutScreen() {
                             <Picker.Item label="Run" value="Run" />
                             <Picker.Item label="Gym" value="Gym" />
                             <Picker.Item label="Walk" value="Walk" />
-                            <Picker.Item label="Stretch" value="Stretch" />
+                            <Picker.Item label="Stretching" value="Stretching" />
                         </Picker>
                     </View>
                 </View>
@@ -80,7 +108,8 @@ export default function NewWorkoutScreen() {
                             <Pressable
                                 className="items-center rounded-full bg-black py-2 px-2 m-2 w-48"
                                 onPress={(e) => {
-                                    console.info(duration, exercisePoints, exerciseType);
+                                    e.preventDefault();
+                                    handleSubmit(duration,exerciseType);
                                 }}
                             >
                                 <Text className="text-white">Log Workout</Text>
@@ -89,7 +118,7 @@ export default function NewWorkoutScreen() {
                     </>
                 )}
             </View>
-            <NeonBackground/>
+            <NeonBackground />
         </View>
     );
 }
