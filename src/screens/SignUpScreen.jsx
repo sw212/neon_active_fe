@@ -60,7 +60,7 @@ export default function SignUp() {
             {Input({ handleChange: setPassword, value: password, placeholder: "password" })}
             {Input({ handleChange: setConfirmPassword, value: confirmPassword, placeholder: "confirm password" })}
             <Pressable className="rounded-full bg-black py-2 px-5 m-2" onPress={handleSubmit}>
-                <Text className="text-white">Log In</Text>
+                <Text className="text-white">Sign Up</Text>
             </Pressable>
             <NeonBackground />
         </View>

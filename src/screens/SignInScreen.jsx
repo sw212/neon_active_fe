@@ -11,7 +11,7 @@ export default function SignIn() {
     const [password, setPassword] = useState("");
     const [hidePass, setHidePass] = useState(true);
 
-    const { setUser } = useContext(UserContext);
+    const { user, setUser } = useContext(UserContext);
 
     const toggleHidePass = () => {
         setHidePass(!hidePass);
@@ -25,9 +25,10 @@ export default function SignIn() {
 
         try {
             const response = await API.post("/login", data);
-            console.log(response);
-
-            setUser(response.username);
+            const jwtToken = response.data.token;
+            const ctx = { ...response.data.user, token: response.data.token };
+            console.log(ctx);
+            setUser(ctx);
         } catch (err) {
             console.error(err);
         }
