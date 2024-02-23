@@ -30,7 +30,6 @@ export default function SignUp() {
 
         try {
             const response = await API.post("/create-user", data);
-            console.log(response);
         } catch (err) {
             console.error(err);
         }

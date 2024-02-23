@@ -25,9 +25,7 @@ export default function SignIn() {
 
         try {
             const response = await API.post("/login", data);
-            const jwtToken = response.data.token;
             const ctx = { ...response.data.user, token: response.data.token };
-            console.log(ctx);
             setUser(ctx);
         } catch (err) {
             console.error(err);
