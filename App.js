@@ -1,6 +1,6 @@
 import { useContext } from "react";
-import { Text, View, ScrollView } from "react-native";
-import { NavigationContainer, useTheme } from "@react-navigation/native";
+import { Text, View, ScrollView, Pressable , Button} from "react-native";
+import { NavigationContainer, useNavigation, useTheme } from "@react-navigation/native";
 import {
     SafeAreaView,
     SafeAreaProvider,
@@ -25,6 +25,7 @@ function Main() {
     const { colors } = useTheme();
     const insets = useSafeAreaInsets();
     const { user, setUser } = useContext(UserContext);
+    const {goBack} = useNavigation()
 
     const headerBG = colors.headerBackground;
 
@@ -53,8 +54,16 @@ function Main() {
                         },
                         tabBarActiveTintColor: "white",
                         tabBarInactiveTintColor: "#254844",
+                        headerTitleAlign:"center",
+                        headerLeft: (e) => (
+                            (<Button
+                              onPress={() => goBack()}
+                              title="Info"
+                              color="#000"
+                              className="m-2 p-2"
+                            />))
                     }}
-                >
+                    >
                     <Tab.Screen
                         name="Home"
                         component={HomeScreen}

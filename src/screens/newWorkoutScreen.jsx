@@ -2,6 +2,7 @@ import { ScrollView, View, Text, TextInput, Pressable } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import { useState } from "react";
 import { Picker } from "@react-native-picker/picker";
+import NeonBackground from "../components/NeonBackground";
 
 export default function NewWorkoutScreen() {
     const { colors } = useTheme();
@@ -88,6 +89,7 @@ export default function NewWorkoutScreen() {
                     </>
                 )}
             </View>
+            <NeonBackground/>
         </View>
     );
 }

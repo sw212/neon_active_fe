@@ -1,6 +1,6 @@
 to do
 
-add image to list (why isn't it working)
+add image to list (why isn't it working) ✅
 add styles to search bar 
 22/02/2024 
     have search for teams functionality
