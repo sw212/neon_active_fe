@@ -8,7 +8,7 @@ import {
     useSafeAreaInsets,
 } from "react-native-safe-area-context";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons, Ionicons } from "@expo/vector-icons";
 
 import { UserProvider, UserContext } from "./src/contexts/UserContext";
 import MainScreen from "./src/screens/MainScreen";
@@ -59,17 +59,14 @@ function Main() {
                         tabBarActiveTintColor: "white",
                         tabBarInactiveTintColor: "#254844",
                         headerTitleAlign: "center",
-                        headerLeft: (e) => (
-                            <Button onPress={() => goBack()} title="Info" color="#000" className="m-2 p-2" />
-                        ),
                     }}
                 >
                     <Tab.Screen
                         name="Home"
                         component={HomeScreen}
-                        options={{
+                        options={() => ({
                             tabBarIcon: makeIconRender("home"),
-                        }}
+                        })}
                     />
                     {/* <Tab.Screen
                     name="signup"
@@ -81,25 +78,55 @@ function Main() {
                 />
                 /> */}
                     <Tab.Screen
-                        name="Main"
+                        name="Rank"
                         component={MainScreen}
-                        options={{
+                        options={({ navigation }) => ({
                             tabBarIcon: makeIconRender("run"),
-                        }}
+                            headerLeft: () => (
+                                <Ionicons
+                                    name="arrow-back-outline"
+                                    onPress={() => navigation.goBack()}
+                                    size={24}
+                                    color="black"
+                                    style={{ marginLeft: 7 }}
+                                />
+                            ),
+                        })}
                     />
                     <Tab.Screen
                         name="New Workout"
                         component={NewWorkoutScreen}
-                        options={{
+                        options={({ navigation }) => ({
                             tabBarIcon: makeIconRender("plus-box-outline"),
-                        }}
+                            headerLeft: () => (
+                                <Ionicons
+                                    name="arrow-back-outline"
+                                    onPress={() => navigation.goBack()}
+                                    size={24}
+                                    color="black"
+                                    style={{ marginLeft: 7 }}
+                                />
+                            ),
+                        })}
                     />
                     <Tab.Screen
                         name="Teams"
                         component={TeamsNavigator}
-                        options={{
+                        options={({ navigation, route }) => ({
                             tabBarIcon: makeIconRender("account-group"),
-                        }}
+                            headerShown: false,
+                            headerLeft: () => {
+                                return (
+                                    <Ionicons
+                                        name="arrow-back-outline"
+                                        onPress={() => navigation.goBack()}
+                                        size={24}
+                                        color="black"
+                                        style={{ marginLeft: 7 }}
+                                    />
+                                );
+                            },
+                        })}
                     />
                 </Tab.Navigator>
             )}
