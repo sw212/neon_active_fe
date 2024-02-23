@@ -6,7 +6,6 @@ export default function TeamCard({ teamInfo, navigation }) {
         <View className="flex-row justify-between py-2 px-4 my-4 w-full border border-white rounded-xl">
             <View className="flex justify-between shrink basis-1/2">
                 <Text className="text-white text-xl">Team {team_name}</Text>
-                {/* <View className="flex items-center w-full" > */}
                 <Pressable
                     className="self-start rounded-xl bg-white p-2"
                     onPress={() => {
@@ -17,7 +16,6 @@ export default function TeamCard({ teamInfo, navigation }) {
                 >
                     <Text className="text-black text-center">Members</Text>
                 </Pressable>
-                {/* </View> */}
             </View>
             <View className=" h-24">
                 {team_img ? (

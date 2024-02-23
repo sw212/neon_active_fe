@@ -7,7 +7,7 @@ export default function SearchForTeamContainer() {
         <View className="flex items-center w-full max-w-xs mx-auto gap-y-1">
             <Text className="text-2xl text-white py-1">Search For Teams</Text>
             <View className="w-[50%] min-w-[240]">
-                <TextInput className="w-full p-1 rounded-xl bg-white" selectedValue={searchedTeam} />
+                <TextInput className="w-full py-1 px-2 rounded-xl bg-white" selectedValue={searchedTeam} />
                 <Pressable className="my-2 bg-white rounded-xl">
                     <Text className="py-2 text-center">Search</Text>
                 </Pressable>
