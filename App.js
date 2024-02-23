@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Text, View, ScrollView, Pressable , Button} from "react-native";
+import { Text, View, ScrollView, Pressable, Button } from "react-native";
 import { NavigationContainer, useNavigation, useTheme } from "@react-navigation/native";
 import {
     SafeAreaView,
@@ -13,6 +13,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { UserProvider, UserContext } from "./src/contexts/UserContext";
 import MainScreen from "./src/screens/MainScreen";
 import HomeScreen from "./src/screens/HomeScreen";
+import SignInScreen from "./src/screens/SignInScreen";
 import SignUpScreen from "./src/screens/SignUpScreen";
 import NewWorkoutScreen from "./src/screens/newWorkoutScreen";
 
@@ -25,7 +26,7 @@ function Main() {
     const { colors } = useTheme();
     const insets = useSafeAreaInsets();
     const { user, setUser } = useContext(UserContext);
-    const {goBack} = useNavigation()
+    const { goBack } = useNavigation();
 
     const headerBG = colors.headerBackground;
 
@@ -40,7 +41,10 @@ function Main() {
             }}
         >
             {!user ? (
-                <View className="flex-1 bg-background">
+                <View className="flex-1 bg-background ">
+                    <Text className="text-3xl text-white self-center">NEON : Active</Text>
+
+                    <SignInScreen />
                     <SignUpScreen />
                 </View>
             ) : (
@@ -54,16 +58,12 @@ function Main() {
                         },
                         tabBarActiveTintColor: "white",
                         tabBarInactiveTintColor: "#254844",
-                        headerTitleAlign:"center",
+                        headerTitleAlign: "center",
                         headerLeft: (e) => (
-                            (<Button
-                              onPress={() => goBack()}
-                              title="Info"
-                              color="#000"
-                              className="m-2 p-2"
-                            />))
+                            <Button onPress={() => goBack()} title="Info" color="#000" className="m-2 p-2" />
+                        ),
                     }}
-                    >
+                >
                     <Tab.Screen
                         name="Home"
                         component={HomeScreen}
