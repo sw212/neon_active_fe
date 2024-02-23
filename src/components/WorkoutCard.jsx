@@ -7,10 +7,10 @@ import { LinearGradient } from "expo-linear-gradient";
 export default function WorkoutCard({ workout }) {
     const icon = useMemo(
         () => ({
-            Run: <MaterialCommunityIcons name="run-fast" size={24} color="white" />,
-            Gym: <MaterialCommunityIcons name="weight-lifter" size={24} color="white" />,
-            Walk: <FontAwesome5 name="walking" size={24} color="white" />,
-            Stretch: <MaterialCommunityIcons name="yoga" size={24} color="white" />,
+            cardio: <MaterialCommunityIcons name="run-fast" size={24} color="white" />,
+            weights: <MaterialCommunityIcons name="weight-lifter" size={24} color="white" />,
+            // Walk: <FontAwesome5 name="walking" size={24} color="white" />,
+            stretching: <MaterialCommunityIcons name="yoga" size={24} color="white" />,
         }),
         []
     );
@@ -44,7 +44,7 @@ export default function WorkoutCard({ workout }) {
                 <View className="flex-row pb-2 justify-between">
                     <View className="flex-row pr-8 gap-x-4">
                         <Text className="text-white">{workout.type}</Text>
-                        <Text className="text-white">{workout.date.toDateString()}</Text>
+                        <Text className="text-white">{new Date(workout.addedAt).toDateString()}</Text>
                     </View>
                     <Text className="text-white">{durationDisplay}</Text>
                 </View>

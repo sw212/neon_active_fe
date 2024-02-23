@@ -11,6 +11,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialCommunityIcons, Ionicons } from "@expo/vector-icons";
 
 import { UserProvider, UserContext } from "./src/contexts/UserContext";
+
 import MainScreen from "./src/screens/MainScreen";
 import HomeScreen from "./src/screens/HomeScreen";
 import SignInScreen from "./src/screens/SignInScreen";
@@ -68,15 +69,6 @@ function Main() {
                             tabBarIcon: makeIconRender("home"),
                         })}
                     />
-                    {/* <Tab.Screen
-                    name="signup"
-                    component={SignUpScreen}
-                    options={{
-                        tabBarIcon: makeIconRender("cog"),
-                    }}
-                    
-                />
-                /> */}
                     <Tab.Screen
                         name="Rank"
                         component={MainScreen}

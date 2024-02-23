@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useContext } from "react";
 import { View, Text, ScrollView } from "react-native";
 
 import { vec3 } from "gl-matrix";
@@ -8,6 +8,9 @@ import { Trail } from "@react-three/drei/native";
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
 
 import { generatePathShape, index_in_path } from "../utils/track";
+
+import { API } from "../utils/api";
+import { UserContext } from "../contexts/UserContext";
 
 import WorkoutList from "../components/WorkoutList";
 import NeonRoundedRect from "../components/shaders/NeonRoundedRect";
@@ -72,6 +75,9 @@ const OrbitTarget = ({ measure }) => {
 };
 
 export default function HomeScreen() {
+    const { user } = useContext(UserContext);
+    const [workouts, setWorkouts] = useState([]);
+
     const targetRef = useRef();
     const containerRef = useRef();
     const [measure, setMeasure] = useState();
@@ -90,6 +96,22 @@ export default function HomeScreen() {
         }
     }, []);
 
+    useEffect(() => {
+        const fetchWorkouts = async () => {
+            try {
+                const response = await API.get("/workouts");
+                console.info("TODO: change homescreen workout user_id once add workout implemented");
+                const user_id = "65d8896c76629981d9533a51";
+                const user_workouts = response.data.workouts.filter((w) => w.user_id === user_id);
+                setWorkouts(user_workouts);
+            } catch (err) {
+                console.error(err);
+            }
+        };
+
+        fetchWorkouts();
+    }, []);
+
     return (
         <>
             <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
@@ -101,7 +123,7 @@ export default function HomeScreen() {
                         <View className="flex-row">
                             <Text className="text-white text-2xl ml-[10%]">Recent Workouts</Text>
                         </View>
-                        <WorkoutList />
+                        <WorkoutList workouts={workouts} />
                     </View>
 
                     <View className="w-[700px] h-[100px] mx-auto hidden">
@@ -112,7 +134,7 @@ export default function HomeScreen() {
                         <View className="flex-row">
                             <Text className="text-white text-2xl ml-[10%]">Past 7 Days</Text>
                         </View>
-                        <BarChart />
+                        <BarChart workouts={workouts} />
                     </View>
 
                     <View className="flex grow gap-2 items-center justify-evenly hidden">

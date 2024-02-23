@@ -2,23 +2,43 @@ import { useState } from "react";
 import { View, Dimensions } from "react-native";
 import { VictoryChart, VictoryBar, VictoryAxis } from "victory-native";
 
-export default function BarChart() {
-    //
-    //  TODO: handle empty values for days where no value is given?
-    //
+export default function BarChart({ workouts }) {
+    const currTime = Date.now();
+    const msPerDay = 24 * 60 * 60 * 1000;
 
-    const [data, setData] = useState([
-        { id: 1, date: new Date(2024, 2, 20), value: 100 },
-        { id: 2, date: new Date(2024, 2, 21), value: 200 },
-        { id: 3, date: new Date(2024, 2, 22), value: 300 },
-        { id: 4, date: new Date(2024, 2, 23), value: 0 },
-        { id: 5, date: new Date(2024, 2, 24), value: 500 },
-        { id: 6, date: new Date(2024, 2, 25), value: 600 },
-    ]);
+    const data = [];
+    for (let i = 0; i < 7; i++) {
+        //
+        // NOTE/TODO: this doesn't work correctly in different timezones
+        //
+
+        const date = new Date(1970, 0, 1, null, null, null, currTime - (6 - i) * msPerDay);
+
+        const dataPoint = {
+            id: i + 1,
+            date: date,
+            value: 0,
+        };
+
+        for (let j = 0; j < workouts.length; j++) {
+            const workout = workouts[j];
+            const workoutDate = new Date(workout.addedAt);
+
+            if (
+                date.getFullYear() === workoutDate.getFullYear() &&
+                date.getMonth() === workoutDate.getMonth() &&
+                date.getDate() === workoutDate.getDate()
+            ) {
+                dataPoint.value += workout.duration * (1 + (workout.type === "cardio" || workout.type === "weights"));
+            }
+        }
+
+        data.push(dataPoint);
+    }
 
     const width = Dimensions.get("window").width;
 
-    const days = ["Sa", "Su", "Mo", "Tu", "We", "Th", "Fr"];
+    const days = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
     const tickValues = data.map((item) => days[item.date.getDay()]);
 
     const values = data.map((v) => ({ x: v.id, y: v.value }));
@@ -27,7 +47,7 @@ export default function BarChart() {
         maxValue = Math.max(maxValue, values[i].y);
     }
 
-    const scale = ["#181525", "#251c45", "#351e7c", "#4c12c8", "#7c1bff", "#b853ff"];
+    const scale = ["#3D365E", "#31265C", "#351e7c", "#4c12c8", "#7c1bff", "#b853ff"];
     const numColors = scale.length;
     const colorScale = [];
 
@@ -38,9 +58,14 @@ export default function BarChart() {
     }
 
     return (
-        <View className="flex items-center -my-8">
+        <View className="flex items-center">
             <VictoryChart width={Math.min(400, 0.9 * width)} height={Math.min(400, 0.6 * width)}>
-                <VictoryBar data={values} barRatio={0.8} style={{ data: { fill: ({ index }) => colorScale[index] } }} />
+                <VictoryBar
+                    data={values}
+                    y0={() => -3}
+                    barRatio={0.5}
+                    style={{ data: { fill: ({ index }) => colorScale[index] } }}
+                />
                 <VictoryAxis
                     style={{
                         axis: {

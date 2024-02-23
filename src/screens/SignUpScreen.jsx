@@ -40,7 +40,6 @@ export default function SignUp() {
             <TextInput
                 className="border border-white p-2 m-2 min-w-[200] rounded-xl text-white"
                 onChangeText={(e) => {
-                    console.log(e);
                     handleChange(e);
                 }}
                 value={value}
