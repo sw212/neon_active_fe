@@ -25,7 +25,6 @@ export default function WorkoutCard({ workout }) {
 
     return (
         <View className="py-2">
-            {/* <View className="min-w-[75%] mx-auto py-2 px-4 border border-white rounded-xl" /> */}
             <LinearGradient
                 style={{
                     minWidth: "75%",
@@ -39,7 +38,6 @@ export default function WorkoutCard({ workout }) {
                     borderRadius: 12,
                 }}
                 colors={["rgba(222, 67, 216, 0.1)", "transparent"]}
-                // colors={["#4c669f", "#3b5998", "#192f6a"]}
                 start={{ y: 0, x: 0 }}
                 end={{ y: 1, x: 1 }}
             >
