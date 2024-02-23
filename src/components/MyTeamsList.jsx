@@ -5,11 +5,6 @@ import TeamCard from "./TeamCard";
 export default function MyTeamsList({ navigation}) {
     const [teams, setTeams] = useState([
         {
-            team_id: 1,
-            team_name: "Chiefs",
-            team_img: null,
-        },
-        {
             team_id: 2,
             team_name: "Eagles",
             team_img: "https://i.pinimg.com/originals/75/ff/2c/75ff2cd83b685270e48fb452c60f1f15.jpg",
