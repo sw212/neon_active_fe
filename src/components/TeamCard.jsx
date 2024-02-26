@@ -1,16 +1,16 @@
 import { View, Text, Image, Pressable } from "react-native";
 export default function TeamCard({ teamInfo, navigation }) {
-    const { team_name, team_img, team_id } = teamInfo;
+    const {name, team_img, team_id } = teamInfo;
 
     return (
         <View className="flex-row justify-between py-2 px-4 my-4 w-full border border-white rounded-xl">
             <View className="flex justify-between shrink basis-1/2">
-                <Text className="text-white text-xl">Team {team_name}</Text>
+                <Text className="text-white text-xl">{name}</Text>
                 <Pressable
                     className="self-start rounded-xl bg-white p-2"
                     onPress={() => {
                         navigation.navigate("This Team Members", [
-                            { chosenTeamId: team_id, chosenTeamName: team_name },
+                            { chosenTeamId: team_id, chosenTeamName: name },
                         ]);
                     }}
                 >

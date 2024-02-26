@@ -15,7 +15,8 @@ export default function MainScreen({ navigation, route }) {
 
     const { _id } = user;
 
-    const { workoutLogged } = route.params;
+    console.log(route.params)
+
 
 
     useEffect(() => {
@@ -29,9 +30,13 @@ export default function MainScreen({ navigation, route }) {
             }
         };
         fetchData();
-    }, [workoutLogged]);
 
-    console.log(points)
+        const intervalId = setInterval(fetchData, 5 * 60 * 1);
+
+        return () => clearInterval(intervalId);
+    });
+
+    console.log(points, "points")
 
     const { rank, rankName } = rankFromPoints(points);
     const relativePoints = points % POINTS_PER_RANK;

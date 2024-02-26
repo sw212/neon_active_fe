@@ -36,7 +36,6 @@ function Main() {
     const insets = useSafeAreaInsets();
     const { user, setUser } = useContext(UserContext);
     const { goBack } = useNavigation();
-    const [workoutLogged, setWorkoutLogged] = useState(false)
     const headerBG = colors.headerBackground;
 
 
@@ -89,7 +88,6 @@ function Main() {
     <Tab.Screen
         name="Rank"
         component={MainScreen}
-        initialParams={{ workoutLogged:workoutLogged }} 
         options={({ navigation }) => ({
             tabBarIcon: makeIconRender("run"),
             headerLeft: () => (
@@ -111,7 +109,6 @@ function Main() {
     <Tab.Screen
         name="New Workout"
         component={NewWorkoutScreen}
-        initialParams={{ setWorkoutLogged : setWorkoutLogged }} 
         options={({ navigation }) => ({
             tabBarIcon: makeIconRender("plus-box-outline"),
             headerLeft: () => (

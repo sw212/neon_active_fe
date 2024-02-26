@@ -5,9 +5,8 @@ import { Picker } from "@react-native-picker/picker";
 import NeonBackground from "../components/shaders/NeonBackground";
 import { UserContext } from "../contexts/UserContext";
 import { API } from "../utils/api";
-import axios from "axios";
 
-export default function NewWorkoutScreen({route, navigation}) {
+export default function NewWorkoutScreen() {
     const { colors } = useTheme();
     const { user } = useContext(UserContext);
     const {username} = user
@@ -15,9 +14,8 @@ export default function NewWorkoutScreen({route, navigation}) {
     const [duration, setDuration] = useState(0);
     const [exerciseType, setExerciseType] = useState();
 
-    const { setWorkoutLogged } = route.params;
 
-    console.log(setWorkoutLogged, "setworkout")
+
 
     let exercisePoints = 0;
     if (exerciseType === "Run" || exerciseType === "Gym") {
@@ -61,8 +59,7 @@ export default function NewWorkoutScreen({route, navigation}) {
                 },
             };
             const response = await API.post("/workouts/add", data, reqHeaders);
-            updateUserPoints(data.duration, username)
-            setWorkoutLogged(true)
+            await updateUserPoints(data.duration, username)
         alert("you logged a workout. nice")
         } catch (err) {
             console.error(err);

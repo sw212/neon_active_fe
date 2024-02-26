@@ -7,7 +7,7 @@ import { LinearGradient } from "expo-linear-gradient";
 export default function WorkoutCard({ workout }) {
     const icon = useMemo(
         () => ({
-            cardio: <MaterialCommunityIcons name="run-fast" size={24} color="white" />,
+            run: <MaterialCommunityIcons name="run-fast" size={24} color="white" />,
             weights: <MaterialCommunityIcons name="weight-lifter" size={24} color="white" />,
             // Walk: <FontAwesome5 name="walking" size={24} color="white" />,
             stretching: <MaterialCommunityIcons name="yoga" size={24} color="white" />,

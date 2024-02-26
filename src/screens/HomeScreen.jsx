@@ -76,7 +76,9 @@ const OrbitTarget = ({ measure }) => {
 
 export default function HomeScreen() {
     const { user } = useContext(UserContext);
-    const [workouts, setWorkouts] = useState([]);
+    const [workouts, setWorkouts] = useState([
+    ]);
+
 
     const targetRef = useRef();
     const containerRef = useRef();
@@ -101,7 +103,9 @@ export default function HomeScreen() {
             try {
                 const response = await API.get("/workouts");
                 console.info("TODO: change homescreen workout user_id once add workout implemented");
-                const user_id = "65d8896c76629981d9533a51";
+                console.info("MAKE SURE WHEN IN DEV MODE THE USER_ID IS UNCOMMENTED OUT ETC.");
+                // const user_id = "65d8896c76629981d9533a51";
+                const user_id = user._id
                 const user_workouts = response.data.workouts.filter((w) => w.user_id === user_id);
                 setWorkouts(user_workouts);
             } catch (err) {

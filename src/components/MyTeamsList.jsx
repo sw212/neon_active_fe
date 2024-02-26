@@ -1,25 +1,25 @@
 import { View, Text, FlatList } from "react-native";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TeamCard from "./TeamCard";
+import { API } from "../utils/api";
 
 export default function MyTeamsList({ navigation }) {
-    const [teams, setTeams] = useState([
-        {
-            team_id: 2,
-            team_name: "Eagles",
-            team_img: "https://i.pinimg.com/originals/75/ff/2c/75ff2cd83b685270e48fb452c60f1f15.jpg",
-        },
-        {
-            team_id: 3,
-            team_name: "Cobras",
-            team_img: "https://i.pinimg.com/originals/75/ff/2c/75ff2cd83b685270e48fb452c60f1f15.jpg",
-        },
-        {
-            team_id: 4,
-            team_name: "Dragons",
-            team_img: "https://i.pinimg.com/originals/75/ff/2c/75ff2cd83b685270e48fb452c60f1f15.jpg",
-        },
-    ]);
+    const [teams, setTeams] = useState([]);
+
+    useEffect(() => {
+        const fetchTeams = async () => {
+            try {
+                const response = await API.get('/teams')
+                console.log(response)
+                setTeams(response.data.teams)
+                console.log(teams)
+            }
+            catch {
+                console.error(error)
+            }
+        }
+        fetchTeams();
+},[])
 
     return (
         <View className="w-full">
