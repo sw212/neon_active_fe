@@ -9,5 +9,8 @@ add styles to search bar
     add back button for members screen 
 
 
+26/02
+failure screens for bad requests to backend
+
 
     backend : https://neon-active-back-end.onrender.com/

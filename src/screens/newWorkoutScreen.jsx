@@ -75,10 +75,9 @@ export default function NewWorkoutScreen() {
                             onValueChange={handleWorkoutTypeChange}
                         >
                             <Picker.Item label="Please Select" value="" />
-                            <Picker.Item label="Run" value="Run" />
-                            <Picker.Item label="Gym" value="Gym" />
-                            <Picker.Item label="Walk" value="Walk" />
-                            <Picker.Item label="Stretching" value="Stretching" />
+                            <Picker.Item label="run" value="run" />
+                            <Picker.Item label="weights" value="weights" />
+                            <Picker.Item label="stretching" value="stretching" />
                         </Picker>
                     </View>
                 </View>

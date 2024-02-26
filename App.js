@@ -186,7 +186,7 @@ export default function App() {
                                         <Ionicons
                                             name="arrow-back-outline"
                                             onPress={() => navigation.goBack()}
-                                            size={35}
+                                            size={24}
                                             color="black"
                                             style={{ marginLeft: 7 }}
                                             />
