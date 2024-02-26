@@ -1,10 +1,11 @@
-import { createStackNavigator } from "@react-navigation/stack";
 import TeamsListScreen from "../screens/TeamsListScreen";
 import MembersForThisTeamScreen from "../screens/MembersForThisTeamScreen";
 const Stack = createStackNavigator();
+import { createStackNavigator } from "@react-navigation/stack";
 import { useIsFocused } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 import { MaterialCommunityIcons, Ionicons } from "@expo/vector-icons";
+import AccountIcon from "../components/AccountIcon";
 
 export default function TeamsNavigator({ navigation }) {
     const isFocused = useIsFocused();
@@ -42,6 +43,11 @@ export default function TeamsNavigator({ navigation }) {
                             style={{ marginLeft: 7 }}
                         />
                     ),
+                    headerRight: () => {
+                        return (
+                            <AccountIcon navigation={navigation}/>
+                         )
+                    }
                 })}
             />
             <Stack.Screen
@@ -57,6 +63,11 @@ export default function TeamsNavigator({ navigation }) {
                             style={{ marginLeft: 7 }}
                         />
                     ),
+                    headerRight: () => {
+                        return (
+                            <AccountIcon navigation={navigation}/>
+                         )
+                    }
                 })}
             />
         </Stack.Navigator>
