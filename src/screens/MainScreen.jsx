@@ -3,6 +3,7 @@ import { ScrollView, Text, View, Image, Pressable, Dimensions } from "react-nati
 import { LinearGradient } from "expo-linear-gradient";
 
 import PointsBar from "../components/shaders/PointsBar";
+import NeonRoundedRect from "../components/shaders/NeonRoundedRect";
 import NeonBackground from "../components/shaders/NeonBackground";
 
 import { MAX_RANK, POINTS_PER_RANK, RANK_NAMES, rankFromPoints } from "../utils/points";
@@ -15,9 +16,7 @@ export default function MainScreen({ navigation, route }) {
 
     const { _id } = user;
 
-    console.log(route.params)
-
-
+    console.log(route.params);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -36,7 +35,7 @@ export default function MainScreen({ navigation, route }) {
         return () => clearInterval(intervalId);
     });
 
-    console.log(points, "points")
+    console.log(points, "points");
 
     const { rank, rankName } = rankFromPoints(points);
     const relativePoints = points % POINTS_PER_RANK;
@@ -67,7 +66,6 @@ export default function MainScreen({ navigation, route }) {
                     <LinearGradient
                         style={{
                             justifyContent: "center",
-
                             minWidth: "75%",
                             marginLeft: "auto",
                             marginRight: "auto",
@@ -92,14 +90,24 @@ export default function MainScreen({ navigation, route }) {
                         </View>
                     </LinearGradient>
                 </View>
-                <View className="rounded-md p-2">
-                    <Pressable
-                        className="items-center rounded-lg bg-[#ff0a0a] py-2 p-2 m-2 w-48"
-                        onPress={() => navigation.navigate("New Workout")}
-                    >
-                        <Text className="text-white p-2 font-bold">Add a Workout</Text>
-                    </Pressable>
-                </View>
+                {/* <View className="rounded-md p-2"> */}
+                <Pressable
+                    className="items-center rounded-lg p-4 m-2 w-48 "
+                    onPress={() => navigation.navigate("New Workout")}
+                >
+                    <Text className="text-white p-2 font-bold">Add a Workout</Text>
+                    <View className="absolute left-0 top-0 right-0 bottom-0 -z-10">
+                        <NeonRoundedRect
+                            startX={0.1}
+                            width={0.8}
+                            length={0.8}
+                            color={[0.1, 0.1, 0.9]}
+                            radius={0.05}
+                            intensity={2.5}
+                        />
+                    </View>
+                </Pressable>
+                {/* </View> */}
             </View>
 
             <NeonBackground />

@@ -11,9 +11,7 @@ import NeonBackground from "../components/shaders/NeonBackground";
 
 export default function HomeScreen() {
     const { user } = useContext(UserContext);
-    const [workouts, setWorkouts] = useState([
-    ]);
-
+    const [workouts, setWorkouts] = useState([]);
 
     // idle | loading | success | error
     const [status, setStatus] = useState("idle");

@@ -87,7 +87,7 @@ const Divider = (props) => {
         const t = clock.elapsedTime;
 
         const s = 0.004 * Math.abs(Math.sin(t));
-        meshRef.current.material.uniforms.power.value = [intensity, radius + s];
+        // meshRef.current.material.uniforms.power.value = [intensity, radius + s];
     });
 
     return (
