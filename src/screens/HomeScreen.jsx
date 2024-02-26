@@ -99,13 +99,10 @@ export default function HomeScreen() {
     useEffect(() => {
         const fetchWorkouts = async () => {
             try {
-                const response = await API.get("/workouts");
-                console.info("TODO: change homescreen workout user_id once add workout implemented");
-                const user_id = "65d8896c76629981d9533a51";
-                const user_workouts = response.data.workouts.filter((w) => w.user_id === user_id);
-                setWorkouts(user_workouts);
+                const response = await API.get(`/user/workouts/${user.username}`);
+                setWorkouts(response.data.workouts);
             } catch (err) {
-                console.error(err);
+                // console.error(err);
             }
         };
 
@@ -116,9 +113,6 @@ export default function HomeScreen() {
         <>
             <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
                 <View className="h-full pt-4" ref={containerRef}>
-                    {/* <View className="w-[700px] h-[500px] mx-auto">
-                        <NeonGrid />
-                    </View> */}
                     <View className="py-4">
                         <View className="flex-row">
                             <Text className="text-white text-2xl ml-[10%]">Recent Workouts</Text>

@@ -27,8 +27,7 @@ const Tab = createBottomTabNavigator();
 function Main() {
     const { colors } = useTheme();
     const insets = useSafeAreaInsets();
-    const { user, setUser } = useContext(UserContext);
-    const { goBack } = useNavigation();
+    const { user } = useContext(UserContext);
 
     const headerBG = colors.headerBackground;
 
@@ -44,15 +43,15 @@ function Main() {
         >
             {!user ? (
                 <View className="flex-1 bg-background ">
-                    <Text className="text-3xl text-white self-center">NEON : Active</Text>
+                    <Text className="py-6 text-3xl text-white self-center">NEON : Active</Text>
 
                     <SignInScreen />
+
+                    <SignUpScreen />
 
                     <View className="absolute left-0 top-0 right-0 bottom-0 -z-10">
                         <NeonLoginBG />
                     </View>
-
-                    <SignUpScreen />
                 </View>
             ) : (
                 <Tab.Navigator

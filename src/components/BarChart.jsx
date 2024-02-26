@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { View, Dimensions } from "react-native";
 import { VictoryChart, VictoryBar, VictoryAxis } from "victory-native";
 
@@ -42,7 +41,8 @@ export default function BarChart({ workouts }) {
     const tickValues = data.map((item) => days[item.date.getDay()]);
 
     const values = data.map((v) => ({ x: v.id, y: v.value }));
-    let maxValue = 0;
+
+    let maxValue = 1;
     for (let i = 0; i < values.length; i++) {
         maxValue = Math.max(maxValue, values[i].y);
     }
@@ -57,9 +57,16 @@ export default function BarChart({ workouts }) {
         colorScale.push(scale[idx]);
     }
 
+    console.log(values);
+    console.log(colorScale);
+
     return (
         <View className="flex items-center">
-            <VictoryChart width={Math.min(400, 0.9 * width)} height={Math.min(400, 0.6 * width)}>
+            <VictoryChart
+                width={Math.min(400, 0.9 * width)}
+                height={Math.min(400, 0.6 * width)}
+                domain={{ y: [-3, Math.max(maxValue, 100)] }}
+            >
                 <VictoryBar
                     data={values}
                     y0={() => -3}

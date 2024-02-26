@@ -3,7 +3,6 @@ import { Text, View, StyleSheet, SafeAreaView, TextInput, Pressable } from "reac
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import { API } from "../utils/api";
-import NeonBackground from "../components/shaders/NeonBackground";
 
 export default function SignUp() {
     const [username, setUsername] = useState("");
