@@ -5,13 +5,7 @@ const Divider = (props) => {
     const meshRef = useRef();
     const { size } = useThree();
 
-    const { measure, intensity = 1.0, radius = 0.006 } = props;
-
-    const width = measure.width / size.width;
-    const height = measure.height / size.height;
-
-    const startX = measure.left / size.width;
-    const startY = (size.height - measure.top) / size.height;
+    const { intensity = 1.5, radius = 0.02 } = props;
 
     const vertexShader = `
     varying vec2 fragCoord;
@@ -69,17 +63,13 @@ const Divider = (props) => {
         
         uv.x *= aspect;
 
-        vec2 centre;
-        centre.x = aspect * (startX + 0.5 * width);
-        centre.y = startY - 0.5 * height;
+        vec2 at = uv - vec2(0.5 * aspect, 0.5);
 
-        vec2 at = uv - centre;
-
-        vec2 a = vec2(0.1 * aspect, 0.5);
-        vec2 a = vec2(0.9 * aspect, 0.5);
+        vec2 a = vec2(-0.4 * aspect, 0.0);
+        vec2 b = vec2( 0.4 * aspect, 0.0);
         float dist = sdSegment(at, a, b);
         float glow = pow(radius/dist, intensity);
-        vec3 col = glow * vec3(0.0, 0.1, 0.1);
+        vec3 col = glow * vec3(0.0, 0.5, 0.5);
         
         col = Tonemap_ACES(col);
 

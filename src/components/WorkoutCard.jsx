@@ -28,7 +28,6 @@ export default function WorkoutCard({ workout }) {
             <LinearGradient
                 style={{
                     width: "100%",
-                    minWidth: "75%",
                     marginLeft: "auto",
                     marginRight: "auto",
                     paddingVertical: 8,

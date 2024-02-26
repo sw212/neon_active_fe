@@ -1,3 +1,6 @@
+import "react-native-gesture-handler";
+// must be top import
+
 import { useContext } from "react";
 import { Text, View, ScrollView, Pressable, Button } from "react-native";
 import { NavigationContainer, useNavigation, useTheme } from "@react-navigation/native";
