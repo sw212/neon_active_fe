@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ScrollView, Text, View, Image, Pressable, Dimensions } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 
@@ -6,9 +6,32 @@ import PointsBar from "../components/shaders/PointsBar";
 import NeonBackground from "../components/shaders/NeonBackground";
 
 import { MAX_RANK, POINTS_PER_RANK, RANK_NAMES, rankFromPoints } from "../utils/points";
+import { API } from "../utils/api";
+import { UserContext } from "../contexts/UserContext";
 
-export default function MainScreen({ navigation }) {
-    const [points, setPoints] = useState(10250);
+export default function MainScreen({ navigation, route }) {
+    const [points, setPoints] = useState(0);
+    const { user } = useContext(UserContext);
+
+    const { _id } = user;
+
+    const { workoutLogged } = route.params;
+
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await API.get(`/users/${_id}`);
+                const UserPoints = response.data.users.points;
+                setPoints(UserPoints);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        fetchData();
+    }, [workoutLogged]);
+
+    console.log(points)
 
     const { rank, rankName } = rankFromPoints(points);
     const relativePoints = points % POINTS_PER_RANK;

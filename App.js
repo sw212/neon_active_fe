@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Text, View, ScrollView, Pressable, Button } from "react-native";
 import { NavigationContainer, useNavigation, useTheme } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -36,7 +36,7 @@ function Main() {
     const insets = useSafeAreaInsets();
     const { user, setUser } = useContext(UserContext);
     const { goBack } = useNavigation();
-
+    const [workoutLogged, setWorkoutLogged] = useState(false)
     const headerBG = colors.headerBackground;
 
 
@@ -53,9 +53,7 @@ function Main() {
             {!user ? (
                 <View className="flex-1 bg-background ">
                     <Text className="text-3xl text-white self-center">NEON : Active</Text>
-
                     <SignInScreen />
-
                     <View className="absolute left-0 top-0 right-0 bottom-0 -z-10">
                         <NeonLoginBG />
                     </View>
@@ -88,49 +86,51 @@ function Main() {
                             }})
                         }
                     />
-                    <Tab.Screen
-                        name="Rank"
-                        component={MainScreen}
-                        options={({ navigation }) => ({
-                            tabBarIcon: makeIconRender("run"),
-                            headerLeft: () => (
-                                <Ionicons
-                                    name="arrow-back-outline"
-                                    onPress={() => navigation.goBack()}
-                                    size={24}
-                                    color="black"
-                                    style={{ marginLeft: 7 }}
-                                />
-                            ),
-                            headerRight: () => {
-                                return (
-                                    <AccountIcon navigation={navigation}/>
-                                )
-                            }}
-                        )}
-                    />
-                    <Tab.Screen
-                        name="New Workout"
-                        component={NewWorkoutScreen}
-                        options={({ navigation }) => ({
-                            tabBarIcon: makeIconRender("plus-box-outline"),
-                            headerLeft: () => (
-                                <Ionicons
-                                    name="arrow-back-outline"
-                                    onPress={() => navigation.goBack()}
-                                    size={24}
-                                    color="black"
-                                    style={{ marginLeft: 7 }}
-                                />
-                            ),
-                            headerRight: () => {
-                                return (
-                                    <AccountIcon navigation={navigation}/>
-                                 )
-                            }}
-                 )
-                        }
-                    />
+    <Tab.Screen
+        name="Rank"
+        component={MainScreen}
+        initialParams={{ workoutLogged:workoutLogged }} 
+        options={({ navigation }) => ({
+            tabBarIcon: makeIconRender("run"),
+            headerLeft: () => (
+                <Ionicons
+                    name="arrow-back-outline"
+                    onPress={() => navigation.goBack()}
+                    size={24}
+                    color="black"
+                    style={{ marginLeft: 7 }}
+                />
+            ),
+            headerRight: () => {
+                return (
+                    <AccountIcon navigation={navigation}/>
+                )
+            }
+        })}
+    />
+    <Tab.Screen
+        name="New Workout"
+        component={NewWorkoutScreen}
+        initialParams={{ setWorkoutLogged : setWorkoutLogged }} 
+        options={({ navigation }) => ({
+            tabBarIcon: makeIconRender("plus-box-outline"),
+            headerLeft: () => (
+                <Ionicons
+                    name="arrow-back-outline"
+                    onPress={() => navigation.goBack()}
+                    size={24}
+                    color="black"
+                    style={{ marginLeft: 7 }}
+                />
+            ),
+            headerRight: () => {
+                return (
+                    <AccountIcon navigation={navigation}/>
+                )
+            }
+        })}
+    />
+
                     <Tab.Screen
                         name="Teams"
                         component={TeamsNavigator}
@@ -204,3 +204,5 @@ export default function App() {
 function makeIconRender(name, size = 24) {
     return ({ color }) => <MaterialCommunityIcons name={name} color={color} size={size} />;
 }
+
+

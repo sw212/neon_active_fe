@@ -5,13 +5,19 @@ import { Picker } from "@react-native-picker/picker";
 import NeonBackground from "../components/shaders/NeonBackground";
 import { UserContext } from "../contexts/UserContext";
 import { API } from "../utils/api";
+import axios from "axios";
 
-export default function NewWorkoutScreen() {
+export default function NewWorkoutScreen({route, navigation}) {
     const { colors } = useTheme();
     const { user } = useContext(UserContext);
+    const {username} = user
 
     const [duration, setDuration] = useState(0);
     const [exerciseType, setExerciseType] = useState();
+
+    const { setWorkoutLogged } = route.params;
+
+    console.log(setWorkoutLogged, "setworkout")
 
     let exercisePoints = 0;
     if (exerciseType === "Run" || exerciseType === "Gym") {
@@ -34,6 +40,14 @@ export default function NewWorkoutScreen() {
         }
     };
 
+    const updateUserPoints = async (duration, username) => {
+        try {
+            const response = await API.patch(`/user/${username}/points/add`, {pointsToAdd : duration})
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
+    
     const handleSubmit = async (duration, exerciseType) => {
         const data = {
             duration,
@@ -47,11 +61,9 @@ export default function NewWorkoutScreen() {
                 },
             };
             const response = await API.post("/workouts/add", data, reqHeaders);
-            return (
-                <View>
-                    <Text className="text-white">You Logged a workout, nice</Text>
-                </View>
-            );
+            updateUserPoints(data.duration, username)
+            setWorkoutLogged(true)
+        alert("you logged a workout. nice")
         } catch (err) {
             console.error(err);
         }
