@@ -1,7 +1,22 @@
-import { Canvas, useThree } from "@react-three/fiber/native";
+import { useRef } from "react";
+import { Canvas, useThree, useFrame } from "@react-three/fiber/native";
+
+const Id = (v, t) => v;
 
 const RoundedRect = (props) => {
-    const { startX = 0.25, startY = 0.5, width = 0.5, length = 0.5, intensity = 1.3, radius = 0.005 } = props;
+    const {
+        startX = 0.25,
+        startY = 0.5,
+        width = 0.5,
+        length = 0.5,
+        color = [0.9, 0.1, 0.1],
+        intensity = 1.3,
+        radius = 0.005,
+        radiusUpdate = Id,
+        colorUpdate = Id,
+    } = props;
+
+    const meshRef = useRef();
 
     const vertexShader = `
     varying vec2 fragCoord;
@@ -29,6 +44,7 @@ const RoundedRect = (props) => {
     uniform vec2 size;
     uniform vec4 measure;
     uniform vec2 power;
+    uniform vec3 color;
 
     varying vec2 fragCoord;
 
@@ -88,7 +104,7 @@ const RoundedRect = (props) => {
         
         float dist = roundSquare(at, size);
         float glow = pow(radius/dist, intensity);
-        vec3 col = glow * vec3(0.9, 0.1, 0.1);
+        vec3 col = glow * color;
         
         col = Tonemap_ACES(col);
 
@@ -102,10 +118,19 @@ const RoundedRect = (props) => {
         size: { value: [size.width, size.height] },
         measure: { value: [startX, startY, width, length] },
         power: { value: [intensity, radius] },
+        color: { value: color },
     };
 
+    useFrame((state) => {
+        const { clock } = state;
+        const t = clock.elapsedTime;
+
+        meshRef.current.material.uniforms.power.value = [intensity, radiusUpdate(radius, t)];
+        meshRef.current.material.uniforms.color.value = colorUpdate(color, t);
+    });
+
     return (
-        <mesh>
+        <mesh ref={meshRef}>
             <bufferGeometry drawRange={{ start: 0, count: 6 }}>
                 <bufferAttribute />
             </bufferGeometry>
