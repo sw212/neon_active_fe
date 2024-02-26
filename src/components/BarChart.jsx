@@ -57,9 +57,6 @@ export default function BarChart({ workouts }) {
         colorScale.push(scale[idx]);
     }
 
-    console.log(values);
-    console.log(colorScale);
-
     return (
         <View className="flex items-center">
             <VictoryChart

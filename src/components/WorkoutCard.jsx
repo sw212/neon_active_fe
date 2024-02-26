@@ -27,6 +27,7 @@ export default function WorkoutCard({ workout }) {
         <View className="py-2">
             <LinearGradient
                 style={{
+                    width: "100%",
                     minWidth: "75%",
                     marginLeft: "auto",
                     marginRight: "auto",
