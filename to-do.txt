@@ -7,3 +7,10 @@ add styles to search bar
     badge assets
     add in API calls
     add back button for members screen 
+
+
+26/02
+failure screens for bad requests to backend
+
+
+    backend : https://neon-active-back-end.onrender.com/
