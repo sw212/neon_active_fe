@@ -22,11 +22,9 @@ import NewWorkoutScreen from "./src/screens/newWorkoutScreen";
 import AccountIcon from "./src/components/AccountIcon";
 import NeonLoginBG from "./src/components/shaders/NeonLoginBG";
 
-
 import "./global.css";
 import TeamsNavigator from "./src/stacknav/teamsNavigator";
 import UserScreen from "./src/screens/UserScreen";
-
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -34,10 +32,8 @@ const Tab = createBottomTabNavigator();
 function Main() {
     const { colors } = useTheme();
     const insets = useSafeAreaInsets();
-    const { user, setUser } = useContext(UserContext);
-    const { goBack } = useNavigation();
+    const { user } = useContext(UserContext);
     const headerBG = colors.headerBackground;
-
 
     return (
         <View
@@ -51,13 +47,15 @@ function Main() {
         >
             {!user ? (
                 <View className="flex-1 bg-background ">
-                    <Text className="text-3xl text-white self-center">NEON : Active</Text>
+                    <Text className="py-6 text-3xl text-white self-center">NEON : Active</Text>
+
                     <SignInScreen />
+
+                    <SignUpScreen />
+
                     <View className="absolute left-0 top-0 right-0 bottom-0 -z-10">
                         <NeonLoginBG />
                     </View>
-
-                    <SignUpScreen />
                 </View>
             ) : (
                 <Tab.Navigator
@@ -71,19 +69,17 @@ function Main() {
                         tabBarActiveTintColor: "white",
                         tabBarInactiveTintColor: "#254844",
                         headerTitleAlign: "center",
-}}
+                    }}
                 >
                     <Tab.Screen
                         name="Home"
                         component={HomeScreen}
-                        options={({navigation}) => ({
+                        options={({ navigation }) => ({
                             tabBarIcon: makeIconRender("home"),
                             headerRight: () => {
-                                return (
-                                    <AccountIcon navigation={navigation}/>
-                                )
-                            }})
-                        }
+                                return <AccountIcon navigation={navigation} />;
+                            },
+                        })}
                     />
     <Tab.Screen
         name="Rank"
@@ -142,7 +138,7 @@ function Main() {
                                         size={24}
                                         color="black"
                                         style={{ marginLeft: 7 }}
-                                        />
+                                    />
                                 );
                             },
                         })}
@@ -168,16 +164,24 @@ export default function App() {
                     }}
                 >
                     <Stack.Navigator>
-                        <Stack.Screen name="main"component={Main} options={() => ({
-                            headerShown: false
-                                    })}/>
-                        <Stack.Screen name="User" component={UserScreen} options={({navigation}) => ({headerStyle: {
-                            backgroundColor: "rgb(231, 48, 91)",
-                                    },
-                            tabBarStyle: {
-                                backgroundColor: "rgb(231, 48, 91)",
+                        <Stack.Screen
+                            name="main"
+                            component={Main}
+                            options={() => ({
+                                headerShown: false,
+                            })}
+                        />
+                        <Stack.Screen
+                            name="User"
+                            component={UserScreen}
+                            options={({ navigation }) => ({
+                                headerStyle: {
+                                    backgroundColor: "rgb(231, 48, 91)",
                                 },
-                                headerTitleAlign: "center", 
+                                tabBarStyle: {
+                                    backgroundColor: "rgb(231, 48, 91)",
+                                },
+                                headerTitleAlign: "center",
                                 headerLeft: () => {
                                     return (
                                         <Ionicons
@@ -186,11 +190,11 @@ export default function App() {
                                             size={24}
                                             color="black"
                                             style={{ marginLeft: 7 }}
-                                            />
+                                        />
                                     );
-                                }
-                                })}
-            />
+                                },
+                            })}
+                        />
                     </Stack.Navigator>
                 </NavigationContainer>
             </UserProvider>

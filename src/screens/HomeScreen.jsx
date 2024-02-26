@@ -1,78 +1,13 @@
-import { useState, useRef, useEffect, useContext } from "react";
-import { View, Text, ScrollView } from "react-native";
-
-import { vec3 } from "gl-matrix";
-import * as THREE from "three";
-import { useThree, useFrame, Canvas } from "@react-three/fiber/native";
-import { Trail } from "@react-three/drei/native";
-import { EffectComposer, Bloom } from "@react-three/postprocessing";
-
-import { generatePathShape, index_in_path } from "../utils/track";
+import { useState, useEffect, useContext, useCallback } from "react";
+import { View, Text, ScrollView, Dimensions } from "react-native";
 
 import { API } from "../utils/api";
 import { UserContext } from "../contexts/UserContext";
 
-import WorkoutList from "../components/WorkoutList";
-import NeonRoundedRect from "../components/shaders/NeonRoundedRect";
-import NeonGrid from "../components/shaders/NeonGrid";
-import PieChart from "../components/PieChart";
+import WorkoutCarousel from "../components/WorkoutCarousel";
+import NeonDivider from "../components/shaders/NeonDivider";
 import BarChart from "../components/BarChart";
-import PointsBar from "../components/shaders/PointsBar";
 import NeonBackground from "../components/shaders/NeonBackground";
-
-const OrbitTarget = ({ measure }) => {
-    const { left, top, width, height } = measure;
-    const meshRef = useRef();
-
-    const { size } = useThree();
-
-    const aspect = size.width / size.height;
-    const x = left / size.width;
-    const y = (size.height - top) / size.height;
-    const w = width / size.width;
-    const h = height / size.height;
-
-    const centre = [x + 0.5 * w - 0.5, y - 0.5 * h - 0.5, 0];
-
-    const screenHeight = Math.tan(37.5 * (Math.PI / 180)) * 2;
-    const screenWidth = aspect * screenHeight;
-    const screenCentre = [centre[0] * screenWidth, centre[1] * screenHeight, 0];
-
-    const num_pts = 50;
-    const [vertices, pathLengths, cumulativeLengths, pathLength] = generatePathShape(
-        0.5 * w * screenWidth,
-        0.5 * h * screenHeight,
-        num_pts
-    );
-
-    useFrame((state) => {
-        const { clock } = state;
-        const t = clock.elapsedTime;
-
-        let d = ((t * pathLength) / 2) % pathLength;
-        const idx = index_in_path(d, num_pts, pathLength, cumulativeLengths);
-        const frac = (d - cumulativeLengths[idx]) / pathLengths[idx];
-
-        let position = vec3.create();
-        vec3.lerp(position, vertices[idx], vertices[(idx + 1) % num_pts], frac);
-
-        meshRef.current.position.set(screenCentre[0] + position[0], screenCentre[1] + position[1], 0);
-    });
-
-    return (
-        <>
-            <EffectComposer>
-                <Bloom mipmapBlur luminanceThreshold={1} radius={0.2} />
-            </EffectComposer>
-            <Trail local width={0.05} length={1} color={new THREE.Color(2, 1, 10)} attenuation={(t) => t * t}>
-                <mesh ref={meshRef} position={screenCentre}>
-                    <sphereGeometry args={[0.01]} />
-                    <meshBasicMaterial color={[10, 1, 10]} toneMapped={false} />
-                </mesh>
-            </Trail>
-        </>
-    );
-};
 
 export default function HomeScreen() {
     const { user } = useContext(UserContext);
@@ -80,36 +15,18 @@ export default function HomeScreen() {
     ]);
 
 
-    const targetRef = useRef();
-    const containerRef = useRef();
-    const [measure, setMeasure] = useState();
-
-    useEffect(() => {
-        if (targetRef.current && containerRef.current) {
-            targetRef.current?.measureLayout(
-                containerRef.current,
-                (left, top, width, height) => {
-                    setMeasure({ left, top, width, height });
-                },
-                () => {
-                    console.error("measurement failed");
-                }
-            );
-        }
-    }, []);
+    // idle | loading | success | error
+    const [status, setStatus] = useState("idle");
 
     useEffect(() => {
         const fetchWorkouts = async () => {
+            setStatus("loading");
             try {
-                const response = await API.get("/workouts");
-                console.info("TODO: change homescreen workout user_id once add workout implemented");
-                console.info("MAKE SURE WHEN IN DEV MODE THE USER_ID IS UNCOMMENTED OUT ETC.");
-                // const user_id = "65d8896c76629981d9533a51";
-                const user_id = user._id
-                const user_workouts = response.data.workouts.filter((w) => w.user_id === user_id);
-                setWorkouts(user_workouts);
+                const response = await API.get(`/user/workouts/${user.username}`);
+                setWorkouts(response.data.workouts);
+                setStatus("success");
             } catch (err) {
-                console.error(err);
+                setStatus("error");
             }
         };
 
@@ -119,39 +36,25 @@ export default function HomeScreen() {
     return (
         <>
             <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-                <View className="h-full pt-4" ref={containerRef}>
-                    {/* <View className="w-[700px] h-[500px] mx-auto">
-                        <NeonGrid />
-                    </View> */}
-                    <View className="py-4">
-                        <View className="flex-row">
+                {status === "success" && (
+                    <View className="h-full pt-4 pb-6">
+                        <View className="w-[80%] max-w-md mx-auto mb-4">
                             <Text className="text-white text-2xl ml-[10%]">Recent Workouts</Text>
+                            <WorkoutCarousel workouts={workouts} />
                         </View>
-                        <WorkoutList workouts={workouts} />
-                    </View>
 
-                    <View className="w-[700px] h-[100px] mx-auto hidden">
-                        <PointsBar frac={0.4} />
-                    </View>
-
-                    <View className="py-4">
-                        <View className="flex-row">
-                            <Text className="text-white text-2xl ml-[10%]">Past 7 Days</Text>
+                        <View className="w-[80%] h-8 max-w-sm mx-auto">
+                            <NeonDivider />
                         </View>
-                        <BarChart workouts={workouts} />
-                    </View>
 
-                    <View className="flex grow gap-2 items-center justify-evenly hidden">
-                        <View className="relative w-32 h-16 bg-[#d75151] rounded-xl" ref={targetRef}>
-                            <View className="absolute left-0 top-0 right-0 bottom-0"></View>
+                        <View className="w-[80%] max-w-md mx-auto my-4">
+                            <View className="flex items-center">
+                                <Text className="self-start text-white text-2xl ml-[10%]">Past 7 Days</Text>
+                                <BarChart workouts={workouts} />
+                            </View>
                         </View>
                     </View>
-
-                    <View className="absolute left-0 top-0 right-0 bottom-0 z-10 hidden">
-                        {/* <Canvas camera={{ position: [0, 0, 1] }}>{measure && <OrbitTarget measure={measure} />}</Canvas> */}
-                    </View>
-                </View>
-
+                )}
                 <NeonBackground />
             </ScrollView>
         </>
