@@ -1,5 +1,5 @@
 import { View } from "react-native";
-import NeonRoundedRect from "./shaders/NeonRoundedRect";
+import NeonRoundedRect from "./NeonRoundedRect";
 
 export default function NeonBackground() {
     return (

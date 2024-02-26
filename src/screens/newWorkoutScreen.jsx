@@ -2,29 +2,25 @@ import { ScrollView, View, Text, TextInput, Pressable } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import { useContext, useState } from "react";
 import { Picker } from "@react-native-picker/picker";
-import NeonBackground from "../components/NeonBackground";
+import NeonBackground from "../components/shaders/NeonBackground";
 import { UserContext } from "../contexts/UserContext";
 import { API } from "../utils/api";
 
 export default function NewWorkoutScreen() {
     const { colors } = useTheme();
+    const { user } = useContext(UserContext);
 
     const [duration, setDuration] = useState(0);
     const [exerciseType, setExerciseType] = useState();
 
-    const { user } = useContext(UserContext);
-
-    console.log(user);
-
     let exercisePoints = 0;
-
     if (exerciseType === "Run" || exerciseType === "Gym") {
         exercisePoints = duration * 2;
     } else {
         exercisePoints = duration;
     }
 
-    handleWorkoutTypeChange = (value) => {
+    const handleWorkoutTypeChange = (value) => {
         setExerciseType(value);
     };
 
@@ -37,6 +33,7 @@ export default function NewWorkoutScreen() {
             setDuration(0);
         }
     };
+
     const handleSubmit = async (duration, exerciseType) => {
         const data = {
             duration,
@@ -52,9 +49,9 @@ export default function NewWorkoutScreen() {
             const response = await API.post("/workouts/add", data, reqHeaders);
             return (
                 <View>
-                    <Text className="text-white"> You Logged a workout, nice </Text>
+                    <Text className="text-white">You Logged a workout, nice</Text>
                 </View>
-            )
+            );
         } catch (err) {
             console.error(err);
         }
@@ -64,11 +61,11 @@ export default function NewWorkoutScreen() {
 
     return (
         <View className="flex flex-1 items-center pt-4">
-            <Text className="text-white text-3xl "> Post a New Workout!</Text>
+            <Text className="text-white text-3xl"> Post a New Workout!</Text>
             <View className="flex py-4 gap-y-4 grow">
                 <View>
                     <Text className="py-1 text-white text-xl">What Exercise Did You Do?</Text>
-                    <View className="p-1 border border-white rounded-xl ">
+                    <View className="p-1 border border-white rounded-xl">
                         <Picker
                             style={{
                                 color: "white",
@@ -88,7 +85,7 @@ export default function NewWorkoutScreen() {
                 <View>
                     <Text className="py-1 text-white text-xl">How Long Did You Exercise For?</Text>
                     <TextInput
-                        className="flex p-2 rounded-xl bg-white"
+                        className="flex px-2 py-3 rounded-xl bg-white"
                         selectedValue={duration}
                         keyboardType="numeric"
                         onChange={handleDurationChange}
@@ -109,7 +106,7 @@ export default function NewWorkoutScreen() {
                                 className="items-center rounded-full bg-black py-2 px-2 m-2 w-48"
                                 onPress={(e) => {
                                     e.preventDefault();
-                                    handleSubmit(duration,exerciseType);
+                                    handleSubmit(duration, exerciseType);
                                 }}
                             >
                                 <Text className="text-white">Log Workout</Text>

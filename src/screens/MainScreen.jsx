@@ -3,7 +3,7 @@ import { ScrollView, Text, View, Image, Pressable, Dimensions } from "react-nati
 import { LinearGradient } from "expo-linear-gradient";
 
 import PointsBar from "../components/shaders/PointsBar";
-import NeonBackground from "../components/NeonBackground";
+import NeonBackground from "../components/shaders/NeonBackground";
 
 import { MAX_RANK, POINTS_PER_RANK, RANK_NAMES, rankFromPoints } from "../utils/points";
 
@@ -22,7 +22,6 @@ export default function MainScreen({ navigation }) {
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
             <View className="flex-1 items-center">
                 <View style={{ width: 0.8 * width }} className="relative py-3 items-center">
-                    {/* <Text className="self-start left-[10%] text-2xl text-white">Points</Text> */}
                     <View className="flex-row w-full justify-between">
                         <Text className="self-start left-[10%] text-white">{rankName}</Text>
                         <Text className="self-end right-[10%] text-white">{nextRankName}</Text>
