@@ -1,6 +1,9 @@
-import { Canvas, useThree } from "@react-three/fiber/native";
+import { useRef } from "react";
+import { Canvas, useThree, useFrame } from "@react-three/fiber/native";
 
 const Bar = ({ frac }) => {
+    const meshRef = useRef();
+
     const startX = 0.1;
     const startY = 0.5;
     const width = 0.5;
@@ -68,7 +71,7 @@ const Bar = ({ frac }) => {
         float startY = measure.y;
         float width = measure.z;
         float length = measure.w;
-
+        
         vec2 uv = fragCoord;
         float aspect = size.x/size.y;
         
@@ -120,11 +123,8 @@ const Bar = ({ frac }) => {
     };
 
     return (
-        <mesh>
-            <bufferGeometry drawRange={{ start: 0, count: 6 }}>
-                <bufferAttribute />
-            </bufferGeometry>
-
+        <mesh ref={meshRef}>
+            <bufferGeometry drawRange={{ start: 0, count: 6 }} />
             <shaderMaterial fragmentShader={fragmentShader} vertexShader={vertexShader} uniforms={uniforms} />
         </mesh>
     );

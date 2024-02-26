@@ -4,7 +4,6 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import { API } from "../utils/api";
 import { UserContext } from "../contexts/UserContext";
-import NeonBackground from "../components/shaders/NeonBackground";
 
 export default function SignIn() {
     const [email, setEmail] = useState("");
@@ -25,7 +24,7 @@ export default function SignIn() {
 
         try {
             const response = await API.post("/login", data);
-            const ctx = { ...response.data.user, token: response.data.token };
+            const ctx = { ...response.data.user, token: response.data.token, points: 0 };
             setUser(ctx);
         } catch (err) {
             console.error(err);

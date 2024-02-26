@@ -8,14 +8,10 @@ import { API } from "../utils/api";
 
 export default function NewWorkoutScreen() {
     const { colors } = useTheme();
-    const { user } = useContext(UserContext);
-    const {username} = user
+    const { user, setUser } = useContext(UserContext);
 
     const [duration, setDuration] = useState(0);
     const [exerciseType, setExerciseType] = useState();
-
-
-
 
     let exercisePoints = 0;
     if (exerciseType === "cardio" || exerciseType === "weights") {
@@ -38,14 +34,14 @@ export default function NewWorkoutScreen() {
         }
     };
 
-    const updateUserPoints = async (duration, username) => {
+    const updateUserPoints = async (amount) => {
         try {
-            const response = await API.patch(`/user/${username}/points/add`, {pointsToAdd : duration})
+            const response = await API.patch(`/user/${user.username}/points/add`, { pointsToAdd: amount });
         } catch (error) {
-            console.error('Error:', error);
+            console.error("Error:", error);
         }
     };
-    
+
     const handleSubmit = async (duration, exerciseType) => {
         const data = {
             duration,
@@ -59,8 +55,12 @@ export default function NewWorkoutScreen() {
                 },
             };
             const response = await API.post("/workouts/add", data, reqHeaders);
-            await updateUserPoints(data.duration, username)
-        alert("you logged a workout. nice")
+            await updateUserPoints(exercisePoints);
+            // alert("you logged a workout. nice");
+
+            setUser((user) => ({ ...user, points: user.points + exercisePoints }));
+            setDuration(0);
+            setExerciseType();
         } catch (err) {
             console.error(err);
         }

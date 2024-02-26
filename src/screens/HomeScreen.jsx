@@ -32,29 +32,28 @@ export default function HomeScreen() {
     }, []);
 
     return (
-        <>
+        status === "success" && (
             <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-                {status === "success" && (
-                    <View className="h-full pt-4 pb-6">
-                        <View className="w-[80%] max-w-md mx-auto mb-4">
-                            <Text className="text-white text-2xl ml-[10%]">Recent Workouts</Text>
-                            <WorkoutCarousel workouts={workouts} />
-                        </View>
+                <View className="h-full pt-4 pb-6">
+                    <View className="w-[80%] max-w-md mx-auto mb-4">
+                        <Text className="text-white text-2xl ml-[10%]">Recent Workouts</Text>
+                        <WorkoutCarousel workouts={workouts} />
+                    </View>
 
-                        <View className="w-[80%] h-8 max-w-sm mx-auto">
-                            <NeonDivider />
-                        </View>
+                    <View className="w-[80%] h-8 max-w-sm mx-auto">
+                        <NeonDivider />
+                    </View>
 
-                        <View className="w-[80%] max-w-md mx-auto my-4">
-                            <View className="flex items-center">
-                                <Text className="self-start text-white text-2xl ml-[10%]">Past 7 Days</Text>
-                                <BarChart workouts={workouts} />
-                            </View>
+                    <View className="w-[80%] max-w-md mx-auto my-4">
+                        <View className="flex items-center">
+                            <Text className="self-start text-white text-2xl ml-[10%]">Past 7 Days</Text>
+                            <BarChart workouts={workouts} />
                         </View>
                     </View>
-                )}
+                </View>
+
                 <NeonBackground />
             </ScrollView>
-        </>
+        )
     );
 }
