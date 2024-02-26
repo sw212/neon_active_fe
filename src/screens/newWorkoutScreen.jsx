@@ -14,7 +14,7 @@ export default function NewWorkoutScreen() {
     const [exerciseType, setExerciseType] = useState();
 
     let exercisePoints = 0;
-    if (exerciseType === "Run" || exerciseType === "Gym") {
+    if (exerciseType === "run" || exerciseType === "weights") {
         exercisePoints = duration * 2;
     } else {
         exercisePoints = duration;
@@ -75,9 +75,9 @@ export default function NewWorkoutScreen() {
                             onValueChange={handleWorkoutTypeChange}
                         >
                             <Picker.Item label="Please Select" value="" />
-                            <Picker.Item label="run" value="run" />
-                            <Picker.Item label="weights" value="weights" />
-                            <Picker.Item label="stretching" value="stretching" />
+                            <Picker.Item label="Run" value="run" />
+                            <Picker.Item label="Weights" value="weights" />
+                            <Picker.Item label="Stretching" value="stretching" />
                         </Picker>
                     </View>
                 </View>
