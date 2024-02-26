@@ -3,7 +3,7 @@ import { Text, View, StyleSheet, SafeAreaView, TextInput, Pressable } from "reac
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import { API } from "../utils/api";
-import NeonBackground from "../components/NeonBackground";
+import NeonBackground from "../components/shaders/NeonBackground";
 
 export default function SignUp() {
     const [username, setUsername] = useState("");
@@ -13,8 +13,6 @@ export default function SignUp() {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [hidePass, setHidePass] = useState(true);
-
-    
 
     const toggleHidePass = () => {
         setHidePass(!hidePass);
@@ -62,7 +60,6 @@ export default function SignUp() {
             <Pressable className="rounded-full bg-black py-2 px-5 m-2" onPress={handleSubmit}>
                 <Text className="text-white">Sign Up</Text>
             </Pressable>
-            <NeonBackground />
         </View>
     );
 }

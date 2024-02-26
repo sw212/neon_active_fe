@@ -18,7 +18,7 @@ import NeonGrid from "../components/shaders/NeonGrid";
 import PieChart from "../components/PieChart";
 import BarChart from "../components/BarChart";
 import PointsBar from "../components/shaders/PointsBar";
-import NeonBackground from "../components/NeonBackground";
+import NeonBackground from "../components/shaders/NeonBackground";
 
 const OrbitTarget = ({ measure }) => {
     const { left, top, width, height } = measure;

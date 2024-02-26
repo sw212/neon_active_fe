@@ -4,7 +4,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import { API } from "../utils/api";
 import { UserContext } from "../contexts/UserContext";
-import NeonBackground from "../components/NeonBackground";
+import NeonBackground from "../components/shaders/NeonBackground";
 
 export default function SignIn() {
     const [email, setEmail] = useState("");
@@ -66,7 +66,6 @@ export default function SignIn() {
             <Pressable className="rounded-full bg-black py-2 px-5 m-2" onPress={handleSubmit}>
                 <Text className="text-white">Log In</Text>
             </Pressable>
-            <NeonBackground />
         </View>
     );
 }

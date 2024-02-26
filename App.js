@@ -17,6 +17,7 @@ import HomeScreen from "./src/screens/HomeScreen";
 import SignInScreen from "./src/screens/SignInScreen";
 import SignUpScreen from "./src/screens/SignUpScreen";
 import NewWorkoutScreen from "./src/screens/newWorkoutScreen";
+import NeonLoginBG from "./src/components/shaders/NeonLoginBG";
 
 import "./global.css";
 import TeamsNavigator from "./src/stacknav/teamsNavigator";
@@ -46,6 +47,11 @@ function Main() {
                     <Text className="text-3xl text-white self-center">NEON : Active</Text>
 
                     <SignInScreen />
+
+                    <View className="absolute left-0 top-0 right-0 bottom-0 -z-10">
+                        <NeonLoginBG />
+                    </View>
+
                     <SignUpScreen />
                 </View>
             ) : (
