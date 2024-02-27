@@ -80,15 +80,7 @@ const Badge = () => {
 
     const uniforms = {
         size: { value: [size.width, size.height] },
-        time: { value: 0 },
     };
-
-    useFrame((state) => {
-        const { clock } = state;
-        const t = clock.elapsedTime;
-
-        meshRef.current.material.uniforms.time.value = t;
-    });
 
     return (
         <mesh ref={meshRef}>

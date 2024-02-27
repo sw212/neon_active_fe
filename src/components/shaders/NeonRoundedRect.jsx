@@ -1,7 +1,5 @@
 import { useRef } from "react";
-import { Canvas, useThree, useFrame } from "@react-three/fiber/native";
-
-const Id = (v, t) => v;
+import { Canvas, useThree } from "@react-three/fiber/native";
 
 const RoundedRect = (props) => {
     const {
@@ -12,8 +10,6 @@ const RoundedRect = (props) => {
         color = [0.9, 0.1, 0.1],
         intensity = 1.3,
         radius = 0.005,
-        radiusUpdate = Id,
-        colorUpdate = Id,
     } = props;
 
     const meshRef = useRef();
@@ -120,14 +116,6 @@ const RoundedRect = (props) => {
         power: { value: [intensity, radius] },
         color: { value: color },
     };
-
-    useFrame((state) => {
-        const { clock } = state;
-        const t = clock.elapsedTime;
-
-        meshRef.current.material.uniforms.power.value = [intensity, radiusUpdate(radius, t)];
-        meshRef.current.material.uniforms.color.value = colorUpdate(color, t);
-    });
 
     return (
         <mesh ref={meshRef}>
