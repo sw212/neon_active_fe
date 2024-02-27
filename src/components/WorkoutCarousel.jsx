@@ -57,7 +57,7 @@ export default function WorkoutCarousel({ workouts }) {
                 loop={false}
                 style={{
                     width: windowWidth,
-                    height: 200,
+                    height: 190,
                     justifyContent: "center",
                     alignItems: "center",
                 }}
