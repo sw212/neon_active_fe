@@ -55,40 +55,22 @@ export default function MainScreen({ navigation }) {
                         </View>
                         <View className="w-full pl-[10%] pr-[15%]">
                             <Text style={{ left: `${pointsFraction * 100}%` }} className="self-start text-white ">
-                                {relativePoints}/1000
+                                {relativePoints}/{POINTS_PER_RANK}
                             </Text>
                         </View>
                     </View>
                     <View className="flex-1 pt-8">
-                        <LinearGradient
-                            style={{
-                                justifyContent: "center",
-                                minWidth: "75%",
-                                marginLeft: "auto",
-                                marginRight: "auto",
-                                padding: 32,
-                                gap: 16,
-                                border: "solid",
-                                borderWidth: 1,
-                                borderColor: "white",
-                                borderRadius: 12,
-                            }}
-                            colors={["rgba(222, 67, 216, 0.1)", "transparent"]}
-                            start={{ y: 0, x: 0 }}
-                            end={{ y: 1, x: 1 }}
-                        >
+                        <View className="p-8 border border-white rounded-xl">
                             <View className="flex items-center">
                                 <Text className="text-white text-2xl">Current Rank:</Text>
                                 <Text className="text-white text-2xl">{rankName}</Text>
                             </View>
                             <View className="flex items-center">
-                                <Text className="text-white text-2xl">Current Badge:</Text>
-                                {/* <Image source={require("../img/bronze-coin.jpg")} /> */}
                                 <View className="w-40 h-40">
                                     <NeonBadge />
                                 </View>
                             </View>
-                        </LinearGradient>
+                        </View>
                     </View>
                     <Pressable
                         className="items-center rounded-lg p-4 m-2 w-48 "

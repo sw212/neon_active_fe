@@ -7,6 +7,7 @@ import { UserContext } from "../contexts/UserContext";
 import WorkoutCarousel from "../components/WorkoutCarousel";
 import NeonDivider from "../components/shaders/NeonDivider";
 import BarChart from "../components/BarChart";
+import CumulativePointsChart from "../components/CumulativePointsChart";
 import NeonBackground from "../components/shaders/NeonBackground";
 
 export default function HomeScreen() {
@@ -45,8 +46,15 @@ export default function HomeScreen() {
 
                     <View className="w-[80%] max-w-md mx-auto my-4">
                         <View className="flex items-center">
-                            <Text className="self-start text-white text-2xl ml-[10%]">Past 7 Days</Text>
+                            <Text className="self-start text-white text-2xl ml-[10%]">Last 7 Days</Text>
                             <BarChart workouts={workouts} />
+                        </View>
+                    </View>
+
+                    <View className="w-[80%] max-w-md mx-auto my-4">
+                        <View className="flex items-center">
+                            <Text className="self-start text-white text-2xl ml-[10%]">Total 30 Days</Text>
+                            <CumulativePointsChart workouts={workouts} />
                         </View>
                     </View>
                 </View>
