@@ -66,7 +66,7 @@ export default function MainScreen({ navigation }) {
                                 <Text className="text-white text-2xl">{rankName}</Text>
                             </View>
                             <View className="flex items-center">
-                                <View className="w-40 h-40">
+                                <View className="w-48 h-48">
                                     <NeonBadge />
                                 </View>
                             </View>
