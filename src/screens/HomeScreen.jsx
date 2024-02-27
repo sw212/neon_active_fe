@@ -27,7 +27,6 @@ export default function HomeScreen() {
                 setStatus("error");
             }
         };
-
         fetchWorkouts();
     }, []);
 

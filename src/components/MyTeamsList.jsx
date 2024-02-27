@@ -10,9 +10,7 @@ export default function MyTeamsList({ navigation }) {
         const fetchTeams = async () => {
             try {
                 const response = await API.get('/teams')
-                console.log(response)
                 setTeams(response.data.teams)
-                console.log(teams)
             }
             catch {
                 console.error(error)

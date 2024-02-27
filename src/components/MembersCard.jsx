@@ -1,14 +1,15 @@
 import { Text, View, Image, Pressable } from "react-native";
 
 export default function MembersCard({ memberInfo }) {
-    const { member_name, avatar_img_url } = memberInfo;
+    const { username, avatar_img_url, points } = memberInfo;
 
     return (
         <View className="py-2">
                 <View className="min-w-[75%] my-2 top-3 mx-auto py-2 px-4 border border-white rounded-xl">
                     <View className="flex-row pb-2 justify-between">
                         <View className="flex-1 pr-8 gap-x-4 items-center">
-                            <Text className="text-white text-2xl">{member_name}</Text>
+                            <Text className="text-white text-2xl">Member - {username}</Text>
+                            <Text className="text-white text-2xl"> Points - {points}</Text>
                         </View>
                         <View className="w-32 h-52 border-white">
                             {avatar_img_url ? (
