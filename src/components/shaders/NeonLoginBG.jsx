@@ -27,6 +27,7 @@ const Scene = () => {
 
     const fragShader = `
     uniform vec2 size;
+    uniform float time;
     
     varying vec2 UV;
 
@@ -98,8 +99,9 @@ const Scene = () => {
         vec3 v = (cross(w, u));
         float fov = tan(PI / 3.0);
         vec3 ray = normalize(-coord.x*u + coord.y*v + fov*w);
-    
-        vec3 col = neonBG(origin, ray);
+        
+        float fade = 1.0 - pow(2.0, -time);
+        vec3 col = fade * neonBG(origin, ray);
         col = aces_approx(col);
         
         gl_FragColor = vec4(col, 1.0);

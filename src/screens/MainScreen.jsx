@@ -3,6 +3,7 @@ import { ScrollView, Text, View, Image, Pressable, Dimensions } from "react-nati
 import { LinearGradient } from "expo-linear-gradient";
 
 import PointsBar from "../components/shaders/PointsBar";
+import NeonBadge from "../components/shaders/NeonBadge";
 import NeonRoundedRect from "../components/shaders/NeonRoundedRect";
 import NeonBackground from "../components/shaders/NeonBackground";
 
@@ -32,7 +33,6 @@ export default function MainScreen({ navigation }) {
     }, []);
 
     const points = user.points;
-    console.log(points, "points");
     const { rank, rankName } = rankFromPoints(points);
     const relativePoints = points % POINTS_PER_RANK;
     const pointsFraction = relativePoints / POINTS_PER_RANK;
@@ -83,7 +83,10 @@ export default function MainScreen({ navigation }) {
                             </View>
                             <View className="flex items-center">
                                 <Text className="text-white text-2xl">Current Badge:</Text>
-                                <Image source={require("../img/bronze-coin.jpg")} />
+                                {/* <Image source={require("../img/bronze-coin.jpg")} /> */}
+                                <View className="w-40 h-40">
+                                    <NeonBadge />
+                                </View>
                             </View>
                         </LinearGradient>
                     </View>
