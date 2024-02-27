@@ -11,6 +11,19 @@ add styles to search bar
 
 26/02
 failure screens for bad requests to backend
+post enw workout screen looks shit
+log out 
 
 
     backend : https://neon-active-back-end.onrender.com/
+
+
+    generate input
+
+    input1 --> lose wieght, gain muscle, get faster, improve my pb 
+
+    input 2 --> number 1-6
+
+    ibput 3 --> 1-7
+
+    input 4 15-75

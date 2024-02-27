@@ -25,14 +25,18 @@ export default function MembersForThisTeamScreen({ route }) {
         };
         fetchMembers();
     }, []);
+
     return (
         <>
-            <ScrollView>
-                <LinearGradient
-                    colors={["rgba(222, 67, 216, 0.1)", "transparent"]}
-                    start={{ y: 0, x: 0 }}
-                    end={{ y: 1, x: 1 }}
-                >
+            <LinearGradient
+                style={{
+                    height: "100%",
+                }}
+                colors={["rgba(222, 67, 216, 0.1)", "transparent"]}
+                start={{ y: 0, x: 0 }}
+                end={{ y: 1, x: 1 }}
+            >
+                <ScrollView>
                     <View className="flex grow gap-y-2 flex-1 justify-center items-center h-full">
                         <View className="top-2 font-serif border border-white rounded-xl m-2 w-40 bg-[#1e375a]">
                             <Text className="flex text-white text-2xl self-center m-3 p-3 items-center">
@@ -44,8 +48,8 @@ export default function MembersForThisTeamScreen({ route }) {
                     {members.map((member) => {
                         return <MembersCard key={member.member_id} memberInfo={member} />;
                     })}
-                </LinearGradient>
-            </ScrollView>
+                </ScrollView>
+            </LinearGradient>
             <NeonBackground />
         </>
     );
