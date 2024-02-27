@@ -36,8 +36,8 @@ export default function HomeScreen() {
                 <View className="h-full pt-4 pb-6">
                     <View className="w-[80%] max-w-md mx-auto mb-4">
                         <Text className="text-white text-2xl ml-[10%]">Recent Workouts</Text>
-                        <WorkoutCarousel workouts={workouts} />
                     </View>
+                    <WorkoutCarousel workouts={workouts} />
 
                     <View className="w-[80%] h-8 max-w-sm mx-auto">
                         <NeonDivider />
