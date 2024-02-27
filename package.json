@@ -42,7 +42,8 @@
     "react-native-web": "~0.19.6",
     "three": "^0.161.0",
     "typescript": "^5.3.0",
-    "victory-native": "^36.9.1"
+    "victory-native": "^36.9.1",
+    "expo-font": "~11.10.3"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
