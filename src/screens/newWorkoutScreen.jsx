@@ -5,6 +5,7 @@ import { Picker } from "@react-native-picker/picker";
 import NeonBackground from "../components/shaders/NeonBackground";
 import { UserContext } from "../contexts/UserContext";
 import { API } from "../utils/api";
+import { LinearGradient } from "expo-linear-gradient";
 
 export default function NewWorkoutScreen() {
     const { colors } = useTheme();
@@ -69,7 +70,13 @@ export default function NewWorkoutScreen() {
     const showAddWorkout = duration > 0 && exerciseType;
 
     return (
+    <>
         <View className="flex flex-1 items-center pt-4">
+        <LinearGradient
+            colors={["rgba(222, 67, 216, 0.1)", "transparent"]}
+            start={{ y: 0, x: 0 }}
+            end={{ y: 1, x: 1 }}
+        >
             <Text className="text-white text-3xl"> Post a New Workout!</Text>
             <View className="flex py-4 gap-y-4 grow">
                 <View>
@@ -123,7 +130,9 @@ export default function NewWorkoutScreen() {
                     </>
                 )}
             </View>
-            <NeonBackground />
+            </LinearGradient>
         </View>
+            <NeonBackground />
+    </>
     );
 }

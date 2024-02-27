@@ -6,27 +6,25 @@ import { UserContext } from "../contexts/UserContext";
 export default function SearchForTeamContainer() {
     const [searchedTeam, setSearchedTeam] = useState("");
     const [userInput, setUserInput] = useState("");
-    const {user} = useContext(UserContext)
+    const { user } = useContext(UserContext);
 
     const updateUserInput = (e) => {
         const { text } = e.nativeEvent;
         setUserInput(text);
     };
 
-    const handleJoinTeamRequest = async() => {
-        const teamName = searchedTeam.name
-        const username = user.username
-            try {
-             const response = await API.patch(`/team/${teamName}/add`, {teamName: teamName, username : username})
-             alert("you have been added to team. nice")
-             setUserInput("")
-             setSearchedTeam("")
-            }
-            catch {
-                    console.error("error")
-            }
-
-    }
+    const handleJoinTeamRequest = async () => {
+        const teamName = searchedTeam.name;
+        const username = user.username;
+        try {
+            const response = await API.patch(`/team/${teamName}/add`, { teamName: teamName, username: username });
+            alert("you have been added to team. nice");
+            setUserInput("");
+            setSearchedTeam("");
+        } catch {
+            console.error("no team found");
+        }
+    };
 
     const handleSearch = async () => {
         try {
@@ -34,10 +32,12 @@ export default function SearchForTeamContainer() {
             const listOfTeams = TeamsArrResponse.data.teams;
             const SelectedTeam = listOfTeams.filter((thisteam) => thisteam.name === userInput);
             setSearchedTeam(SelectedTeam[0]);
+            console.log(searchedTeam)
         } catch {
             console.error("err");
         }
     };
+
 
     return (
         <View className="flex items-center w-full max-w-xs mx-auto gap-y-1">
@@ -61,8 +61,14 @@ export default function SearchForTeamContainer() {
                             <Text className="text-black text-center">Join this Team</Text>
                         </Pressable>
                     </View>
-                ) : null}
+                ) : (
+                        <View className="flex-row justify-between mb-4">
+                            <Text className="text-white self-start">Error: Team not found</Text>
+                        </View>
+                )}
             </View>
         </View>
     );
 }
+
+<View className="flex-col p-4 my-4 w-full border border-white rounded-xl items-center "></View>;
