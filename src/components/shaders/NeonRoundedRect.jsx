@@ -1,5 +1,7 @@
-import { useRef } from "react";
-import { Canvas, useThree } from "@react-three/fiber/native";
+import { useRef, memo } from "react";
+import { Canvas, useThree, useFrame } from "@react-three/fiber/native";
+
+const Id = (v, t) => v;
 
 const RoundedRect = (props) => {
     const {
@@ -10,6 +12,8 @@ const RoundedRect = (props) => {
         color = [0.9, 0.1, 0.1],
         intensity = 1.3,
         radius = 0.005,
+        radiusUpdate = Id,
+        colorUpdate = Id,
     } = props;
 
     const meshRef = useRef();
@@ -117,21 +121,27 @@ const RoundedRect = (props) => {
         color: { value: color },
     };
 
+    useFrame((state) => {
+        const { clock } = state;
+        const t = clock.elapsedTime;
+
+        meshRef.current.material.uniforms.power.value = [intensity, radiusUpdate(radius, t)];
+        meshRef.current.material.uniforms.color.value = colorUpdate(color, t);
+    });
+
     return (
         <mesh ref={meshRef}>
-            <bufferGeometry drawRange={{ start: 0, count: 6 }}>
-                <bufferAttribute />
-            </bufferGeometry>
+            <bufferGeometry drawRange={{ start: 0, count: 6 }} />
 
             <shaderMaterial fragmentShader={fragmentShader} vertexShader={vertexShader} uniforms={uniforms} />
         </mesh>
     );
 };
 
-export default function NeonRoundedRect(props) {
+export const NeonRoundedRect = memo(function (props) {
     return (
         <Canvas>
             <RoundedRect {...props} />
         </Canvas>
     );
-}
+});

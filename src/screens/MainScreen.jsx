@@ -3,9 +3,9 @@ import { ScrollView, Text, View, Image, Pressable, Dimensions } from "react-nati
 import { LinearGradient } from "expo-linear-gradient";
 
 import PointsBar from "../components/shaders/PointsBar";
-import NeonBadge from "../components/shaders/NeonBadge";
-import NeonRoundedRect from "../components/shaders/NeonRoundedRect";
-import NeonBackground from "../components/shaders/NeonBackground";
+import { NeonBadge } from "../components/shaders/NeonBadge";
+import { NeonRoundedRect } from "../components/shaders/NeonRoundedRect";
+import { NeonBackground } from "../components/shaders/NeonBackground";
 
 import { MAX_RANK, POINTS_PER_RANK, RANK_NAMES, rankFromPoints } from "../utils/points";
 import { API } from "../utils/api";
@@ -13,6 +13,7 @@ import { UserContext } from "../contexts/UserContext";
 
 export default function MainScreen({ navigation }) {
     const { user, setUser } = useContext(UserContext);
+    const [state, setState] = useState(0);
 
     // idle | loading | success | error
     const [status, setStatus] = useState("idle");
@@ -45,6 +46,10 @@ export default function MainScreen({ navigation }) {
         status === "success" && (
             <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
                 <View className="flex-1 items-center">
+                    <Pressable onPress={() => setState((v) => 1 - v)}>
+                        <Text>Press Me</Text>
+                    </Pressable>
+
                     <View style={{ width: 0.8 * width }} className="relative py-3 items-center">
                         <View className="flex-row w-full justify-between">
                             <Text className="self-start left-[10%] text-white">{rankName}</Text>

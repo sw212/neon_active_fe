@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { View, Text, FlatList, ScrollView } from "react-native";
 import MembersCard from "../components/MembersCard";
-import NeonBackground from "../components/shaders/NeonBackground";
+import { NeonBackground } from "../components/shaders/NeonBackground";
 import { API } from "../utils/api";
 import { LinearGradient } from "expo-linear-gradient";
 

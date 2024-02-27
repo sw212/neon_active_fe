@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, memo } from "react";
 import { Canvas, useThree, useFrame } from "@react-three/fiber/native";
 
 const Badge = () => {
@@ -90,10 +90,10 @@ const Badge = () => {
     );
 };
 
-export default function NeonBadge() {
+export const NeonBadge = memo(function NeonBadge() {
     return (
         <Canvas>
             <Badge />
         </Canvas>
     );
-}
+});

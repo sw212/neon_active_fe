@@ -1,7 +1,7 @@
 import { ScrollView } from "react-native";
 import SearchForTeamContainer from "../components/SearchForTeamsContainer";
 import MyTeamsList from "../components/MyTeamsList";
-import NeonBackground from "../components/shaders/NeonBackground";
+import { NeonBackground } from "../components/shaders/NeonBackground";
 import { LinearGradient } from "expo-linear-gradient";
 
 export default function TeamsListScreen({ navigation }) {

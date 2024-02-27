@@ -8,7 +8,7 @@ import WorkoutCarousel from "../components/WorkoutCarousel";
 import NeonDivider from "../components/shaders/NeonDivider";
 import BarChart from "../components/BarChart";
 import CumulativePointsChart from "../components/CumulativePointsChart";
-import NeonBackground from "../components/shaders/NeonBackground";
+import { NeonBackground } from "../components/shaders/NeonBackground";
 
 export default function HomeScreen() {
     const { user } = useContext(UserContext);
