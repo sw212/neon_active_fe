@@ -9,15 +9,14 @@ export default function MyTeamsList({ navigation }) {
     useEffect(() => {
         const fetchTeams = async () => {
             try {
-                const response = await API.get('/teams')
-                setTeams(response.data.teams)
+                const response = await API.get("/teams");
+                setTeams(response.data.teams);
+            } catch {
+                console.error(error);
             }
-            catch {
-                console.error(error)
-            }
-        }
+        };
         fetchTeams();
-},[])
+    }, []);
 
     return (
         <View className="w-full">

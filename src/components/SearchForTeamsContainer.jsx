@@ -32,12 +32,11 @@ export default function SearchForTeamContainer() {
             const listOfTeams = TeamsArrResponse.data.teams;
             const SelectedTeam = listOfTeams.filter((thisteam) => thisteam.name === userInput);
             setSearchedTeam(SelectedTeam[0]);
-            console.log(searchedTeam)
+            console.log(searchedTeam);
         } catch {
             console.error("err");
         }
     };
-
 
     return (
         <View className="flex items-center w-full max-w-xs mx-auto gap-y-1">
@@ -62,13 +61,11 @@ export default function SearchForTeamContainer() {
                         </Pressable>
                     </View>
                 ) : (
-                        <View className="flex-row justify-between mb-4">
-                            <Text className="text-white self-start">Error: Team not found</Text>
-                        </View>
+                    <View className="flex-row justify-between mb-4">
+                        <Text className="text-white self-start">Error: Team not found</Text>
+                    </View>
                 )}
             </View>
         </View>
     );
 }
-
-<View className="flex-col p-4 my-4 w-full border border-white rounded-xl items-center "></View>;

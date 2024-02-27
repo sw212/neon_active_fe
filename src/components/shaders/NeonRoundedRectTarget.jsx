@@ -121,10 +121,7 @@ const RoundedRect = (props) => {
 
     return (
         <mesh ref={meshRef}>
-            <bufferGeometry drawRange={{ start: 0, count: 6 }}>
-                <bufferAttribute />
-            </bufferGeometry>
-
+            <bufferGeometry drawRange={{ start: 0, count: 6 }} />
             <shaderMaterial fragmentShader={fragmentShader} vertexShader={vertexShader} uniforms={uniforms} />
         </mesh>
     );
