@@ -24,7 +24,7 @@ export default function SignIn() {
 
         try {
             const response = await API.post("/login", data);
-            const ctx = { ...response.data.user, token: response.data.token, points: 0 };
+            const ctx = { ...response.data.user, token: response.data.token };
             setUser(ctx);
         } catch (err) {
             console.error(err);

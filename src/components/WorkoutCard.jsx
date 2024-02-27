@@ -7,10 +7,10 @@ import { LinearGradient } from "expo-linear-gradient";
 export default function WorkoutCard({ workout }) {
     const icon = useMemo(
         () => ({
-            run: <MaterialCommunityIcons name="run-fast" size={24} color="white" />,
-            weights: <MaterialCommunityIcons name="weight-lifter" size={24} color="white" />,
-            // Walk: <FontAwesome5 name="walking" size={24} color="white" />,
-            stretching: <MaterialCommunityIcons name="yoga" size={24} color="white" />,
+            cardio: <MaterialCommunityIcons name="run-fast" size={48} color="white" />,
+            weights: <MaterialCommunityIcons name="weight-lifter" size={48} color="white" />,
+            // Walk: <FontAwesome5 name="walking" size={48} color="white" />,
+            stretching: <MaterialCommunityIcons name="yoga" size={48} color="white" />,
         }),
         []
     );
@@ -41,15 +41,18 @@ export default function WorkoutCard({ workout }) {
                 start={{ y: 0, x: 0 }}
                 end={{ y: 1, x: 1 }}
             >
-                <View className="flex-row pb-2 justify-between">
-                    <View className="flex-row pr-8 gap-x-4">
-                        <Text className="text-white">{workout.type}</Text>
-                        <Text className="text-white">{new Date(workout.addedAt).toDateString()}</Text>
+                <View className="flex gap-y-2">
+                    <View className="flex-row justify-between">
+                        <View className="flex-row pr-10">
+                            <Text className="text-white">{workout.type[0].toUpperCase() + workout.type.slice(1)}</Text>
+                        </View>
+                        <Text className="text-white">{durationDisplay}</Text>
                     </View>
-                    <Text className="text-white">{durationDisplay}</Text>
-                </View>
 
-                <View>{icon[workout.type]}</View>
+                    <View className="py-2 self-center">{icon[workout.type]}</View>
+
+                    <Text className="text-white">{new Date(workout.addedAt).toDateString()}</Text>
+                </View>
             </LinearGradient>
         </View>
     );
