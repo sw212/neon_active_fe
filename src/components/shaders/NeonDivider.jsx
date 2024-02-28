@@ -82,14 +82,6 @@ const Divider = (props) => {
         power: { value: [intensity, radius] },
     };
 
-    useFrame((state) => {
-        const { clock } = state;
-        const t = clock.elapsedTime;
-
-        const s = 0.004 * Math.abs(Math.sin(t));
-        // meshRef.current.material.uniforms.power.value = [intensity, radius + s];
-    });
-
     return (
         <mesh ref={meshRef}>
             <bufferGeometry drawRange={{ start: 0, count: 6 }}>

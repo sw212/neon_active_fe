@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, memo } from "react";
 import { Canvas, useThree, useFrame } from "@react-three/fiber/native";
 
 const Badge = () => {
@@ -26,25 +26,19 @@ const Badge = () => {
     `;
 
     const fragmentShader = `
+    #define PI 3.141593
+
     uniform vec2 size;
     uniform float time;
 
     varying vec2 fragCoord;
 
-    mat2 rot(float theta)
-    {
-        float c = cos(theta);
-        float s = sin(theta);
-    
-        return mat2(c, -s, s, c);
-    }
-
     // https://iquilezles.org/articles/distfunctions2d/
     float sdStar(in vec2 p, in float r, in int n, in float m) // m=[2,n]
     {
         // these 4 lines can be precomputed for a given shape
-        float an = 3.141593/float(n);
-        float en = 3.141593/m;
+        float an = PI/float(n);
+        float en = PI/m;
         vec2  acs = vec2(cos(an),sin(an));
         vec2  ecs = vec2(cos(en),sin(en)); // ecs=vec2(0,1) and simplify, for regular polygon,
     
@@ -66,13 +60,24 @@ const Badge = () => {
         vec2 uv = (2.0*fragCoord - vec2(1.0));
         uv.x *= size.x / size.y;
 
-        uv *= rot(time * 0.2);
+        float theta = (atan(uv.y, uv.x) / (2.0 * PI));
+        float r = abs(length(uv) - 0.7);
+        float ringPart = mod(theta * 3.0 + time * 0.1, 3.0);
+        vec3  ring = vec3(0.1, 0.1, 0.1);
+        
+        if      (ringPart < 1.0) { ring = mix(vec3(1.0, 0.1, 0.1), vec3(0.1, 1.0, 0.1), ringPart); }
+        else if (ringPart < 2.0) { ring = mix(vec3(0.1, 1.0, 0.1), vec3(0.1, 0.1, 1.0), (ringPart - 1.0)); }
+        else                     { ring = mix(vec3(0.1, 0.1, 1.0), vec3(1.0, 0.1, 0.1), (ringPart - 2.0)); }
 
         float n = 5.0;
         float w = 3.0; // [2,n]
-        float d = abs(sdStar(uv, 0.75, int(n), w));
-        float m = pow(0.04 / d, 1.9);
-        vec3 col = m * vec3(0.1, 0.1, 0.7);
+        float d = abs(sdStar(uv, 0.65, int(n), w));
+        float m = pow(0.02 / d, 1.5);
+
+        float t = mod(theta - time*0.1, 1.0) - 0.5;
+        float width = 0.5 + 3.0*pow(2.0, -abs(pow(20.0*t, 2.0)));
+
+        vec3 col = m * vec3(0.1, 0.1, 0.7) + width * (pow(0.7 * abs(0.02 / r), 1.9) * ring);
         gl_FragColor = vec4(col, m);
     }
     `;
@@ -98,10 +103,10 @@ const Badge = () => {
     );
 };
 
-export default function NeonBadge() {
+export const NeonBadge = memo(function NeonBadge() {
     return (
         <Canvas>
             <Badge />
         </Canvas>
     );
-}
+});

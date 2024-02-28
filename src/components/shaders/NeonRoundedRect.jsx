@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, memo } from "react";
 import { Canvas, useThree, useFrame } from "@react-three/fiber/native";
 
 const Id = (v, t) => v;
@@ -131,19 +131,17 @@ const RoundedRect = (props) => {
 
     return (
         <mesh ref={meshRef}>
-            <bufferGeometry drawRange={{ start: 0, count: 6 }}>
-                <bufferAttribute />
-            </bufferGeometry>
+            <bufferGeometry drawRange={{ start: 0, count: 6 }} />
 
             <shaderMaterial fragmentShader={fragmentShader} vertexShader={vertexShader} uniforms={uniforms} />
         </mesh>
     );
 };
 
-export default function NeonRoundedRect(props) {
+export const NeonRoundedRect = memo(function (props) {
     return (
         <Canvas>
             <RoundedRect {...props} />
         </Canvas>
     );
-}
+});

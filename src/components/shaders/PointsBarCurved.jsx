@@ -31,27 +31,23 @@ const Bar = ({ frac }) => {
     `;
 
     const fragmentShader = `
+    #define PI 3.141593
 
     uniform vec2 size;
     uniform vec4 measure;
     uniform float frac;
+    uniform float time;
 
     varying vec2 fragCoord;
 
-    float roundSquare(vec2 at, vec2 size, float cornerRadius)
+    float sdRing( in vec2 p, in vec2 n, in float r, float th )
     {
-        at = abs(at);
+        p.x = abs(p.x);
+    
+        p = mat2x2(n.x,n.y,-n.y,n.x)*p;
 
-        if ((at.x > size.x) || (at.y > size.y))
-        {
-            return abs( length(max(at - size, vec2(0))) - cornerRadius );
-        }
-        else
-        {
-            vec2 delta = abs(at - size);
-            return ((delta.x * delta.y) / (delta.x + delta.y)) + cornerRadius;
-            // return min(delta.x, delta.y) + cornerRadius;
-        }
+        return max( abs(length(p)-r)-th*0.5,
+                    length(vec2(p.x,max(0.0,abs(r-p.y)-th*0.5)))*sign(p.x) );
     }
 
     // Narkowicz 2015, "ACES Filmic Tone Mapping Curve"
@@ -67,50 +63,39 @@ const Bar = ({ frac }) => {
 
     void main()
     {
-        float startX = measure.x;
-        float startY = measure.y;
-        float width = measure.z;
-        float length = measure.w;
-        
-        vec2 uv = fragCoord;
+        vec2 p = fragCoord - 0.5;
         float aspect = size.x/size.y;
+        float i_aspect = size.y/size.x;
         
-        uv.x *= aspect;
+        p.x *= aspect;
+        p.y += 0.45;
 
-        vec2 centre;
-        centre.x = startX + 0.5 * length;
-        centre.x *= aspect;
-        centre.y = startY;
+        float angle = 1.0 - atan(p.y, p.x) / PI;
+        float r = length(p);
 
-        vec2 at = uv - centre;
-
-        vec2 dims = 0.5 * vec2(length * aspect, width);
+        float t = 3.14159 * 0.5;
+        vec2 cs = vec2(cos(t),sin(t));
+        float ra = 0.4 * aspect;
+        float th = 0.1 * aspect;
         
-        float corner = 0.08;
-        float dist = roundSquare(at, dims, corner);
-        float intensity = 1.8;
-        float radius = 0.04;
-        float glow = pow(radius/dist, intensity);
+        float d = sdRing(p, cs, ra, th);
+        float m = abs(d);
+        
+        float glow = pow(0.01 / m, 1.5);
+        vec3 col = glow * vec3(0.8, 0.1, 0.1);
 
-        vec3 col = glow * vec3(0.9, 0.1, 0.1);
-        col = clamp(col, 0.0, 1.0);
-
-        vec2 inner_centre = vec2((startX + 0.5 * length * frac) * aspect, centre.y);
-        vec2 inner_size = vec2(dims.x * frac, dims.y);
-        vec2 inner_at = abs(uv - inner_centre);
-        float inner_v = inner_at.y / inner_size.y;
-        float inner_corner = corner / sqrt(2.5);
-
-        float alpha = glow;
-        alpha = clamp(alpha, 0.0, 1.0);
-        if ((inner_at.x < (inner_size.x + inner_corner)) && (inner_at.y < (inner_size.y + inner_corner)))
+        float f = (1.0 - pow(2.0, -2.0 * time)) * frac;
+        float lower = ra - 0.5*th + 0.01;
+        float upper = ra + 0.5*th - 0.01;
+        if ((0.0 < angle) && (angle < f) && (r > lower) && (r < upper))
         {
-            alpha = 1.0;
-            col = mix(vec3(0.8, 0.8, 0.8), vec3(0.9, 0.1, 0.1), inner_v);
+            col = mix(vec3(.8,.8,.8), vec3(0.9, 0.1, 0.1), abs(r - ra) / (0.5*th));
+            col *= smoothstep(f, f - 0.01, angle - 0.05*abs(r - ra));
         }
-        
-        vec3 result = Tonemap_ACES(col);
-        gl_FragColor = vec4(result, alpha);
+    
+        col = Tonemap_ACES(col);
+    
+        gl_FragColor = vec4(col, glow);
     }
     `;
 
@@ -120,7 +105,15 @@ const Bar = ({ frac }) => {
         size: { value: [size.width, size.height] },
         measure: { value: [startX, startY, width, length] },
         frac: { value: frac },
+        time: { value: 0 },
     };
+
+    useFrame((state) => {
+        const { clock } = state;
+        const t = clock.elapsedTime;
+
+        meshRef.current.material.uniforms.time.value = t;
+    });
 
     return (
         <mesh ref={meshRef}>
@@ -130,7 +123,7 @@ const Bar = ({ frac }) => {
     );
 };
 
-export default function PointsBar({ frac = 0 }) {
+export default function PointsBarCurved({ frac = 0 }) {
     return (
         <Canvas>
             <Bar frac={frac} />

@@ -2,7 +2,7 @@ import { ScrollView, View, Text, TextInput, Pressable } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import { useContext, useState } from "react";
 import { Picker } from "@react-native-picker/picker";
-import NeonBackground from "../components/shaders/NeonBackground";
+import { NeonBackground } from "../components/shaders/NeonBackground";
 import { UserContext } from "../contexts/UserContext";
 import { API } from "../utils/api";
 import { LinearGradient } from "expo-linear-gradient";

@@ -1,8 +1,8 @@
+import { memo } from "react";
 import { View } from "react-native";
-import { vec3 } from "gl-matrix";
-import NeonRoundedRect from "./NeonRoundedRect";
+import { NeonRoundedRect } from "./NeonRoundedRect";
 
-export default function NeonBackground() {
+export const NeonBackground = memo(function () {
     const radiusUpdateBlink = (radius, t) => {
         const a = 0.09;
         const b = 0.5;
@@ -48,4 +48,4 @@ export default function NeonBackground() {
             />
         </View>
     );
-}
+});

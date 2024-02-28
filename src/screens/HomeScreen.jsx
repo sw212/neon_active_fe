@@ -8,10 +8,10 @@ import WorkoutCarousel from "../components/WorkoutCarousel";
 import NeonDivider from "../components/shaders/NeonDivider";
 import BarChart from "../components/BarChart";
 import CumulativePointsChart from "../components/CumulativePointsChart";
-import NeonBackground from "../components/shaders/NeonBackground";
+import { NeonBackground } from "../components/shaders/NeonBackground";
 
 export default function HomeScreen() {
-    const { user } = useContext(UserContext);
+    const { user, setUser } = useContext(UserContext);
     const [workouts, setWorkouts] = useState([]);
 
     // idle | loading | success | error
@@ -29,6 +29,21 @@ export default function HomeScreen() {
             }
         };
         fetchWorkouts();
+    }, [user.points]);
+
+    useEffect(() => {
+        const fetchPoints = async () => {
+            try {
+                const response = await API.get(`/users/${user._id}`);
+                setUser({ ...user, points: response.data.users.points });
+            } catch (err) {
+                console.error(err);
+            }
+        };
+
+        if (__DEV__) {
+            fetchPoints();
+        }
     }, []);
 
     return (
@@ -39,10 +54,6 @@ export default function HomeScreen() {
                         <Text className="text-white text-2xl ml-[10%]">Recent Workouts</Text>
                     </View>
                     <WorkoutCarousel workouts={workouts} />
-
-                    <View className="w-[80%] h-8 max-w-sm mx-auto">
-                        <NeonDivider />
-                    </View>
 
                     <View className="w-[80%] max-w-md mx-auto my-4">
                         <View className="flex items-center">

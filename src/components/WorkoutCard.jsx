@@ -23,8 +23,14 @@ export default function WorkoutCard({ workout }) {
     const minutesDisplay = `${hours ? " " : ""}${minutes}m`;
     const durationDisplay = hoursDisplay + minutesDisplay;
 
+    const borderColors = {
+        cardio: "rgb(244, 83, 75)",
+        weights: "rgb(172, 99, 245)",
+        stretching: "rgb(116, 244, 134)",
+    };
+
     return (
-        <View className="py-2">
+        <View className="py-2 min-w-[200]">
             <LinearGradient
                 style={{
                     width: "100%",
@@ -34,10 +40,10 @@ export default function WorkoutCard({ workout }) {
                     paddingHorizontal: 16,
                     border: "solid",
                     borderWidth: 1,
-                    borderColor: "white",
+                    borderColor: borderColors[workout.type],
                     borderRadius: 12,
                 }}
-                colors={["rgba(222, 67, 216, 0.1)", "transparent"]}
+                colors={["rgba(75, 15, 75, 0.1)", "transparent"]}
                 start={{ y: 0, x: 0 }}
                 end={{ y: 1, x: 1 }}
             >
