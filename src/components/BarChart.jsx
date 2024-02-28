@@ -69,6 +69,7 @@ export default function BarChart({ workouts }) {
                     y0={() => -3}
                     barRatio={0.5}
                     style={{ data: { fill: ({ index }) => colorScale[index] } }}
+                    animate={{ onLoad: { duration: 500 } }}
                 />
                 <VictoryAxis
                     style={{

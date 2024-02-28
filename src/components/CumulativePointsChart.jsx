@@ -9,21 +9,12 @@ export default function CumulativePointsChart({ workouts }) {
     const daySpan = 30;
     let total = 0;
 
-    // const tickCount = 5;
-    const tickValues = [];
-
     for (let i = 0; i < daySpan; i++) {
         //
         // NOTE/TODO: this doesn't work correctly in different timezones
         //
 
         const date = new Date(1970, 0, 1, null, null, null, currTime - (daySpan - 1 - i) * msPerDay);
-
-        if (!(i % 7)) {
-            const day = date.getDate().toString();
-            const month = date.toLocaleString("fr-fr", { month: "2-digit" });
-            tickValues.push(`${day}/${month}`);
-        }
 
         const dataPoint = {
             id: i + 1,
@@ -60,10 +51,9 @@ export default function CumulativePointsChart({ workouts }) {
                     style={{
                         data: { stroke: "white" },
                     }}
+                    animate={{ onEnter: { duration: 1000 } }}
                 />
                 <VictoryAxis
-                    // tickValues={tickValues}
-                    // tickCount={4}
                     tickFormat={(v) => {
                         const date = new Date(v);
                         const day = date.getDate().toString();
