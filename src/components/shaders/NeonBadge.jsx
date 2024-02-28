@@ -29,6 +29,7 @@ const Badge = () => {
     #define PI 3.141593
 
     uniform vec2 size;
+    uniform float time;
 
     varying vec2 fragCoord;
 
@@ -59,9 +60,9 @@ const Badge = () => {
         vec2 uv = (2.0*fragCoord - vec2(1.0));
         uv.x *= size.x / size.y;
 
-        float theta = atan(uv.y, uv.x) / (2.0 * PI);
+        float theta = (atan(uv.y, uv.x) / (2.0 * PI));
         float r = abs(length(uv) - 0.7);
-        float ringPart = mod(theta * 3.0, 3.0);
+        float ringPart = mod(theta * 3.0 + time * 0.1, 3.0);
         vec3  ring = vec3(0.1, 0.1, 0.1);
         
         if      (ringPart < 1.0) { ring = mix(vec3(1.0, 0.1, 0.1), vec3(0.1, 1.0, 0.1), ringPart); }
@@ -71,8 +72,12 @@ const Badge = () => {
         float n = 5.0;
         float w = 3.0; // [2,n]
         float d = abs(sdStar(uv, 0.65, int(n), w));
-        float m = pow(0.04 / d, 1.9);
-        vec3 col = m * vec3(0.1, 0.1, 0.7) + (pow(0.7 * abs(0.02 / r), 1.9) * ring);
+        float m = pow(0.02 / d, 1.2);
+
+        float t = mod(theta - time*0.1, 1.0) - 0.5;
+        float width = 0.1 + pow(2.0, -abs(pow(10.0*t, 2.0)));
+
+        vec3 col = m * vec3(0.1, 0.1, 0.7) + width * (pow(0.7 * abs(0.02 / r), 1.9) * ring);
         gl_FragColor = vec4(col, m);
     }
     `;
@@ -80,7 +85,15 @@ const Badge = () => {
 
     const uniforms = {
         size: { value: [size.width, size.height] },
+        time: { value: 0 },
     };
+
+    useFrame((state) => {
+        const { clock } = state;
+        const t = clock.elapsedTime;
+
+        meshRef.current.material.uniforms.time.value = t;
+    });
 
     return (
         <mesh ref={meshRef}>
