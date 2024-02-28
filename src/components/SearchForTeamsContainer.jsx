@@ -4,9 +4,11 @@ import { API } from "../utils/api";
 import { UserContext } from "../contexts/UserContext";
 
 export default function SearchForTeamContainer() {
-    const [searchedTeam, setSearchedTeam] = useState("");
-    const [userInput, setUserInput] = useState("");
     const { user } = useContext(UserContext);
+
+    const [searchedTeam, setSearchedTeam] = useState("");
+    const [searchTeamStatus, setSearchTeamStatus] = useState("idle");
+    const [userInput, setUserInput] = useState("");
 
     const updateUserInput = (e) => {
         const { text } = e.nativeEvent;
@@ -28,11 +30,16 @@ export default function SearchForTeamContainer() {
 
     const handleSearch = async () => {
         try {
+            setSearchTeamStatus("idle");
             const TeamsArrResponse = await API.get("/teams");
             const listOfTeams = TeamsArrResponse.data.teams;
-            const SelectedTeam = listOfTeams.filter((thisteam) => thisteam.name === userInput);
-            setSearchedTeam(SelectedTeam[0]);
-            console.log(searchedTeam);
+            const selectedTeam = listOfTeams.filter((thisteam) => thisteam.name === userInput);
+            if (selectedTeam.length) {
+                setSearchTeamStatus("success");
+            } else {
+                setSearchTeamStatus("failure");
+            }
+            setSearchedTeam(selectedTeam[0]);
         } catch {
             console.error("err");
         }
@@ -61,9 +68,11 @@ export default function SearchForTeamContainer() {
                         </Pressable>
                     </View>
                 ) : (
-                    <View className="flex-row justify-between mb-4">
-                        <Text className="text-white self-start">Error: Team not found</Text>
-                    </View>
+                    searchTeamStatus === "failure" && (
+                        <View className="flex-row justify-between mb-4">
+                            <Text className="text-white self-start">Error: Team not found</Text>
+                        </View>
+                    )
                 )}
             </View>
         </View>
