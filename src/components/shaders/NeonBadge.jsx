@@ -72,7 +72,7 @@ const Badge = () => {
         float n = 5.0;
         float w = 3.0; // [2,n]
         float d = abs(sdStar(uv, 0.65, int(n), w));
-        float m = pow(0.02 / d, 1.2);
+        float m = pow(0.02 / d, 1.5);
 
         float t = mod(theta - time*0.1, 1.0) - 0.5;
         float width = 0.5 + 3.0*pow(2.0, -abs(pow(20.0*t, 2.0)));
