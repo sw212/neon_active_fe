@@ -1,7 +1,7 @@
 import { View, Text } from "react-native";
 import { FlatList, ScrollView } from "react-native-gesture-handler";
 import GeneratedWorkoutPlanCard from "../components/GeneratedWorkoutPlanCard";
-import NeonBackground from "../components/shaders/NeonBackground";
+import {NeonBackground} from "../components/shaders/NeonBackground";
 import { LinearGradient } from "expo-linear-gradient";
 
 export default function DisplayWorkoutScreen({ route }) {
