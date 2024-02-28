@@ -23,7 +23,7 @@ export default function MyTeamsList({ navigation }) {
             <View className="flex items-center w-[80%] max-w-md mx-auto py-2">
                 <Text className="text-white text-2xl -mb-2 self-start">My Teams!</Text>
                 {teams.map((team) => {
-                    return <TeamCard key={team.team_id} teamInfo={team} navigation={navigation} />;
+                    return <TeamCard key={team._id} teamInfo={team} navigation={navigation} />;
                 })}
             </View>
         </View>
