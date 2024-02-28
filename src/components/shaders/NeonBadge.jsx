@@ -75,7 +75,7 @@ const Badge = () => {
         float m = pow(0.02 / d, 1.2);
 
         float t = mod(theta - time*0.1, 1.0) - 0.5;
-        float width = 0.1 + pow(2.0, -abs(pow(10.0*t, 2.0)));
+        float width = 0.5 + 3.0*pow(2.0, -abs(pow(20.0*t, 2.0)));
 
         vec3 col = m * vec3(0.1, 0.1, 0.7) + width * (pow(0.7 * abs(0.02 / r), 1.9) * ring);
         gl_FragColor = vec4(col, m);
