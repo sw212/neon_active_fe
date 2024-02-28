@@ -11,7 +11,7 @@ import CumulativePointsChart from "../components/CumulativePointsChart";
 import { NeonBackground } from "../components/shaders/NeonBackground";
 
 export default function HomeScreen() {
-    const { user } = useContext(UserContext);
+    const { user, setUser } = useContext(UserContext);
     const [workouts, setWorkouts] = useState([]);
 
     // idle | loading | success | error
@@ -29,6 +29,21 @@ export default function HomeScreen() {
             }
         };
         fetchWorkouts();
+    }, [user.points]);
+
+    useEffect(() => {
+        const fetchPoints = async () => {
+            try {
+                const response = await API.get(`/users/${user._id}`);
+                setUser({ ...user, points: response.data.users.points });
+            } catch (err) {
+                console.error(err);
+            }
+        };
+
+        if (__DEV__) {
+            fetchPoints();
+        }
     }, []);
 
     return (
