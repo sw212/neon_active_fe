@@ -1,4 +1,4 @@
-import { View, Text, FlatList } from "react-native";
+import { View, Text } from "react-native";
 import { useEffect, useState } from "react";
 import TeamCard from "./TeamCard";
 import { API } from "../utils/api";
