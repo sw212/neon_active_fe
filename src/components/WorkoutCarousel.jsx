@@ -15,7 +15,7 @@ export default function WorkoutCarousel({ workouts }) {
         const scale = interpolate(value, [-1, 0, 1], [sFactorA, 1, sFactorA], Extrapolation.CLAMP);
 
         const size = windowWidth;
-        const tFactorA = 1 / 2;
+        const tFactorA = 0.5;
         const translateX = interpolate(value, [-1, 0, 1], [-size * tFactorA, 0, size * tFactorA], Extrapolation.CLAMP);
         const zIndex = interpolate(
             value,
@@ -30,7 +30,7 @@ export default function WorkoutCarousel({ workouts }) {
                 { perspective: 150 },
                 { translateX },
                 {
-                    rotateY: `${interpolate(value, [-1, 0, 1], [-30, 0, 30], Extrapolation.CLAMP)}deg`,
+                    rotateY: `${interpolate(value, [-1, 0, 1], [-45, 0, 45], Extrapolation.CLAMP)}deg`,
                 },
                 { scale },
             ],

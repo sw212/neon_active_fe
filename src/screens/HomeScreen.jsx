@@ -55,10 +55,6 @@ export default function HomeScreen() {
                     </View>
                     <WorkoutCarousel workouts={workouts} />
 
-                    <View className="w-[80%] h-8 max-w-sm mx-auto">
-                        <NeonDivider />
-                    </View>
-
                     <View className="w-[80%] max-w-md mx-auto my-4">
                         <View className="flex items-center">
                             <Text className="self-start text-white text-2xl ml-[10%]">Last 7 Days</Text>
