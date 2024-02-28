@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { View, Text, FlatList, ScrollView } from "react-native";
+import { View, Text,ScrollView } from "react-native";
 import MembersCard from "../components/MembersCard";
 import NeonBackground from "../components/shaders/NeonBackground";
 import { API } from "../utils/api";

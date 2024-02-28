@@ -18,13 +18,15 @@ import HomeScreen from "./src/screens/HomeScreen";
 import SignInScreen from "./src/screens/SignInScreen";
 import SignUpScreen from "./src/screens/SignUpScreen";
 import NewWorkoutScreen from "./src/screens/newWorkoutScreen";
+import UserScreen from "./src/screens/UserScreen";
 
 import AccountIcon from "./src/components/AccountIcon";
 import NeonLoginBG from "./src/components/shaders/NeonLoginBG";
 
 import "./global.css";
+import GenerateNav from "./src/stacknav/GenerateNav";
 import TeamsNavigator from "./src/stacknav/teamsNavigator";
-import UserScreen from "./src/screens/UserScreen";
+
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -135,6 +137,28 @@ function Main() {
                                         style={{ marginLeft: 7 }}
                                     />
                                 );
+                            },
+                        })}
+                    />
+                    <Tab.Screen
+                        name="Generate"
+                        component={GenerateNav}
+                        options={({ navigation, route }) => ({
+                            tabBarIcon: makeIconRender("cow"),
+                            headerShown: false,
+                            headerLeft: () => {
+                                return (
+                                    <Ionicons
+                                        name="arrow-back-outline"
+                                        onPress={() => navigation.goBack()}
+                                        size={24}
+                                        color="black"
+                                        style={{ marginLeft: 7 }}
+                                    />
+                                );
+                            },
+                            headerRight: () => {
+                                return <AccountIcon navigation={navigation} />;
                             },
                         })}
                     />
