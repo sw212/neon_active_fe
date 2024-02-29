@@ -11,14 +11,17 @@ export default function NewWorkoutScreen() {
     const { colors } = useTheme();
     const { user, setUser } = useContext(UserContext);
 
-    const [duration, setDuration] = useState(0);
+    const [duration, setDuration] = useState("");
     const [exerciseType, setExerciseType] = useState();
+
+    const isValidDuration = !isNaN(duration) && !isNaN(parseFloat(duration));
+    const workoutDuration = Number(duration);
 
     let exercisePoints = 0;
     if (exerciseType === "cardio" || exerciseType === "weights") {
-        exercisePoints = duration * 2;
+        exercisePoints = workoutDuration * 2;
     } else {
-        exercisePoints = duration;
+        exercisePoints = workoutDuration;
     }
 
     const handleWorkoutTypeChange = (value) => {
@@ -27,12 +30,7 @@ export default function NewWorkoutScreen() {
 
     const handleDurationChange = (e) => {
         const { text } = e.nativeEvent;
-
-        if (!isNaN(text) && !isNaN(parseFloat(text))) {
-            setDuration(Number(text));
-        } else {
-            setDuration(0);
-        }
+        setDuration(text);
     };
 
     const updateUserPoints = async (amount) => {
@@ -60,14 +58,14 @@ export default function NewWorkoutScreen() {
             // alert("you logged a workout. nice");
 
             setUser((user) => ({ ...user, points: user.points + exercisePoints }));
-            setDuration(0);
+            setDuration("");
             setExerciseType();
         } catch (err) {
             console.error(err);
         }
     };
 
-    const showAddWorkout = duration > 0 && exerciseType;
+    const showAddWorkout = isValidDuration && workoutDuration > 0 && exerciseType;
 
     return (
         <>
@@ -104,7 +102,7 @@ export default function NewWorkoutScreen() {
                             <Text className="py-1 text-white text-xl">How Long Did You Exercise For?</Text>
                             <TextInput
                                 className="flex px-2 py-3 rounded-xl bg-white"
-                                value={`${duration}`}
+                                value={duration}
                                 keyboardType="numeric"
                                 onChange={handleDurationChange}
                             />
