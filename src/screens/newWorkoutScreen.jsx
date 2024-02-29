@@ -55,7 +55,7 @@ export default function NewWorkoutScreen() {
             };
             const response = await API.post("/workouts/add", data, reqHeaders);
             await updateUserPoints(exercisePoints);
-            // alert("you logged a workout. nice");
+            alert("You logged a workout. Nice!");
 
             setUser((user) => ({ ...user, points: user.points + exercisePoints }));
             setDuration("");
