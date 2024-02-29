@@ -6,7 +6,8 @@ import { LinearGradient } from "expo-linear-gradient";
 
 export default function DisplayWorkoutScreen({ route }) {
     const { workoutPlan } = route.params[0];
-    const daysArray = workoutPlan.split(/\n(?=Day \d+:)/).map((day) => day.trim());
+    console.log(workoutPlan)
+    const daysArray = workoutPlan.split(/Day: \d+\n/).map((day) => day.trim());
     return (
         <>
             <LinearGradient
@@ -21,7 +22,7 @@ export default function DisplayWorkoutScreen({ route }) {
                     <FlatList
                         snapToAlignment={"center"}
                         className=""
-                        data={workoutPlan.split(/\n(?=Day \d+:)/).map((day) => day.trim())}
+                        data={daysArray}
                         renderItem={({ item }) => {
                             if (item !== "") {
                                 return <GeneratedWorkoutPlanCard item={item} />;
