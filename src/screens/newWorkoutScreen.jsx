@@ -39,7 +39,7 @@ export default function NewWorkoutScreen() {
         try {
             const response = await API.patch(`/user/${user.username}/points/add`, { pointsToAdd: amount });
         } catch (error) {
-            console.error("Error:", error);
+            console.error(error);
         }
     };
 
@@ -104,7 +104,7 @@ export default function NewWorkoutScreen() {
                             <Text className="py-1 text-white text-xl">How Long Did You Exercise For?</Text>
                             <TextInput
                                 className="flex px-2 py-3 rounded-xl bg-white"
-                                selectedValue={duration}
+                                value={`${duration}`}
                                 keyboardType="numeric"
                                 onChange={handleDurationChange}
                             />
