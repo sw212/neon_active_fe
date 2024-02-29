@@ -10,6 +10,7 @@ import AccountIcon from "../components/AccountIcon";
 export default function GenerateNav({ navigation }) {
     const isFocused = useIsFocused();
     const [workoutPlan,setWorkoutPlan] = useState([]) 
+    const [isLoaded, setIsLoaded] = useState(false)
 
     useEffect(() => {
         if (isFocused) {
@@ -35,7 +36,6 @@ export default function GenerateNav({ navigation }) {
             <Stack.Screen
                 name="Generate Workout"
                 component={GenerateWorkoutScreen}
-                initialParams={{setWorkoutPlan, workoutPlan}}
                 navigation={navigation}
                 options={({ navigation }) => ({
                     headerLeft: () => (
@@ -57,7 +57,7 @@ export default function GenerateNav({ navigation }) {
             <Stack.Screen
                 name="Display Workout"
                 component={DisplayWorkoutScreen}
-                initialParams={{workoutPlan}}
+                initialParams={{workoutPlan, isLoaded}}
                 options={({ navigation }) => ({
                     headerLeft: () => (
                         <Ionicons

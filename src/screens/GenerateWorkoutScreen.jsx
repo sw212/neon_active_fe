@@ -1,45 +1,49 @@
-import { ScrollView, View, Text, TextInput, Pressable } from "react-native";
+import { ScrollView, View, Text, TextInput, Pressable, Alert } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import { useContext, useEffect, useState } from "react";
 import { Picker } from "@react-native-picker/picker";
-import NeonBackground from "../components/shaders/NeonBackground";
+import { NeonBackground } from "../components/shaders/NeonBackground";
 import { UserContext } from "../contexts/UserContext";
 import { API } from "../utils/api";
 import { LinearGradient } from "expo-linear-gradient";
 
-export default function GenerateWorkoutScreen({navigation, route}) {
-
-    const {setWorkoutPlan} = route.params
+export default function GenerateWorkoutScreen({ navigation, route }) {
     const { user, setUser } = useContext(UserContext);
     const { colors } = useTheme();
-    const [workoutGoal, setWorkoutGoal] = useState("")
-    const [fitnessPlanDuration, setFitnessPlanDuration] = useState("")
-    const [workoutDaysPerWeek, setWorkoutDaysPerWeek] = useState("")
-    const [workoutLength, setWorkoutLength] = useState("")
+    const [workoutGoal, setWorkoutGoal] = useState("");
+    const [fitnessPlanDuration, setFitnessPlanDuration] = useState("");
+    const [workoutDaysPerWeek, setWorkoutDaysPerWeek] = useState("");
+    const [workoutLength, setWorkoutLength] = useState("");
+    const [backgroundColor, setBackgroundColor] = useState('blue');
+    const [isPressed, setIsPressed] = useState(false);
 
+    const handlePressIn = () => {
+        setIsPressed(true);
+      };
 
     const handleWorkoutGoalChange = (value) => {
-        if (value !== "Please Select"){
-            setWorkoutGoal(value)
+        if (value !== "Please Select") {
+            setWorkoutGoal(value);
         }
-    }
+    };
     const handleFitnessPlanDurationChange = (value) => {
-        if (value !== "Please Select"){
-            setFitnessPlanDuration(value)
+        if (value !== "Please Select") {
+            setFitnessPlanDuration(value);
         }
-    }
+    };
 
     const handleWorkoutDaysPerWeek = (value) => {
-        if (value !== "Please Select"){
-            setWorkoutDaysPerWeek(value)
+        if (value !== "Please Select") {
+            setWorkoutDaysPerWeek(value);
         }
-    }
+    };
 
     const handleWorkoutLength = (value) => {
-        if (value !== "Please Select"){
-            setWorkoutLength(value)
+        if (value !== "Please Select") {
+            setWorkoutLength(value);
         }
-    }
+    };
+
     const handleGenerate = async (workoutGoal, fitnessPlanDuration, workoutDaysPerWeek, workoutLength) => {
         try {
             const reqHeaders = {
@@ -48,17 +52,27 @@ export default function GenerateWorkoutScreen({navigation, route}) {
                     Authorization: `jwt ${user.token}`,
                 },
             };
-            const response = await API.post("/workout-plan/generate",{input1 : workoutGoal, input2 :workoutDaysPerWeek, input3:workoutLength, input4: "hello"})
-            // console.log(response.data.workoutPlan)
+            const response = await API.post("/workout-plan/generate", {
+                input1: workoutGoal,
+                input2: workoutDaysPerWeek,
+                input3: workoutLength,
+                input4: "hello",
+            });
             return response.data.workoutPlan
         } catch (err) {
-            console.error(err);
+            // console.error(err);
+            return "Please Answer All Inputs"
         }
     };
+    const handlePress = () => {
+        setBackgroundColor(backgroundColor === 'blue' ? 'red' : 'blue');
+      };
 
+
+    
     return (
         <>
-            <ScrollView contentContainerStyle={{flexGrow: 1}}>
+            <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
                 <LinearGradient
                     style={{
                         height: "100%",
@@ -66,7 +80,7 @@ export default function GenerateWorkoutScreen({navigation, route}) {
                     colors={["rgba(222, 67, 216, 0.1)", "transparent"]}
                     start={{ y: 0, x: 0 }}
                     end={{ y: 1, x: 1 }}
-                >
+                    >
                     <View className="flex flex-1 items-center pt-4">
                         <Text className="text-white text-3xl"> Generate Workout!</Text>
                         <View className="flex py-4 gap-y-4 grow">
@@ -96,7 +110,7 @@ export default function GenerateWorkoutScreen({navigation, route}) {
                                         backgroundColor: colors.background,
                                     }}
                                     selectedValue={workoutDaysPerWeek}
-                                        onValueChange={handleWorkoutDaysPerWeek}
+                                    onValueChange={handleWorkoutDaysPerWeek}
                                 >
                                     <Picker.Item label="Please Select" value="" />
                                     <Picker.Item label="1 day a week" value="1" />
@@ -129,23 +143,36 @@ export default function GenerateWorkoutScreen({navigation, route}) {
                             </View>
                         </View>
 
-                        <View className="py-2 basis-1/3">
+                        <View className="py-2 basis-1/3 bottom-20">
                             {!null && (
                                 <>
                                     <View className="items-center">
                                         <Pressable
-                                            className="items-center rounded-full bg-black py-2 px-2 m-2 w-48"
+                                            className="items-center rounded-full bg-white py-2 px-2 m-2 w-48"
+                                            onPressIn={handlePressIn}
+                                            style={({pressed}) => [
+                                                { backgroundColor: pressed || isPressed ? 'rgb(210, 230, 255)' : 'white' }]}
                                             onPress={async (e) => {
                                                 e.preventDefault();
-                                                const workoutPlan = await handleGenerate(workoutGoal, fitnessPlanDuration, workoutDaysPerWeek, workoutLength)
-                                                navigation.navigate("Display Workout", 
-                                                    [
-                                                        { workoutPlan : workoutPlan },
-                                                    ]
-                                                )
+                                                const response = await handleGenerate(
+                                                    workoutGoal,
+                                                    fitnessPlanDuration,
+                                                    workoutDaysPerWeek,
+                                                    workoutLength)
+                                                    if (response === "Please Answer All Inputs"){
+                                                        console.log(response)
+                                                        alert(response)
+                                                    } else {
+                                                        navigation.navigate("Display Workout", [{
+                                                            workoutPlan: response
+                                                        }]);
+                                                        setWorkoutDaysPerWeek("")
+                                                        setWorkoutLength("")
+                                                        setWorkoutGoal("")
+                                                    }
                                             }}
-                                        >
-                                            <Text className="text-white">Generate Workout</Text>
+                                            >
+                                            <Text className="text-black text-xl p-3">Generate Workout</Text>
                                         </Pressable>
                                     </View>
                                 </>
