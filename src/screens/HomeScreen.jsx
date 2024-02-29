@@ -22,7 +22,10 @@ export default function HomeScreen() {
             setStatus("loading");
             try {
                 const response = await API.get(`/user/workouts/${user.username}`);
-                setWorkouts(response.data.workouts);
+
+                const result = response.data.workouts;
+                result.sort((a, b) => new Date(b.addedAt) - new Date(a.addedAt));
+                setWorkouts(result);
                 setStatus("success");
             } catch (err) {
                 setStatus("error");
