@@ -14,7 +14,12 @@ export default function UserScreen({ navigation }) {
 
     useEffect(() => {
         const fetchWorkouts = async () => {
+            if (!user) {
+                return;
+            }
+
             setStatus("loading");
+
             try {
                 const response = await API.get(`/user/workouts/${user.username}`);
                 setWorkouts(response.data.workouts);
@@ -24,7 +29,7 @@ export default function UserScreen({ navigation }) {
             }
         };
         fetchWorkouts();
-    }, [user.points]);
+    }, [user?.points]);
 
     return (
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>

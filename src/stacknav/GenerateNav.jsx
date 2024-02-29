@@ -10,8 +10,6 @@ import AccountIcon from "../components/AccountIcon";
 export default function GenerateNav({ navigation }) {
     const isFocused = useIsFocused();
     const [workoutPlan,setWorkoutPlan] = useState([]) 
-    const [isLoaded, setIsLoaded] = useState(false)
-
     useEffect(() => {
         if (isFocused) {
             navigation.navigate("Generate Workout");
@@ -58,6 +56,7 @@ export default function GenerateNav({ navigation }) {
                 name="Display Workout"
                 component={DisplayWorkoutScreen}
                 initialParams={{workoutPlan, isLoaded}}
+
                 options={({ navigation }) => ({
                     headerLeft: () => (
                         <Ionicons

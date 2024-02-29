@@ -90,7 +90,7 @@ const Bar = ({ frac }) => {
         if ((0.0 < angle) && (angle < f) && (r > lower) && (r < upper))
         {
             col = mix(vec3(.8,.8,.8), vec3(0.9, 0.1, 0.1), abs(r - ra) / (0.5*th));
-            col *= smoothstep(f, f - 0.01, angle - 0.05*abs(r - ra));
+            col *= smoothstep(f, f - 0.01, angle - max(0.002, 0.05*abs(r - ra)));
         }
     
         col = Tonemap_ACES(col);
