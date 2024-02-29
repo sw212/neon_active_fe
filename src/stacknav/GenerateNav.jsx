@@ -55,8 +55,6 @@ export default function GenerateNav({ navigation }) {
             <Stack.Screen
                 name="Display Workout"
                 component={DisplayWorkoutScreen}
-                initialParams={{workoutPlan, isLoaded}}
-
                 options={({ navigation }) => ({
                     headerLeft: () => (
                         <Ionicons

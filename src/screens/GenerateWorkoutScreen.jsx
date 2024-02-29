@@ -68,59 +68,6 @@ export default function GenerateWorkoutScreen({ navigation, route }) {
         setBackgroundColor(backgroundColor === 'blue' ? 'red' : 'blue');
       };
 
-
-    
-    return (
-        <>
-            <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-=======
-import { ScrollView, View, Text, TextInput, Pressable } from "react-native";
-import { useTheme } from "@react-navigation/native";
-import { useContext, useEffect, useState } from "react";
-import { Picker } from "@react-native-picker/picker";
-import {NeonBackground} from "../components/shaders/NeonBackground";
-import { API } from "../utils/api";
-import { LinearGradient } from "expo-linear-gradient";
-
-export default function GenerateWorkoutScreen({navigation, route}) {
-    const { colors } = useTheme();
-    const [workoutGoal, setWorkoutGoal] = useState("")
-    const [fitnessPlanDuration, setFitnessPlanDuration] = useState("")
-    const [workoutDaysPerWeek, setWorkoutDaysPerWeek] = useState("")
-    const [workoutLength, setWorkoutLength] = useState("")
-
-
-    const handleWorkoutGoalChange = (value) => {
-        if (value !== "Please Select"){
-            setWorkoutGoal(value)
-        }
-    }
-    const handleWorkoutDaysPerWeek = (value) => {
-        if (value !== "Please Select"){
-            setWorkoutDaysPerWeek(value)
-        }
-    }
-
-    const handleWorkoutLength = (value) => {
-        if (value !== "Please Select"){
-            setWorkoutLength(value)
-        }
-    }
-    const handleGenerate = async (workoutGoal, fitnessPlanDuration, workoutDaysPerWeek, workoutLength) => {
-        try {
-            // const reqHeaders = {
-            //     headers: {
-            //         "Content-Type": "application/json",
-            //         Authorization: `jwt ${user.token}`,
-            //     },
-            // };
-            const response = await API.post("/workout-plan/generate",{input1 : workoutGoal, input2 :workoutDaysPerWeek, input3:workoutLength, input4: "hello"})
-            return response.data.workoutPlan
-        } catch (err) {
-            console.error(err);
-        }
-    };
-
     return (
         <>
             <ScrollView contentContainerStyle={{flexGrow: 1}}>

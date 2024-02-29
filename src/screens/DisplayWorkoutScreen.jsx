@@ -15,9 +15,8 @@ export default function DisplayWorkoutScreen({ route }) {
                 }}
                 colors={["rgba(222, 67, 216, 0.1)", "transparent"]}
                 start={{ y: 0, x: 0 }}
-                end={{ y: 1, x: 1 }}
+                end={{ y: 1, x: 1 }}>
                 <Text className="top-7 left-20 text-white text-3xl">Here is your workout</Text>
-
                 <View className="mx-5 my-4 flex-1 justify-center items-center">
                     <FlatList
                         snapToAlignment={"center"}
